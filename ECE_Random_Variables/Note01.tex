@@ -1,0 +1,477 @@
+\documentclass[12pt,thmsa]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts} % for /mathbb
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{cancel}
+\usepackage{color}    % color
+\usepackage{geometry}
+\usepackage{amssymb}  %  \varnothing
+\usepackage{textcase} % \MakeTextUppercase
+\usepackage{float}    % Force figure placement in text with [H]
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+
+% Linhui added for newly defined color
+\definecolor{forestgreen}{RGB}{34,139,34}
+
+
+% Linhui added for Expectation and Variance
+\newcommand{\Exp}{{\mathbb E}\! }
+\newcommand{\Var}{\mbox{Var}\! }
+
+% Linhui added for rename the command for empty set.
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+%------------------------------------------------------%
+\makeatletter
+\def\maketitle{%
+	\par
+	\hrule height 1.5pt\vspace{1ex}
+	\par\noindent
+	
+	\begin{minipage}{0.5\textwidth}
+		\scshape
+		Purdue University $\cdot$ ece 60000 \\[1ex]
+		Random Variables and Signals \\
+		Prof. Bell, Prof. Salama
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\MakeTextUppercase{{\@title}}\\[0.3ex] % 0.2ex height space between two line
+		\textit{\@author}\\[0.2ex]
+		\textit{August 31, 2021}
+	\end{minipage}
+	\par\vspace{1ex}
+	\hrule height 1.5pt\vspace{1ex}
+	\par
+}
+\makeatother
+
+\author{Linhui Xie}
+\title{Lecture Note 1}
+%------------------------------------------------------%
+
+\begin{document}
+\maketitle
+
+\section{Lecture 1\medskip}
+
+%------------------------------------------------------%
+\subsection{Set theory} % 1.1
+A simple random experiment - roll a fair die,
+\[\Omega=\mathcal{S}=\{1,2,3,4,5,6\}.\]
+Also, \(\Omega, \mathcal{S}\) is \underline{sample space}.
+\begin{itemize}
+	\item Each event of interest can be describe by a subset of \(\Omega=\{1,2,3,4,5,6\}\).\\
+    For example, \\
+	\[\begin{aligned}
+	A_{1} &= \text{ the outcome is odd } = \{1, 3, 5\}, \\
+	A_{2} &= \text{ the outcome is divisible by 3 } = \{3, 6\}, \\
+	A_{3} &= \text{ the outcome is prime } = \{2, 3, 5\}.
+	\end{aligned}\]
+	\item There are \(C_{6}^{0} + C_{6}^{1} + C_{6}^{2} + C_{6}^{3} + C_{6}^{4} + C_{6}^{5} + C_{6}^{6}=2^6=64\) distinct subsets of \(\Omega\).
+	\item In order to fully characterize a random experiment, we must know the probability of each of these sets.
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Events} % 1.2
+\begin{itemize}
+	\item Events are subsets of \(\Omega\).
+	\item The collection of all events is called the \underline{event space},
+\[\mathcal{F}(\Omega)=\left\{A_{1}, {A}_{2}, \ldots, A_{64}\right\}.\]
+	\item Our random experiment is completely characterized by
+\[
+\{\Omega, \mathcal{F}(\Omega), P(\cdot)\},
+\]where\[
+P(\cdot): \mathcal{F}(\Omega) \rightarrow[0,1],
+\] and assigns probability to each of the events.
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Basic Set Theory} % 1.3
+A set is simply a collection of objects. In any given problem, the set containing all possible elements of interest is called the universe, universal set, or space. We typically denote the space by \(\Omega\) or \(\mathcal{S}\).
+\begin{itemize}
+	\item The \underline{union} of two sets \(A\) and \(B\), denoted \(A \cup B\), is defined as \[
+A \cup B =\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { or }}} \omega \in B\}.
+\]
+    \begin{figure}[H] % The h stands for "here." You could also specify the bottom of the page by saying [b]
+    \centering
+    \includegraphics[width=.4\linewidth]{Figure/Note01_Figure_1.png}
+    \end{figure}
+    
+	\item  The \underline{intersection} of two sets \(A\) and \(B\), denoted \(A \cap B\), is defined as \[
+A \cap B=\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { and }}} \omega \in B\}.
+\]
+    \begin{figure}[H] % The h stands for "here." You could also specify the bottom of the page by saying [b]
+    \centering
+    \includegraphics[width=.4\linewidth]{Figure/Note01_Figure_2.png}
+    \end{figure}
+
+	\item The \underline{complement} of a set \(A\) (with respect to \(\Omega\) ), denoted \(\overline{A}, A^{''}, A^{c}\), is defined as \[
+\overline{A}=\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \notin  A\}.
+\]
+    \begin{figure}[H] % The h stands for "here." You could also specify the bottom of the page by saying [b]
+    \centering
+    \includegraphics[width=.4\linewidth]{Figure/Note01_Figure_3.png}
+    \end{figure}
+
+	\item The set containing no elements is called the \underline{empty set} or \underline{null set}, and is denoted by \(\emptyset\) or \(\{ \}\). (n.b. \(\{\emptyset\}\) is not correct notation.)
+
+	\item  If two sets \(A\) and \(B\) have no elements in common, then \(A \cap B = \emptyset\), and \(A\) and \(B\) are said to be \underline{disjoint}.
+
+	\item  The \underline{set difference} of two sets \(A\) and \(B\) is defined as
+\[\begin{aligned}
+A-B &=\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { and }}} \omega \notin B\}\\
+&= A \cap \overline{B}.
+\end{aligned}
+\]
+    \begin{figure}[H] % The h stands for "here." You could also specify the bottom of the page by saying [b]
+    \centering
+    \includegraphics[width=.4\linewidth]{Figure/Note01_Figure_4.png}
+    \end{figure}
+    
+	\item  The \underline{symmetric difference} of two sets \(A\) and \(B\), is defined as
+\[\begin{aligned}
+A \Delta B & =\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { or }}} \omega \in B, \text { but not both. }\} \\
+& = \left( A \cup B \right) - \left( A \cap B \right) \\
+& = \left( A \cap \overline{B} \right) \cup \left( \overline{A} \cap B \right).
+\end{aligned}
+\]
+    \begin{figure}[H] % The h stands for "here." You could also specify the bottom of the page by saying [b]
+    \centering
+    \includegraphics[width=.4\linewidth]{Figure/Note01_Figure_5.png}
+    \end{figure}
+    
+	\item  Two sets \(A\) and \(B\) are  \underline{equal} if and only if they contain exactly the same elements. \\
+	\(\Longleftrightarrow A=B \Leftrightarrow A \subset B \text{ and } B \subset A.\) \\
+	Proof, \\
+	\(\Longleftarrow\) \\
+	If \(B \subset A\), then \(\omega \in B \Rightarrow \omega \in A \), and if \(A \subset B\), then \(\omega \in A \Rightarrow \omega \in B \). \\
+	If both conditions hold, that means every element of \(B\) is an element of \(A\), and every element of \(A\) is an element of \(B\). (or say, \(A\) has no element that are not in \(B\) and \(B\) has no elements that are not in \(A\). ) \\
+	\(A\) and \(B\) have exactly the same elements, \(A = B\).\\
+	\(\Longrightarrow\) \\
+	From the definition of the subset, 
+	\(A =\{ \omega \in \Omega: \omega \in A \}\),  \(B =\{ \omega \in \Omega: \omega \in B \}\). \\
+	If \(A=B\), every element of \(A\) is an element of \(B\), \(A \subset B\). Similarly, every element of \(B\) is an element of \(A\), \(B \subset A\).
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Index sets \(\mathcal{I}\)} % 1.4
+\begin{itemize}
+	\item   Indexed collections of sets \( \{A_{i} ; i \in \mathcal{I}\} \), where \(\mathcal{I} \) is an index set.
+	\item   So \( \{A_{i} ; i \in \mathcal{I}\} \) is a ``set of sets", or a \underline{family of sets}, or a \underline{collection of sets}.
+	\item  There is one and only one set \( A_{i} \), for each \( i \in \mathcal{I} \).
+
+For example,
+\[\begin{array}{l}  \mathcal{I} = \{ 1,2,3\} , \\A_{1}=[0,1]=\{x \in \mathbb{R} ; 0 \leq x \leq 1\}, \\  A_{2}=[1,2] , \\  A_{3}=[2,3], \end{array}\]
+\[ \{A_{i} ; i \in \mathcal{I}\} =\{ A_1, A_2, A_3  \} = \left\{ [0,1], [1,2], [2,3] \right\}, \]
+\[\bigcup_{i \in \mathcal{I}} A_{i}=[0,1] \cup[1,2] \cup[2,3].\]
+Typical Index sets:
+\[\begin{array}{l} 
+	\mathbb{N}=\{1,2,3, \ldots\}=\text { natural numbers }, \\ 
+	\mathbb{Z}=\{\ldots-1,0,1,2, \ldots\}=\text { integers }, \\ 
+	\mathbb{Z}_{+}=\{0,1,2, \ldots\}=\text { non-negative integers }, \\
+	\mathbb{R}=(-\infty, \infty), \\
+	\mathbb{I}_{n}=\{0,1,2, \ldots, n-1\}.
+\end{array}\]
+
+For another example,
+\[\mathcal{S}=\{1,2,3,4,5,6\}.\]
+There are 64 subsets, \(A_{1}, A_{2}, \cdots, A_{64}\),
+\[\left\{ A_{1}, A_{2}, \cdots, A_{64} \right\} \text{ is an indexed collection of sets.}\]
+
+	\item  An index set \(\mathcal{I}\) is countable if it has an infinite number of elements and they can be put in one-to-one correspondance with the natural numbers \(\mathbb{I}\).
+	
+	\item  Given an indexed collection of sets \( \{A_{i} ; i \in \mathcal{I}\} \), the union of the family is \[ {\color{blue}{\bigcup_{i \in I}}} A_{i} \triangleq\left\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A_{i} \text { for } {\color{blue}{ \text{at least}}} \text{ one } i \in \mathcal{I} \right\}. \]
+	the intersection of the family is 
+	\[ {\color{blue}{\bigcap_{i \in I}}} A_{i} \triangleq\left\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A_{i} \text { for } {\color{blue}{ \text{all } }} i \in \mathcal{I} \right\}. \]
+	For example, \\
+	\(\text {Let } F_{r}=[0,1 / r), r \in(0,1] . \text { Find }\)
+    \[ \bigcup_{r \in(0,1]} F_{r} \quad \text { and } \quad \bigcap_{r \in(0,1]} F_{r}.\]
+    Short answer,
+	\[ \begin{aligned}\bigcup_{r \in (0,1]} F_r 
+    &= \bigcup_{r \in (0,1]}[0,1 / r)
+      =\big\{\omega: \omega \in[0,1 / r) \text { for } {\color{blue}{\text{at least}}} \text{ one } r \in(0,1]\big\}
+      = [0,\infty). \\  \\ 
+    \bigcap_{r \in (0,1]} F_r 
+    &= \bigcap_{r \in (0,1]}[0,1 / r)
+      =\big\{\omega: \omega \in[0,1 / r) \text { for } {\color{blue}{\text{all }}} r \in(0,1]\big\} 
+      = [0,1). 
+    \end{aligned} \]
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Algebra of Set Theory} % 1.5
+There are 16 rules,
+
+\(\left.\begin{array}{l}\text { 1. } A \cup B=B \cup A \text { . } \\ \text { 2. } A \cap B=B \cap A \text { . }\end{array} \qquad \qquad \qquad \; \;  \right\}\) Commutative laws
+
+\(\left.\begin{array}{l}\text { 3. } A \cup(B \cup C)=(A \cup B) \cup C. \\ \text { 4. } A \cap(B \cap C)=(A \cap B) \cap C .\end{array} \quad \quad  \right\}\) Associative laws
+
+\(\left.\begin{array}{l}\text { 5. } A \cap(B \boldsymbol{\color{blue}{\cup}} C)=(A \cap B) \boldsymbol{\color{blue}{\cup}} (A \cap C). \\ \text { 6. } A \cup(B \boldsymbol{\color{blue}{\cap}} C)=(A \cup B) \boldsymbol{\color{blue}{\cap}} (A \cup C) .\end{array} \right\}\) Distributive laws
+
+\( \begin{array}{l} \text{ 7. } \overline{\overline{A}}=A\end{array}. \)
+
+\(\left.\begin{array}{l} 
+	\text { 8. } \overline{ {\color{black}{A}} \cap {\color{black}{B}} }=\overline{\color{black}{A}} \cup \overline{\color{black}{B}}. \\ 
+	\text { 9. } \overline{ {\color{black}{A}} \cup {\color{black}{B}} }=\overline{\color{black}{A}} \cap \overline{\color{black}{B}}.\end{array} \qquad \qquad \qquad \quad \; \;\right\}\) De Morgan's Laws
+
+ \(	\text { 10. }\overline{\mathcal{S}}=\varnothing. \)
+
+ \(	\text { 11. }A \cap \mathcal{S}=A.\)
+
+ \(	\text { 12. }A \cap \varnothing=\varnothing.\)
+
+ \(	\text { 13. }A \cup \mathcal{S}= \mathcal{S}.\)
+
+ \(	\text { 14. }A \cup \varnothing=A.\)
+
+ \(	\text { 15. }A \cup \bar{A}= \mathcal{S}.\)
+
+ \(	\text { 16. }A \cap \bar{A}=\varnothing.\)
+
+\noindent
+Proof:
+
+1) Union is commutative.
+\[
+\begin{aligned}
+	A \cup B & \triangleq\{x \in \Omega: \quad x \in A \text { or } x \in B\} \\
+	&=\{x \in \Omega: \quad x \in B \text { or } x \in A\} \\
+	&=B \cup A.
+\end{aligned}
+\]
+
+\medskip
+
+2) Intersection is commutative.
+\[
+\begin{aligned}
+	A \cap B & \triangleq\{x \in \Omega: \quad x \in A \text { and } x \in B\} \\
+	&=\{x \in \Omega: \quad x \in B \text { and } x \in A\} \\
+	&=B \cap A.
+\end{aligned}
+\]
+
+\medskip
+
+3)  Union is associative.
+\[
+\begin{aligned}
+	A \cup(B \cup C) &\triangleq \{x \in \Omega: \qquad \quad x \in A \text { or } x \in(B \cup C)\} \\
+	&=\{x \in \Omega: \qquad \quad x \in A \text { or } x \in B \text { or } x \in C\} \\
+	&=\{x \in \Omega: \; x \in(A \cup B) \text {  or } x \in C)\} \\
+	&=(A \cup B) \cup C.
+\end{aligned}
+\]
+
+\medskip
+
+4) Intersection is associative.
+\[
+\begin{aligned}
+	A \cap(B \cap C) &\triangleq \{x \in \Omega: \qquad \quad x \in A \text { and } x \in(B \cap C)\} \\
+	&=\{x \in \Omega: \qquad \quad x \in A \text { and } x \in B \text { and } x \in C\} \\
+	&=\{x \in \Omega: \; x \in(A \cap B) \text{  and } x \in C)\} \\
+	&=(A \cap B) \cap C.
+\end{aligned}
+\]
+
+\medskip
+
+5) Intersection is distributive over union.
+
+Let \(x \in A \cap(B \cup C) \). Then, \(x \in A\) and \(x \in(B \cup C)\), 
+\[ \Rightarrow x \in A \text{ and at the same time, } x \in B \text{ or } x \in C \text{, possibly both}, \] \[\Rightarrow \text{ either } x \in A \text{ and } x \in B \text{, or } x \in A  \text{ and } x \in C \text{ (possibly both).} \]
+
+Hence, \[x \in(A \cap B) \text{ or } x \in(A \cap C),\]   
+
+i.e. \(x \in(A \cap B) \cup(A \cap C)\). So we have that \[
+\begin{aligned}
+x \in A \cap(B \cup C) & \Rightarrow x \in(A \cap B) \cup(A \cap C), \\
+&\Rightarrow A \cap(B \cup C) \subset(A \cap B) \cup(A \cap C).
+\end{aligned}\]   
+
+Next we assume that \(x \in(A \cap B) \cup(A \cap C) \). Then, \(x \in(A \cap B)\) or \(x \in(A \cap C)\), 
+\[ \begin{aligned} &\Rightarrow x \in A \text{ in addition to being in } B \text{ or } C \text{, or both,} \\
+	&\Rightarrow x \in A \cap(B \cup C). \end{aligned}\]    
+
+This gives us that \[\begin{aligned}
+x \in(A \cap B) \cup(A \cap C) &\Rightarrow x \in A \cap(B \cup C),\\
+&\Rightarrow (A \cap B) \cup(A \cap C) \subset A \cap(B \cup C).
+\end{aligned}\]    
+
+Combining the two results we have
+\[A \cap(B \cup C) \subset(A \cap B) \cup(A \cap C) \text{ and } (A \cap B) \cup(A \cap C) \subset A \cap(B \cup C) \]
+\[\Rightarrow A \cap(B \cup C)=(A \cap B) \cup(A \cap C).\]
+
+\medskip
+
+6)  Union is distributive over intersection.
+
+Let \(x \in A \cup(B \cap C) \). Then, \(x \in A\) or \(x \in(B \cap C)\), 
+\[ \Rightarrow \text{ either }  x \in A \text{, or } x \in B \text{ and } x \in C \text{, possibly both}. \]
+
+If \(x \in A\), we have \(x \in A \cup B \) and \(x \in A \cup C \) both satisfied. If \(x \in B \cap C\), we have \(x \in B \) and \(x \in C\). Then \(x \in A \cup B \) and \(x \in A \cup C \) both hold,
+\[ \Rightarrow \text{ either }  x \in A \text{ or } x \in B \text{ and at the same time, either } x \in A \text{ or } x \in C, \]
+\[\Rightarrow  x \in (A \cup B) \text{, and } x \in (A \cup C), \]
+ 
+i.e. \(x \in(A \cup B) \cap(A \cup C)\). So we have that \[
+\begin{aligned}
+x \in A \cup(B \cap C) & \Rightarrow x \in(A \cup B) \cap(A \cup C), \\
+&\Rightarrow A \cup(B \cap C) \subset(A \cup B) \cap(A \cup C).
+\end{aligned}\]   
+
+Next we assume that \(x \in(A \cup B) \cap(A \cup C) \). Then, \(x \in(A \cup B)\) and \(x \in(A \cup C)\). If \(x \in A\), \(x \in A \cup (B \cap C)\) holds. If \(x \notin A\), since \(x \in(A \cup B) \) and \(x \in(A \cup C) \), we have \(x \in B\) and \(x \in C\). It gives \(x \in(B \cap C)\), related on \(x \in A \cup (B \cap C)\).
+
+\[\begin{aligned}
+x \in(A \cup B) \cap(A \cup C) &\Rightarrow x \in A \cup(B \cap C),\\
+&\Rightarrow (A \cup B) \cap(A \cup C) \subset A \cup(B \cap C).
+\end{aligned}\]    
+
+Combining the two results we have
+\[A \cup(B \cap C) \subset(A \cup B) \cap(A \cup C) \text{ and } (A \cup B) \cap(A \cup C) \subset A \cup(B \cap C) \]
+\[\Rightarrow A \cup(B \cap C)=(A \cup B) \cap(A \cup C).\]
+
+\medskip
+
+7)
+\[\begin{aligned}
+\overline{\overline{A}} &=\{ x \in \Omega: \omega \notin  \overline{A}\} \\
+& = \{ x \in \Omega: \omega \in A\} \\
+& = A
+\end{aligned}
+\]
+
+\medskip
+
+8) De Morgan's Laws
+\[
+\begin{aligned}
+    x \in \overline{A \cap B} &\Leftrightarrow x \notin A \cap B, & & \text{ By definition of complement.}\\
+    &\Leftrightarrow x \in \overline{A} \text { or } x \in \overline{B}, & & \text{ By definition of intersection and complement.}\\
+    &\Leftrightarrow  x \in \overline{A} \cup \overline{B},  & & \text{ By definition of union.}\\ 
+    \overline{A \cap B} & = \overline{A} \cup \overline{B} .
+\end{aligned}
+\]
+
+\medskip
+
+9) De Morgan's Laws
+\[
+\begin{aligned}
+    x \in \overline{A \cup B} &\Leftrightarrow x \notin A \text{ and } x \notin B, & & \text{ By definition of union and complement.}\\
+    &\Leftrightarrow x \in \overline{A} \text { and } x \in \overline{B}, & & \text{ By definition of complement.}\\
+    &\Leftrightarrow  x \in \overline{A} \cap \overline{B}, & & \text{ By definition of intersection.} \\ 
+    \overline{A \cup B} & = \overline{A} \cap \overline{B}.
+\end{aligned}
+\]
+
+\medskip
+
+10)Here \(\mathcal{S}\) is the universal set. Based on the definition,
+\[
+\overline{\mathcal{S}} =\{ \omega \in \Omega ( \Omega= \mathcal{S}): \omega \notin  \mathcal{S} \}.
+\]
+The complement of the set \(\mathcal{S}\) is the difference between the universal set \(\mathcal{S}\) and set \(\mathcal{S}\) itself. Obviously, no element satisfies this statement. The set containing no elements is empty set. Hence, \(\overline{\mathcal{S}} = \varnothing\).
+
+\medskip
+
+11)
+Here \(\mathcal{S}\) is the universal set.
+First we show that \(A \cap  \mathcal{S} \subset A\). In general, the set resulting from the intersection of two sets is a subset of both of the sets. Let \(x \in A \cap  B\), \(x\) is an element of \(A \cap  B\).
+\[\begin{aligned} 
+ x \in A \cap  B & \Rightarrow x \in A \text{ and } x \in B, \qquad \text{ By definition of intersection.}\\
+ & \Rightarrow x \in A, \\
+ & \Rightarrow  A \cap B \subset A.
+\end{aligned}\]
+Next, we want to show that \( A \subset A \cap  \mathcal{S} \).
+Let \(x \in A\), then \(x \in  \mathcal{S}\) such that \(x \in A \). Therefore, \(x \in A \Rightarrow x \in(A \cap \mathcal{S}) \Rightarrow A \subset A \cap  \mathcal{S} \).
+Since \(A \cap \mathcal{S} \subset \mathrm{A}\) and \(\mathrm{A} \subset \mathrm{A} \cap \mathcal{S},\) we have that \(\mathrm{A} \cap \mathcal{S}=\mathrm{A}\).
+
+\medskip
+
+12) First we show that \(A \cap  \varnothing \subset \varnothing\). We have shown in 11) that the set resulting from the intersection of two sets is a subset of both of the sets. Hence, \(A \cap  \varnothing \subset \varnothing\) holds.
+
+Next, we want to show that \( \varnothing \subset A \cap  \varnothing \). Since every set contains the set itself and the empty set, the \( \varnothing \) is subset of a set resulting from \(A \cap  \varnothing \), i.e., \( \varnothing \subset A \cap  \varnothing \).
+
+Since \(A \cap  \varnothing \subset \varnothing\) and \( \varnothing \subset A \cap  \varnothing \), we have \( A \cap  \varnothing = \varnothing \).
+
+\medskip
+
+
+13)
+Here \(\mathcal{S}\) is the universal set.
+First we show that \(\mathcal{S} \subset A \cup  \mathcal{S}\). In general, both of the sets are subsets of the set resulting from the union of two sets. Let \(x \in B \), \(x\) is an element of \(B \).
+\[\begin{aligned} 
+ x \in B & \Rightarrow x \in A \text{ or } x \in B, \\
+ & \Rightarrow x \in A \cup B, \qquad \quad \text{ By definition of union.}\\
+ & \Rightarrow B \subset A \cup B.
+\end{aligned}\]
+
+Next, we want to show that \( A \cup  \mathcal{S} \subset \mathcal{S} \).
+Let \(x \in A \cup  \mathcal{S}\), then \(x \in  \mathcal{S}\) such that \(x \in A \text{ or } x \in \mathcal{S} \). 
+\[\begin{aligned} 
+ x \in A \cup  \mathcal{S} & \Rightarrow x \in A \text{ or } x \in \mathcal{S}, & & \text{ By definition of union.}\\
+ & \Rightarrow x \in \mathcal{S},  & & \text{ By the case that } A \text{ is subset of } \mathcal{S}.\\
+ & \Rightarrow A \cup  \mathcal{S} \subset \mathcal{S}.
+\end{aligned}\]
+
+Since \(\mathcal{S} \subset \mathrm{A} \cup \mathcal{S}\) and \(A \cup \mathcal{S} \subset \mathcal{S}\), we have that \(\mathrm{A} \cup \mathcal{S}=\mathcal{S}\).
+
+\medskip
+
+14)
+First we show that \(A \subset A \cup \varnothing\). We have shown in 13) that both of the sets are subsets of the set resulting from the union of two sets. Hence, \(A \subset A \cup \varnothing\) holds.
+
+Next, we want to show that \( A \cup \varnothing \subset A \). Let \( x \in A \cup \varnothing\), we have \( x \in A\) or \( x \in \varnothing\). Since no element exists in empty set, \( x \in \varnothing\) is logically false. Hence, only \( x \in A\) holds. It results in \( x \in A \cup \varnothing \Rightarrow x \in A\).
+
+Since \(A \subset A \cup \varnothing\) and \( A \cup \varnothing \subset A \), we have \( A \cup  \varnothing = A \).
+
+\medskip
+
+15)
+First we show that \(A \cup \overline{A} \subset \mathcal{S}\). We have shown in 13) that both of the sets are subsets of the set resulting from the union of two sets. Hence, \(A \subset A \cup \overline{A} \Rightarrow A \subset \mathcal{S}\), and \(\overline{A} \subset A \cup \overline{A} \Rightarrow \overline{A} \subset \mathcal{S}\). Let \(x \in A \cup \overline{A} \), \(x \in A\) or \( x \in \overline{A} \), we all have \(x \in \mathcal{S}\). \(A \cup \overline{A} \subset \mathcal{S}\) holds.
+
+Next, let \(x \in \mathcal{S}\), for the statements \(x\) is an element of \(A\), and \(x\) is not an element of \(A\), only one statement is true. Hence, either \(x \in A\) is true or \(x \notin A\) is true, i.e., 
+\(x \in \mathcal{S} \Rightarrow x \in A  \text{ or } x \notin A\). Hence, \(\mathcal{S} \subset A \cup \overline{A} \).
+
+Since \(A \cup \overline{A} \subset \mathcal{S}\) and \(\mathcal{S} \subset A \cup \overline{A} \), we have \( A \cup \overline{A} = \mathcal{S} \).
+
+\medskip
+
+16)
+First we show that \(A \cap  \overline{A} \subset \varnothing\). Let \(x \in A \cap  \overline{A}\),
+\[\begin{aligned}
+x \in A \cap  \overline{A} & \Rightarrow x \in A \text{ and } x \in  \overline{A} \\
+& \Rightarrow x \in A \text{ and } x \notin A \\
+& \Rightarrow \text{no element satisfies both statement. }
+\end{aligned}\]
+Since no element exists in empty set, such statement result in a set contain no element, i.e., \(A \cap  \overline{A} \subset \varnothing\) holds.
+
+Next, we want to show that \( \varnothing \subset A \cap  \overline{A} \). Since every set contains the set itself and the empty set, the \( \varnothing \) is subset of a set resulting from \(A \cap  \overline{A} \), i.e., \( \varnothing \subset A \cap  \overline{A} \).
+
+Since \(A \cap  \overline{A} \subset \varnothing\) and \( \varnothing \subset A \cap \overline{A} \), we have \( A \cap  \overline{A} = \varnothing \).
+\bigskip
+
+\noindent
+[Ref]: 
+
+R. G. Bartle, D. R. Sherbert, ``Sets and Functions" in ``Introduction to Real Analysis", 3rd Edition, John Wiley and Sons, Inc. 2000. ch 1, pp 3.
+
+W. Rudin, ``Basic Topology" in ``Principles of Mathematical Analysis", 3rd Edition, McGraw-Hill Inc. ch 2, pp 28.
+
+
+
+\end{document}
