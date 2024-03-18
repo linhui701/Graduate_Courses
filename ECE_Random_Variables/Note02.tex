@@ -1,0 +1,578 @@
+\documentclass[12pt,thmsa]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts} % for \mathbb
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{cancel}
+\usepackage{color}    % color
+\usepackage{geometry}
+\usepackage{amssymb}  % \varnothing
+\usepackage{enumitem} % enumerate
+\usepackage{textcase} % \MakeTextUppercase
+\usepackage{float}    % Force figure placement in text with [H]
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+
+% Linhui added for newly defined color
+\definecolor{forestgreen}{RGB}{34,139,34}
+
+
+% Linhui added for Expectation and Variance
+\newcommand{\Exp}{{\mathbb E}\! }
+\newcommand{\Var}{\mbox{Var}\! }
+
+% Linhui added for rename the command for empty set.
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+%------------------------------------------------------%
+\makeatletter
+\def\maketitle{%
+	\par
+	\hrule height 1.5pt\vspace{1ex}
+	\par\noindent
+	
+	\begin{minipage}{0.5\textwidth}
+		\scshape
+		Purdue University $\cdot$ ece 60000 \\[1ex]
+		Random Variables and Signals \\
+		Prof. Bell, Prof. Salama
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\MakeTextUppercase{{\@title}}\\[0.3ex] % 0.2ex height space between two line
+		\textit{\@author}\\[0.2ex]
+		\textit{September 30, 2021}
+	\end{minipage}
+	\par\vspace{1ex}
+	\hrule height 1.5pt\vspace{1ex}
+	\par
+}
+\makeatother
+
+\author{Linhui Xie}
+\title{Lecture Note 2}
+%------------------------------------------------------%
+
+\begin{document}
+\maketitle
+
+\setcounter{section}{1}
+\section{Lecture 2\medskip}
+
+\setcounter{section}{2}
+%------------------------------------------------------%
+\subsection{Fundamental Set Operations}  % 2.1
+
+[Recall] There are 3 fundamental set operations:
+\begin{itemize}
+	\item Union: \(
+	A \cup B =\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { or }}} \omega \in B\}.
+	\)
+	\item Intersection: \(
+	A \cap B=\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A {\color{blue}{\text { and }}} \omega \in B\}.
+	\)
+	\item Complement: \(
+	\overline{A}=A^c=\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \notin  A\}.
+	\)
+\end{itemize}
+
+\noindent
+There are 2 other ``set difference operations'' that are sometimes used:
+\begin{itemize}
+	\item \(A - B = \{{\color{forestgreen}{\omega}} \in A: \omega \notin B\} \)
+	\item \(B - A = \{{\color{forestgreen}{\omega}} \in B: \omega \notin A\} \)
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Index sets \(\mathcal{I}\)} % 2.2
+[Recall]
+\begin{itemize}
+	\item   Indexed collections of sets \( \{A_{i} ; i \in \mathcal{I}\} \), where \(\mathcal{I} \) is an index set.
+	\item   So \( \{A_{i} ; i \in \mathcal{I}\} \) is a ``set of sets", or a \underline{family of sets}, or a \underline{collection of sets}.
+	\item  There is one and only one set \( A_{i} \), for each \( i \in \mathcal{I} \).
+
+	Typical Index sets:
+	\[\begin{array}{l} 
+		\mathbb{N}=\{1,2,3, \ldots\}=\text { natural numbers }, \\ 
+		\mathbb{Z}=\{\ldots-1,0,1,2, \ldots\}=\text { integers }, \\ 
+		\mathbb{Z}_{+}=\{0,1,2, \ldots\}=\text { non-negative integers }, \\
+		\mathbb{R}=(-\infty, \infty), \\
+		\mathbb{I}_{n}=\{0,1,2, \ldots, n-1\}.
+	\end{array}\]
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Cardinality of Sets} % 2.3
+
+\begin{itemize}
+	\item A set is \underline{finite} if it has a finite number of elements.
+	
+	(i.e., its elements can be put in one-to-one correspondence with the numbers $1, 2, \ldots, n$ for some natural number $n$.)
+	
+	\item A set is \underline{infinite} if it is not finite.
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Countable and Uncountable Sets} % 2.4
+Infinite sets come in two varieties: \textit{countable} and \textit{uncountable}.
+
+\begin{itemize}
+	\item An infinite set is \underline{countable} if its elements can be put in one-to-one correspondence with the natural (counting) numbers \(\mathbb{N} = \{1, 2, 3, \ldots\}\).
+	
+	\item An infinite set is \underline{uncountable} if it is not countable.
+	
+	\item The following are examples of uncountable sets:
+	\begin{itemize}
+		\item \(\mathbb{R} = (-\infty, \infty)\)
+		\item \([0, 1]\) and \((0, 1)\)
+		\item \([a, b]\), \([a, b)\), \((a, b]\), \((a, b)\) for \(a, b \in \mathbb{R}\) such that \(a < b\).
+	\end{itemize}
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Collectively Exhaustive and Disjoint Families} % 2.5
+
+\begin{itemize}
+	\item Given an indexed family of sets $\{A_i; i \in I\}$, the union of the sets in the family is
+	\[ 
+	{\color{blue}{\bigcup_{i \in I}}} A_{i} \triangleq\left\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A_{i} \text { for } {\color{blue}{ \text{at least}}} \text{ one } i \in \mathcal{I} \right\}.
+	\]
+	\item The intersection of the sets in the family is
+	\[
+	{\color{blue}{\bigcap_{i \in I}}} A_{i} \triangleq\left\{ {\color{forestgreen}{\omega \in \Omega}}: \omega \in A_{i} \text { for } {\color{blue}{ \text{all } }} i \in \mathcal{I} \right\}.
+	\]
+
+	\item If $G \subseteq \Omega$ and $\{A_i; i \in \mathcal{I}\}$ is a family of sets, then if
+	\[
+	\bigcup_{i \in \mathcal{I}} A_i = G
+	\]
+	we say that $\{A_i; i \in \mathcal{I}\}$ is \underline{collectively exhaustive} over $G$.
+	
+	\item A family of sets $\{A_i; i \in \mathcal{I}\}$ is \underline{disjoint} if
+	\[
+	A_i \cap A_j = \emptyset, \forall i, j \in \mathcal{I} \text{ such that } i \neq j.
+	\]
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Partitioned Sets} % 2.6
+
+\begin{itemize}	
+	\item A family of sets \(\{A_i; i \in \mathcal{I}\}\) is a \underline{partition} of \(\Omega\) if it is disjoint and collectively exhaustive over \(\Omega\), meaning:
+	\begin{itemize}
+		\item \textit{Disjointness:} \(A_i \cap A_j = \emptyset\) for all \(i \neq j\).
+		\item \textit{Collectively exhaustive:} \(\bigcup_{i \in I} A_i =\Omega \), every element of \(\Omega\) is in at least one \(A_i\).
+	\end{itemize}
+	
+	\item Let \(\{A_i; i \in \mathcal{I}\}\) be a partition of \(\Omega\). Define \(B_i \triangleq A_i \cap G\) for some \(G \subseteq \Omega\) and for all \(i \in \mathcal{I}\). Show that, \(\{B_i; i \in \mathcal{I}\}\) is a partition of \(G\).
+	
+	Need to prove,
+	\begin{enumerate}
+		\item The family of sets  \(\{B_i; i \in \mathcal{I}\}\) are disjoint.
+		
+		Assume \(B_i\) and \(B_j\) are not disjoint for some \(i \neq j\), meaning there exists an element \(x\) such that \(x \in B_i\) and \(x \in B_j\). By definition, \(x \in A_i \cap G\) and \(x \in A_j \cap G\), implying \(x \in A_i\) and \(x \in A_j\), which contradicts the assumption that \(\{A_i\}\) are disjoint. Therefore,\(\{B_i; i \in \mathcal{I}\}\) is disjoint.
+		
+		\item The union of all \(\{B_i; i \in \mathcal{I}\}\) is \(G\).
+		
+		Since \(B_i = A_i \cap G\), then \(\bigcup_{i \in \mathcal{I}} B_i = \bigcup_{i \in \mathcal{I}} (A_i \cap G)\). Given \(\bigcup_{i \in \mathcal{I}} A_i = \Omega\) and \(G \subseteq \Omega\), it follows that \(\bigcup_{i \in \mathcal{I}} (A_i \cap G) = G = \bigcup_{i \in \mathcal{I}} B_i\).
+		
+		Combine 1 and 2, \(\{B_i; i \in \mathcal{I}\}\) forms a partition of \(G\).
+	\end{enumerate}
+
+\end{itemize}
+
+
+%------------------------------------------------------%
+\subsection{Probability Spaces \((\Omega, \mathcal{F}, P)\) } % 2.7
+
+A \underline{probability space} \((\Omega, \mathcal{F}, P)\) is a triple consisting of:
+\begin{itemize}
+	\item A sample space \(\Omega\) (or hand written notation \(\mathcal{S}\) in this course).
+	\item A collection of events (subsets of \(\Omega\)) \(\mathcal{F}(\Omega)\).
+	\item The probabilities \(P(A)\) for each \(A \in \mathcal{F}( \Omega )\),
+			\[ P:  \mathcal{F}(\Omega) \rightarrow [ 0,1 ].
+			\]
+%	The probabilities \(P(A)\) satisfying the axioms of probability:
+%	\begin{enumerate}
+%		\item \(P(A) \geq 0\) for all \(A \in \mathcal{F}\).
+%		\item \(P(\Omega) = 1\).
+%		\item If \(A_1, A_2, \ldots\) are disjoint events in \(\mathcal{F}\), then \(P(\bigcup_{i} A_i) = \sum_{i} P(A_i)\).
+%	\end{enumerate}
+
+	For example, consider the random experiment of flipping a fair coin. The probability space for this experiment:
+	\begin{itemize}
+		\item \(\Omega = \{\text{``Heads"}, \text{``Tails"}\}\),
+		\item \(\mathcal{F} = \{\emptyset, \{\text{``Heads"}\}, \{\text{``Tails"}\}, \Omega\}\),
+		\item \(P(\{\text{``Heads"}\}) = 0.5\), \(P(\{\text{``Tails"}\}) = 0.5\), \(P(\Omega) = 1\), and \(P(\emptyset) = 0\).
+	\end{itemize}
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{The Sample Space \(\Omega\)} % 2.8
+
+\begin{itemize}
+	\item The \underline{sample space} \(\Omega\) of a random experiment is a non-empty set of possible outcomes of the random experiment.
+
+	\fbox{\parbox{0.9\textwidth}{
+			One and only one outcome from the sample space \(\Omega\) occurs when we perform a random experiment.
+	}}
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{The Event Space \( \mathcal{F}(\Omega) \)} % 2.9
+The \underline{event space} \( \mathcal{F}(\Omega) \) is a non-empty collection of subsets of \(\Omega\) satisfying the following closure properties:
+
+\begin{enumerate}
+	\item If \( A \in \mathcal{F}(\Omega) \), then \( \overline{A} \in \mathcal{F}(\Omega) \).
+	\item For any finite \( n \), if \( A_i \in \mathcal{F}(\Omega) \) for \( i = 1, 2, \ldots, n \), then \( \bigcup_{i=1}^{n} A_i \in \mathcal{F}(\Omega) \).
+	\item If \( A_i \in \mathcal{F}(\Omega) \) for \( i = 1, 2, 3, \ldots \), then \( \bigcup_{i=1}^{\infty} A_i \in \mathcal{F}(\Omega) \).
+\end{enumerate}
+
+A set of subsets of \(\Omega\) satisfying these three properties is called a \underline{\( \sigma \)-field} (\(\mathcal{F}_{\sigma}\)). 
+
+\textit{Note: If only 1 and 2 hold, we have a \underline{field} of sets.}
+
+%------------------------------------------------------%
+\subsection{Intersections in the Event Space \( \mathcal{F}(\Omega) \)} %2.10
+\begin{itemize}
+	\item Suppose \( A, B \in \mathcal{F}(\Omega) \), is \( A \cap B \in \mathcal{F}(\Omega) \)?
+	
+	Short answer, by the closure property 1, closed under complements:
+	\[ \overline{A}, \overline{B} \in \mathcal{F}(\Omega). \]
+	
+	Using the closure property 2, closed under unions:
+	\[ \overline{A} \cup \overline{B} \in \mathcal{F}(\Omega). \]
+	
+	Applying De Morgan's laws:
+	\[ A \cap B  = \overline{\overline{A \cap B}} = \overline{\overline{A} \cup \overline{B}}. \]
+	
+	Since the event space is closed under complements, it follows that:
+	\[ \overline{\overline{A} \cup \overline{B}} \in \mathcal{F}(\Omega), \]
+	thus proving \( A \cap B \in \mathcal{F}(\Omega) \).
+	
+	\item It follows from the closure properties that \( \emptyset, \Omega \in \mathcal{F}(\Omega) \).
+	
+	Proof:
+	
+	Suppose \( A \in \mathcal{F}(\Omega) \) (non-empty), by closure property 1, closed under complements,
+	\[ \overline{A} \in \mathcal{F}(\Omega). \]
+	
+	Furthermore, by closure property 2, closed under unions,
+	\[ \Omega = A \cup \overline{A} \in \mathcal{F}(\Omega). \]
+	
+	By closure property 1 again, closed under complements,
+	\[ \Rightarrow \emptyset = \overline{\Omega} \in \mathcal{F}(\Omega) \] 
+	
+	Hence, \( \emptyset, \Omega \in \mathcal{F}(\Omega) \).
+\end{itemize}
+
+
+%------------------------------------------------------%
+\subsection{Examples}
+1. Show that the power set of any set \(\Omega,\) is a \(\sigma\)-field (\(\mathcal{F}_{\sigma}\)).
+
+Note: the power set of \(\Omega\), is the set contains all subsets of \(\Omega\) including \(\Omega\) and \(\emptyset\).
+
+\noindent
+Short answer,
+
+Let \(\rho(\Omega)\) be the power set of \(\Omega\), then
+\begin{enumerate}[label=\roman*)] % i), ii), iii), ...
+	\item \(\Omega \in \rho(\Omega)\), it's non-empty. \\
+	(By definition, the power set contains all subsets of \(\Omega\) including \(\Omega\).)
+	
+	\item \textbf{For any} \(A \in \rho(\Omega), \quad \overline{A} \in \rho(\Omega)\). \\
+	(as \(\rho(\Omega)\) contains all subsets of \(\Omega\).)
+	\item \textbf{For any} \(A_{1}, A_{2}, A_{3}, \cdots \in \rho(\Omega)\), \(\begin{aligned}\bigcup_{n=1}^{\infty} A_{n}\end{aligned}\) is also a subset of \(\Omega\). Hence, \(\begin{aligned}\bigcup_{n=1}^{\infty} A_{n}\end{aligned} \in \rho(\Omega)\).
+\end{enumerate}
+
+Thus, \(\rho(\Omega)\) is a \(\sigma\)-field.
+
+\medskip
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+\noindent
+2. Let \(A\) and \(B\) be a two \(\sigma\)-fields of subsets of \(\Omega\). Show that \(A \cap B\) is also a \(\sigma\)-fields of
+subsets of \(\Omega\).
+
+\noindent
+Short answer,
+
+Need to verify that the intersection of \(A\) and \(B\) satisfies the three properties:
+\begin{enumerate}[label=\roman*)] % i), ii), iii)
+	\item The sample space \(\Omega\) is in the intersection.
+	\item The intersection is closed under complements.
+	\item The intersection is closed under countable unions.
+\end{enumerate}
+
+Given A is \(\sigma\)-field of \textbf{subsets of} \(\Omega\), and B is \(\sigma\)-field of \textbf{subsets of} \(\Omega\).
+
+Let \(D=A \cap B\), then,
+\begin{enumerate}[label=\roman*)] % i), ii), iii), ...
+	\item A is \(\sigma\)-field of \textbf{subsets of} \(\Omega\), and B is \(\sigma\)-field of \textbf{subsets of} \(\Omega\). \\
+	\(\Rightarrow \Omega \in A\) and \(\Omega \in B\), \\
+	\(\Rightarrow \Omega \in A \cap B,\) \\
+	\(\Rightarrow \Omega \in D.\)
+	\item \textbf{For any} \(G \in D\), \(G\) is also in \(A\) (\(G \in A\)) \& in \(B\) (\(G \in B\)). A is \(\sigma\)-field, and B is \(\sigma\)-field. Thus, \(\overline{G} \in A\) and \(\overline{G} \in B,\) \\
+	\(\Rightarrow \overline{G} \in A \cap B,\) \\
+	\(\Rightarrow \overline{G} \in D.\)
+	\item \textbf{For any} \(G_{1}, G_{2}, G_{3}, \cdots \in D\), \(G_{1}, G_{2}, \cdots\) in \(A\) and \(G_{1}, G_{2}, \ldots\) in \(B\). A is \(\sigma\)-field, and B is \(\sigma\)-field. \\
+	\(\Rightarrow \begin{aligned}\bigcup_{n=1}^{\infty} G_{n} \in A\end{aligned}\) and \(\begin{aligned}\bigcup_{n=1}^{\infty} G_{n} \in B\end{aligned},\) \\
+	\(\Rightarrow  \begin{aligned}\bigcup_{n=1}^{\infty} G_{n} \in A \cap B\end{aligned},\) \\
+	\(\Rightarrow \begin{aligned}\bigcup_{n=1}^{\infty} G_{n} \in D\end{aligned}.\)
+\end{enumerate}
+
+Thus, \(A \cap B\) is also a \(\sigma\)-field of \textbf{subsets of} \(\Omega\).
+
+\medskip
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+\noindent
+3. Let \(B\) be a \(\sigma\)-field of subsets of the real line \(\mathbb{R}\). \(B\) is generated by intervals of the form (a,b) where \(a<b, -\infty<a<\infty, -\infty<b<\infty\), that is, \(B=\sigma\)(all finite open intervals). Show that
+\begin{enumerate}[label=\alph*)] % a), b), c), ...
+	\item \(B\) contains all sets of the form \((-\infty, a)\)
+	
+	\item \(B\) contains all sets of the form \((-\infty, a]\)
+\end{enumerate}
+
+\noindent
+Short answer,
+
+a)
+
+Because \(B=\sigma\)(all finite open intervals), \textbf{for any} positive integer \(n\), \((a-n, a)\) is a subset of \(B\).
+\[
+(a-n, a) \in B
+\]
+
+Because \(B\) is \(\sigma\)-field of real line, for \(\sigma\)-field property iii)
+\[
+\begin{aligned}
+	& \bigcup_{n=1}^{\infty}(a-n, a)& &\in B \\
+	\Rightarrow &\quad (-\infty, a)& &\in B .
+\end{aligned}
+\]
+
+b)
+
+Given \(B=\sigma\)(all finite open intervals),
+
+we set \(G_{n}\), for any positive integer \(n\),the open interval \(\left(-\infty, a+\frac{1}{n}\right)\) is a subset of \(B\).
+
+we set \(H_{m}\), for any positive integer \(m\),the open interval \(\left(-\infty, a+\frac{1}{m}\right)\) is a subset of \(B\).
+
+\(\overline{G}, \overline{H} \in B\) [ by ii) ], \(\overline{G} \cup \overline{H} \in B\) [ by iii) ], \( \overline{\overline{G} \cup \overline{H}} \in B\) [ by ii) ].
+
+\[\Rightarrow \quad G \cap H \in B, \quad \text{for countable intersections.} \]
+
+\[
+\bigcap_{n=1}^{\infty} G_{n}
+=\overline{\overline{\bigcap_{n=1}^{\infty} G_{n}}}
+=\overline{\bigcup_{n=1}^{\infty} \overline{{G}}_{n}} \in B
+\]
+
+\[
+\text { that is, } \sum_{n=1}^{\infty} \left(-\infty, a+\frac{1}{n}\right) \in B
+\]
+
+\[
+\Rightarrow \quad(-\infty, a] \in B
+\]
+
+\medskip
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+
+\noindent
+4. A class \(A\) of subsets of \(\Omega\) is said to be monotone if the limit of any monotone increasing/decreasing sequence of sets in \(A\) is also in \(A\). Show that a \(\sigma\)-field is monotone.
+
+\noindent
+Short answer,
+
+Let \(A\) be a monotone \textbf{class} of \textbf{subsets of} \(\Omega\). 
+
+i.e. for any \textbf{M}onotone \textbf{I}ncreasing \textbf{S}ubsets (MIS) of events,
+\[
+B_{n} \uparrow B, \quad B \in A.
+\]
+
+Similarly, for any \textbf{M}onotone \textbf{D}ecreasing \textbf{S}ubsets (MDS) of events,
+\[
+D_{n} \downarrow D, \quad D \in A.
+\]
+
+\(\Longrightarrow\)
+
+Let \(\mathcal{F}\) be any \(\sigma\)-field of \textbf{subsets of} \(\Omega\). Suppose \(B_{1} \subset B_{2} \subset \cdots\) is an MIS sequence of events in \(\mathcal{F}\). Becanse \(\mathcal{F}\) is a \(\sigma\)-field, then
+\[
+\bigcup_{n=1}^{\infty} B_{n} \in \mathcal{F} \quad \Rightarrow \quad \lim _{n \rightarrow \infty} B_{n} \in \mathcal{F}.
+\]
+
+Similarly, for any MDS sequence of events in \(\mathcal{F}\), \(D_{1} \supset D_{2} \supset \dots\)
+\[
+\bigcap_{n=1}^{\infty} D_{n} \in \mathcal{F} \quad \Rightarrow \quad \lim _{n \rightarrow \infty} D_{n} \in \mathcal{F}.
+\]
+
+Because \(\mathcal{F}\) is a \(\sigma\)-field,
+\[\Rightarrow \mathcal{F} \text{ is monotone.}\]
+
+\(\Longleftarrow\) conversely,
+
+Suppose \(G\) is a \textbf{field} of \textbf{subsets of} \(\Omega\) that
+is monotone, we can show that \(G\) is a \(\sigma\)-field.
+
+\begin{enumerate}[label=\roman*)] % i), ii), iii), ...
+	\item Becanse \(G\) is a \textbf{field}, \\
+	\(\Rightarrow \Omega \in G\).
+	
+	\item Becanse \(G\) is a \textbf{field}, \textbf{for any} \(A \in G, \quad \overline{A} \in G\)
+	
+	\item Now consider any arbitary sequence of events \(A_{1}, A_{2}, A_{3}, \cdots\), We need to show that \(\begin{aligned}\bigcup_{n=1}^{\infty} A_{n} \in G\end{aligned}\). Define a new sequence of events,
+	\[
+	\begin{aligned}
+		B_{1} &=A_{1} \quad &\in G \\
+		B_{2} &=A_{1} \cup A_{2} \quad &\in G \\
+		\vdots & & \\
+		B_{n} &= \bigcup_{j=1}^{n} A_{j} \quad &\in G \\
+	\end{aligned}
+	\]
+\end{enumerate}
+
+Any finite union is in the \textbf{field} \(G\)(field Definition). We know \(B_{1} \subset B_{2} \subset B_{3} \subset \cdots\), \(\begin{aligned}\bigcup_{j=1}^{n} B_{j} \in G \end{aligned}\).
+\[
+\text { i.e. this is an \textbf{M}onotone \textbf{I}ncreasing \textbf{S}ubsets (MIS) of events.}
+\]
+
+Because \(G\) is monotone, by the definition, the limit of any monotone increasing/decreasing sequence of sets in \(G\) is also in \(G\). That is, \[\lim_{n \rightarrow \infty} \bigcup_{j=1}^{n} B_{j} \in G.\]
+
+The monotone limits of sequence is still in \(G\). Give that \(\begin{aligned}\lim_{n \rightarrow \infty} \bigcup_{j=1}^{n} B_{j}=\bigcup_{n=1}^{\infty} A_{n}\end{aligned}\),
+\[
+\Rightarrow \quad \bigcup_{n=1}^{\infty} A_{n} \in G.
+\]
+
+Combine (i), (ii) and (iii), \(G\) is a \(\sigma\)-field.
+
+
+\medskip
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+\noindent
+{\bf 5.} Suppose \((\Omega, \mathcal{F}, P)\) is a probability space with \(B \in \mathcal{F}\) such that \(P(B)>0 \). Define a new set function \(Q: \mathcal{F} \rightarrow[0,1]\) by \(Q(A)=P(A \mid B)\) for any \(A \in \mathcal{F} \). Show that
+\begin{enumerate}[label=\alph*)] % a), b), c), ...
+	\item \((\Omega, \mathcal{F}, Q)\) is a probability space.
+	
+	\item If \(C \in \mathcal{F}\) such that \(Q(C)>0\), show that \(Q(A \mid C)=P(A \mid B \cap C)\).
+\end{enumerate}
+
+For any \(A \in \mathcal{F}\),
+\[
+Q(A)=P(A \mid B)=\frac{P(A \cap B)}{P(A)}
+\]
+
+\noindent
+Short answer,
+
+a)
+
+To show \((\Omega, \mathcal{F}, Q)\) is probability space, we need to show,
+
+\begin{enumerate}% 1., 2., 3., ...
+	\item \(Q(A) \geqslant 0\). \\
+	We know that \(\begin{aligned} Q(A)=\frac{P(A \cap B)}{P(A)} = \frac{P(A \cap B) \geqslant 0}{P(A) > 0} \end{aligned}\). Thus, \( Q(A) \geqslant 0\)
+	
+	
+	\item \(Q(\Omega)=1\). \\
+	\[Q(\Omega)=P(\Omega \mid B)=\frac{P(\Omega \cap B)}{P(B)}=\frac{P(B)}{P(B)}=1.\]
+	
+	\item For any disjoint sets \( \begin{aligned} A_{1} A_{2}, A_{3} \cdots, Q\left(\bigcup_{n=1}^{\infty} A_{n}\right) \equiv \sum_{n=1}^{\infty} Q\left(A_{n}\right) \end{aligned}\).
+	\[ \begin{aligned}
+		Q\left(\bigcup_{n=1}^{\infty} A_{n}\right) &= P\left(\bigcup_{n=1}^{\infty} A_{n} \mid B\right) \\
+		&=P\left(\left(\bigcup_{n=1}^{\infty} A_{n}\right) \cap B\right) / P(B) \quad (A_{n} \text{ are disjointed.}) \\
+		&= \sum_{n=1}^{\infty} \frac{P\left(A_{n} \cap B\right)}{P(B)} \\
+		&= \sum_{n=1}^{\infty} Q\left(A_{n}\right).
+	\end{aligned}
+	\]
+\end{enumerate}
+
+Thus, \((\Omega, \mathcal{F}, Q)\) is a probability space.
+
+b)
+
+For any C, set \(Q(C)>0\).
+\[
+Q(A \mid C)=\frac{Q(A \cap C) / P(B)}{Q(C)/ P(B)}=\frac{P(A \cap C \mid B) P(B)}{P(C \mid B) P(B)} = \frac{P(A \cap C \cap B)}{P(C \cap B) } = P(A \mid B \cap C).
+\]
+
+\medskip
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+
+\noindent
+6. Prove the Continuity Theorem.
+
+\noindent
+Short answer,
+
+\begin{enumerate}[label=\roman*)] % i), ii), iii), ...
+	\item Check \textbf{M}onotone \textbf{i}ncreasing \textbf{s}equence of events. \\
+	If \(A_{1} \subset A_{2} \subset A_{3} \subset \cdots\) s.t. \(A_{n} \uparrow A\), We need to show \(P(A)=\lim _{n \rightarrow \infty} P\left(A_{n}\right)\). Because \(A=\bigcup_{n=1}^{\infty} A_{n}\), We define \(B_{1}=A_{1}, \quad B_{2}=A_{2} \backslash A_{1}, \quad B_{3}=A_{3} \backslash A_{2}, \cdots,\)
+	\[
+	\begin{aligned}
+		&\Rightarrow A & &= \bigcup_{n=1}^{\infty} B_{n}, \\
+		&\Rightarrow P(A) & &=P\left(\bigcup_{n=1}^{\infty} B_{n}\right)=\sum_{n=1}^{\infty} P\left(B_{n}\right). \quad (B_{n}\text{'s are disjoint.) }
+	\end{aligned}
+	\]
+	Because \(\quad B_{n}=A_{n} \backslash A_{n-1} \quad \) and \( \quad A_{n-1} \backslash A_{n}\).
+	\[
+	\begin{aligned}
+		&\Rightarrow P\left(B_{n}\right) && = P\left(A_{n}\right)- P\left(A_{n-1}\right) \\
+		&\Rightarrow \sum_{i=1}^{\infty} P\left(B_{n}\right)&& =\lim _{n \rightarrow \infty} P\left(A_{n}\right)-P\left(A_{0}\right)
+	\end{aligned}
+	\]
+	Assume \(A_{0}=\emptyset\), \[\quad P(A)=\lim _{n \rightarrow \infty} P\left(A_{n}\right).\]
+	\item Check \textbf{M}onotone \textbf{d}ecreasing \textbf{s}equence of events. \\
+	Suppose \(D_{1} \supset D_{2} \supset D_{3} \cdots\), \(\begin{aligned} D=\bigcap_{n=1}^{\infty} D_{n} , \quad D_{n} \downarrow D \end{aligned}\).
+	\[\begin{aligned}
+		&\Rightarrow  \quad  D_{n}^{C}& & \uparrow & & D^{C}, \\
+		&\Rightarrow \quad P\left(D^{C}\right)& & = & & \lim _{n \rightarrow \infty} P\left(D_{n}^{C}\right), \\
+		&\Rightarrow \quad 1-P(D) & &= & &\lim _{n \rightarrow \infty}\left[1-P\left(D_{n}\right)\right], \\
+		& \Rightarrow \quad P(D) & &= & &\lim _{n \rightarrow \infty} P\left(D_{n}\right).
+	\end{aligned}
+	\]
+\end{enumerate}
+
+
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+
+\noindent
+[Ref]: 
+
+R. G. Bartle, D. R. Sherbert, ``Sets and Functions" in ``Introduction to Real Analysis", 3rd Edition, John Wiley and Sons, Inc. 2000. ch 1, pp 3.
+
+W. Rudin, ``Basic Topology" in ``Principles of Mathematical Analysis", 3rd Edition, McGraw-Hill Inc. ch 2, pp 28.
+
+
+
+\end{document}
