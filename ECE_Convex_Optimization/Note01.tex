@@ -1,9 +1,10 @@
 \documentclass[12pt,thmsa]{article}
 
 \usepackage{amsmath}
+\usepackage{amsthm}    % for proof
 \usepackage{amsfonts}  % for \mathbb
 \usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
-\usepackage{dutchcal}  % lower alphbetfor Ralph Smith's Formal Script Font
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script 
 \usepackage{algorithm} % http://ctan.org/pkg/algorithms
 \usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
 \usepackage{graphicx}  % Allows including images
@@ -11,10 +12,14 @@
 \usepackage{cancel}
 \usepackage{color}     % color
 \usepackage{geometry}
-\usepackage{amssymb}   %  \varnothing
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
 \usepackage{textcase}  % \MakeTextUppercase
 \usepackage{float}     % Force figure placement in text with [H]
 \usepackage[export]{adjustbox}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
 \usepackage{tikz}
 \usetikzlibrary{shapes, arrows.meta, positioning}
 \usepackage{pgfplots}
@@ -50,7 +55,7 @@
 		\scshape
 		Purdue University \(\cdot\) ece 58000 \\[1ex]
 		Optimization Methods \\
-		Prof. Żak
+		Prof. Żak, Prof. Chong
 	\end{minipage}
 	\begin{minipage}{0.45\textwidth}
 		\raggedleft
@@ -71,7 +76,7 @@
 \begin{document}
 \maketitle
 
-\section{Mathematical preliminaries\medskip}
+\section{Mathematical preliminaries}
 
 %------------------------------------------------------%
 \subsection{Real vectors and matrices}
@@ -91,7 +96,7 @@
 		x_{1} \\
 		\vdots \\
 		x_{n}
-	\end{array}\right], \quad x_{i} \in \mathbb{R}
+	\end{array}\right], \quad x_{i} \in \mathbb{R}.
 \end{equation*}
 
 \begin{itemize}
@@ -113,10 +118,10 @@
 
 \begin{equation*}
 	\begin{aligned}
-		\boldsymbol{a}+\boldsymbol{b} & =\boldsymbol{b}+\boldsymbol{a} & \alpha(\boldsymbol{a}+\boldsymbol{b}) & =\alpha \boldsymbol{a}+\alpha \boldsymbol{b} \\
-		(\boldsymbol{a}+\boldsymbol{b})+\boldsymbol{c} & =\boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c}) & \alpha(\beta \boldsymbol{a}) & =(\alpha \beta) \boldsymbol{a} \\
-		\mathbf{0} & =[0,0, \ldots, 0]^{\top} & 1 \boldsymbol{a} & =\boldsymbol{a} \\
-		\boldsymbol{a}+\mathbf{0} & =\mathbf{0}+\boldsymbol{a}=\boldsymbol{a} & \alpha \mathbf{0} & =\mathbf{0}=0 \boldsymbol{a}
+		\boldsymbol{a}+\boldsymbol{b} & =\boldsymbol{b}+\boldsymbol{a}, & \alpha(\boldsymbol{a}+\boldsymbol{b}) & =\alpha \boldsymbol{a}+\alpha \boldsymbol{b}, \\
+		(\boldsymbol{a}+\boldsymbol{b})+\boldsymbol{c} & =\boldsymbol{a}+(\boldsymbol{b}+\boldsymbol{c}), & \alpha(\beta \boldsymbol{a}) & =(\alpha \beta) \boldsymbol{a}, \\
+		\mathbf{0} & =[0,0, \ldots, 0]^{\top}, & 1 \boldsymbol{a} & =\boldsymbol{a}, \\
+		\boldsymbol{a}+\mathbf{0} & =\mathbf{0}+\boldsymbol{a}=\boldsymbol{a}, & \alpha \mathbf{0} & =\mathbf{0}=0 \boldsymbol{a}.
 	\end{aligned}
 \end{equation*}
 
@@ -192,7 +197,7 @@
 
 
 \begin{itemize}
-	\item[\(\blacktriangleright\)] \(\mathcal{Proposition}\) 2.1 A set of vectors \(\left\{\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right\}\) is \underline{linearly dependent} if and only if one of the vectors from the set is a linear combination of the remaining vectors.
+	\item[\(\blacktriangleright\)] \(\mathscr{PROPOSITION}\) 2.1 A set of vectors \(\left\{\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right\}\) is \underline{linearly dependent} if and only if one of the vectors from the set is a linear combination of the remaining vectors.
 \end{itemize}
 
 \begin{itemize}
@@ -201,7 +206,7 @@
 	
 	\item Any set of linearly independent vectors \(\left\{\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right\} \subset \mathcal{V}\), is a \underline{basis} of the subspace \(\mathcal{V}\), if \(\mathcal{V}=\operatorname{span}\left[\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right]\).
 	
-	\item[\(\blacktriangleright\)] \(\mathcal{Proposition}\) 2.2 If \(\left\{\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right\}\) is a basis of \(\mathcal{V}\), then any vector \(\boldsymbol{a}\) of \(\mathcal{V}\) can be represented uniquely as
+	\item[\(\blacktriangleright\)] \(\mathscr{PROPOSITION}\) 2.2 If \(\left\{\boldsymbol{a}_{1}, \boldsymbol{a}_{2}, \ldots, \boldsymbol{a}_{k}\right\}\) is a basis of \(\mathcal{V}\), then any vector \(\boldsymbol{a}\) of \(\mathcal{V}\) can be represented uniquely as
 	
 	\begin{equation*}
 		\boldsymbol{a}=\alpha_{1} \boldsymbol{a}_{1}+\alpha_{2} \boldsymbol{a}_{2}+\cdots+\alpha_{k} \boldsymbol{a}_{k},
@@ -215,7 +220,7 @@
 \begin{itemize}
 	\item The maximal number of linearly independent columns of \(\boldsymbol{A}\) is called the \underline{rank} of the matrix \(\boldsymbol{A}\), denoted rank \(\boldsymbol{A}\).
 	
-	\item[\(\blacktriangleright\)] \(\mathcal{Proposition}\) 2.3 The rank of a matrix \(\boldsymbol{A}\) is \underline{invariant} under the following operations:
+	\item[\(\blacktriangleright\)] \(\mathscr{PROPOSITION}\) 2.3 The rank of a matrix \(\boldsymbol{A}\) is \underline{invariant} under the following operations:
 	
 	\begin{itemize}
 		\item \(\operatorname{rank}\left[\boldsymbol{a}_{1}, \ldots,  \alpha \boldsymbol{a}_{k}, \ldots, \boldsymbol{a}_{n}\right] = \operatorname{rank}\left[\boldsymbol{a}_{1}, \ldots,  \boldsymbol{a}_{k}, \ldots, \boldsymbol{a}_{n}\right],  \alpha \neq 0.\)
@@ -232,13 +237,13 @@
 	\begin{array}{c}
 		\operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k-1}, {\color{red}{\alpha}} \boldsymbol{a}_{k}^{(1)}+ {\color{blue}{\beta}} \boldsymbol{a}_{k}^{(2)}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right] \\
 		={\color{red}{\alpha}} \operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k-1}, \boldsymbol{a}_{k}^{(1)}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right] 
-		+{\color{blue}{\beta}} \operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k-1}, \boldsymbol{a}_{k}^{(2)}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right]
+		+{\color{blue}{\beta}} \operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k-1}, \boldsymbol{a}_{k}^{(2)}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right],
 	\end{array}
 	\]
 	for each \( \alpha, \beta \in \mathbb{R}, \boldsymbol{a}_{k}^{(1)}, \boldsymbol{a}_{k}^{(2)} \in \mathbb{R}^{n} \).
 	
 	2. If for some \(k\) we have \(\boldsymbol{a}_{k}=\boldsymbol{a}_{k+1}\), then
-	\[\operatorname{det} \boldsymbol{A}=\operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right]=\operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k}, \boldsymbol{a}_{k}, \ldots, \boldsymbol{a}_{n}\right]=0\]
+	\[\operatorname{det} \boldsymbol{A}=\operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k}, \boldsymbol{a}_{k+1}, \ldots, \boldsymbol{a}_{n}\right]=\operatorname{det}\left[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{k}, \boldsymbol{a}_{k}, \ldots, \boldsymbol{a}_{n}\right]=0\].
 	
 	3. Let
 	\[
@@ -247,16 +252,16 @@
 		0 & 1 & \cdots & 0 \\
 		\vdots & \vdots & \ddots & \vdots \\
 		0 & 0 & \cdots & 1
-	\end{array}\right]
+	\end{array}\right],
 	\]
 	where \( \left\{\boldsymbol{e}_{1}, \ldots, \boldsymbol{e}_{n}\right\} \) is the natural basis for \(\mathbb{R}^{n}\). Then
 	\[
-	\operatorname{det} \boldsymbol{I}_{n}=1
+	\operatorname{det} \boldsymbol{I}_{n}=1.
 	\]
 	
 	\item A \underline{\(p\)th-order minor} of an \({\color{red}{m}} \times {\color{blue}{n}}\) matrix \(\boldsymbol{A}\), with \(p \leq \min \{{\color{red}{m}}, {\color{blue}{n}}\}\), is the determinant of a \(p \times p\) matrix obtained from \(\boldsymbol{A}\) by deleting \(m-p\) rows and \(n-p\) columns.
 	
-	\item[\(\blacktriangleright\)] \(\mathcal{Proposition}\) 2.4 If an \({\color{red}{m}} \times {\color{blue}{n}}\) matrix \(A({\color{red}{m}} \geq {\color{blue}{n}})\) has a nonzero \(n\)th-order minor, then the columns of \(A\) are linearly independent; that is, \(\operatorname{rank}(A)={\color{blue}{n}}\).
+	\item[\(\blacktriangleright\)] \(\mathscr{PROPOSITION}\) 2.4 If an \({\color{red}{m}} \times {\color{blue}{n}}\) matrix \(A({\color{red}{m}} \geq {\color{blue}{n}})\) has a nonzero \(n\)th-order minor, then the columns of \(A\) are linearly independent; that is, \(\operatorname{rank}(A)={\color{blue}{n}}\).
 	
 	\item The rank of a matrix is equal to the highest order of its nonzero \(\operatorname{minor}(\mathrm{s})\).
 	
@@ -269,13 +274,13 @@
 %------------------------------------------------------%
 \subsection{Linear equations}
 \begin{itemize}
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 2.1 The system of equations \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\) has a solution if and only if
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 2.1 The system of equations \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\) has a solution if and only if
 	
 	\begin{equation*}
 		\operatorname{rank} \boldsymbol{A}=\operatorname{rank}[\boldsymbol{A}, \boldsymbol{b}] .
 	\end{equation*}
 
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 2.2 Consider the equation \(\boldsymbol{A x}=\boldsymbol{b}\), where \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) and \(\operatorname{rank} \boldsymbol{A}=m\). A solution to \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\) can be obtained by assigning arbitrary values for \(n-m\) variables and solving for the remaining ones.
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 2.2 Consider the equation \(\boldsymbol{A x}=\boldsymbol{b}\), where \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) and \(\operatorname{rank} \boldsymbol{A}=m\). A solution to \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\) can be obtained by assigning arbitrary values for \(n-m\) variables and solving for the remaining ones.
 \end{itemize}	
 
 %------------------------------------------------------%
@@ -333,7 +338,7 @@
 		
 		\item \(\|\boldsymbol{x}+\boldsymbol{y}\| \leq\|\boldsymbol{x}\|+\|\boldsymbol{y}\|\).
 	\end{itemize}
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 2.3 Cauchy-Schwarz Inequality. For any two vectors \(\boldsymbol{x}\) and \(\boldsymbol{y}\) in \(\mathbb{R}^{n}\), the Cauchy-Schwarz inequality holds,
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 2.3 Cauchy-Schwarz Inequality. For any two vectors \(\boldsymbol{x}\) and \(\boldsymbol{y}\) in \(\mathbb{R}^{n}\), the Cauchy-Schwarz inequality holds,
 	
 	\begin{equation*}
 		|\langle\boldsymbol{x}, \boldsymbol{y}\rangle| \leq\|\boldsymbol{x}\|\|\boldsymbol{y}\|.
@@ -348,7 +353,7 @@
 	\[
 	\|\boldsymbol{x}\|_{p}=\left\{\begin{array}{ll}
 		\left(\left|x_{1}\right|^{p}+\cdots+\left|x_{n}\right|^{p}\right)^{1 / p} & \text { if } 1 \leq p<\infty \\
-		\max \left\{\left|x_{1}\right|, \ldots,\left|x_{n}\right|\right\} & \text { if } p=\infty
+		\max \left\{\left|x_{1}\right|, \ldots,\left|x_{n}\right|\right\} & \text { if } p=\infty.
 	\end{array}\right.
 	\]
 \end{itemize}
@@ -403,7 +408,7 @@
 		
 	\end{itemize}
 
-	\item Let \(\left\{\boldsymbol{e}_{1}, \boldsymbol{e}_{2}, \ldots, \boldsymbol{e}_{n}\right\}\) and \(\left\{\boldsymbol{e}_{1}^{\prime}, \boldsymbol{e}_{2}^{\prime}, \ldots, \boldsymbol{e}_{n}^{\prime}\right\}\) be two bases for \(\mathbb{R}^{n}\). Define the \underline{transformation matrix} \(\boldsymbol{T}\) from \(\left\{\boldsymbol{e}_{1}, \boldsymbol{e}_{2}, \ldots, \boldsymbol{e}_{n}\right\}\) to  \(\left\{\boldsymbol{e}_{1}^{\prime}, \boldsymbol{e}_{2}^{\prime}, \ldots, \boldsymbol{e}_{n}^{\prime}\right\}\)
+	\item Let \(\left\{\boldsymbol{e}_{1}, \boldsymbol{e}_{2}, \ldots, \boldsymbol{e}_{n}\right\}\) and \(\left\{\boldsymbol{e}_{1}^{\prime}, \boldsymbol{e}_{2}^{\prime}, \ldots, \boldsymbol{e}_{n}^{\prime}\right\}\) be two bases for \(\mathbb{R}^{n}\). Define the \underline{transformation matrix} \(\boldsymbol{T}\) from \(\left\{\boldsymbol{e}_{1}, \boldsymbol{e}_{2}, \ldots, \boldsymbol{e}_{n}\right\}\) to  \(\left\{\boldsymbol{e}_{1}^{\prime}, \boldsymbol{e}_{2}^{\prime}, \ldots, \boldsymbol{e}_{n}^{\prime}\right\}\),
 	
 	\begin{equation*}
 		\begin{gathered}
@@ -427,8 +432,8 @@
 	\item Given a vector \(\boldsymbol{v}\), \(\boldsymbol{x}\) is the coordinates of the vector with respect to a base \(\boldsymbol{B} =\left\{\boldsymbol{e}_{1}, \boldsymbol{e}_{2}, \ldots, \boldsymbol{e}_{n}\right\}\) and \(\boldsymbol{x}^{\prime}\) be the coordinates of the same vector with respect to a base \( \boldsymbol{B}^{\prime} = \left\{\boldsymbol{e}_{1}^{\prime}, \boldsymbol{e}_{2}^{\prime}, \ldots, \boldsymbol{e}_{n}^{\prime}\right\}\).
 	\begin{equation*}
 		\begin{gathered}
-		\left[ \boldsymbol{v} \right]_{B}=x_1 \boldsymbol{e}_1+\cdots+x_n \boldsymbol{e}_n=\left[\boldsymbol{e}_1, \ldots, \boldsymbol{e}_n\right] \boldsymbol{x}  \\
-		\left[ \boldsymbol{v} \right]_{B^{\prime}}=x_1^{\prime} \boldsymbol{e}_1^{\prime}+\cdots+x_n^{\prime} \boldsymbol{e}_n^{\prime} = \left[\boldsymbol{e}_1^{\prime}, \ldots, \boldsymbol{e}_n^{\prime}\right] \boldsymbol{x}^{\prime} \\
+		\left[ \boldsymbol{v} \right]_{B}=x_1 \boldsymbol{e}_1+\cdots+x_n \boldsymbol{e}_n=\left[\boldsymbol{e}_1, \ldots, \boldsymbol{e}_n\right] \boldsymbol{x},  \\
+		\left[ \boldsymbol{v} \right]_{B^{\prime}}=x_1^{\prime} \boldsymbol{e}_1^{\prime}+\cdots+x_n^{\prime} \boldsymbol{e}_n^{\prime} = \left[\boldsymbol{e}_1^{\prime}, \ldots, \boldsymbol{e}_n^{\prime}\right] \boldsymbol{x}^{\prime}, \\
 		\boldsymbol{x}^{\prime} = \left[ \begin{array}{cccc}
 			% \vdots & \vdots &   & \vdots \\
 			 &  &   &  \\
@@ -442,14 +447,14 @@
 			\boldsymbol{e}_1 & \boldsymbol{e}_2 & \cdots & \boldsymbol{e}_n \\
 			 &  &   &  
 			% \vdots & \vdots &  & \vdots
-		\end{array} \right] \boldsymbol{x}=\boldsymbol{T} \boldsymbol{x}
+		\end{array} \right] \boldsymbol{x}=\boldsymbol{T} \boldsymbol{x}.
 		\end{gathered}
 	\end{equation*}
 
 	\item Example, let \(\boldsymbol{y}=\boldsymbol{A} \boldsymbol{x}\) and \(\boldsymbol{y}^{\prime}=\boldsymbol{A}^{\prime} \boldsymbol{x}^{\prime}\). Therefore,
 	
 	\begin{equation*}
-		\boldsymbol{y}^{\prime}=\boldsymbol{T} \boldsymbol{y}=\boldsymbol{T} \boldsymbol{A} \boldsymbol{x}, 	\boldsymbol{y}^{\prime}=\boldsymbol{A}^{\prime} \boldsymbol{x}^{\prime}=\boldsymbol{A}^{\prime} \boldsymbol{T} \boldsymbol{x}
+		\boldsymbol{y}^{\prime}=\boldsymbol{T} \boldsymbol{y}=\boldsymbol{T} \boldsymbol{A} \boldsymbol{x}, 	\boldsymbol{y}^{\prime}=\boldsymbol{A}^{\prime} \boldsymbol{x}^{\prime}=\boldsymbol{A}^{\prime} \boldsymbol{T} \boldsymbol{x}.
 	\end{equation*}
 	
 	and hence \(\boldsymbol{T} \boldsymbol{A}=\boldsymbol{A}^{\prime} \boldsymbol{T}\), or \(\boldsymbol{A}=\boldsymbol{T}^{-1} \boldsymbol{A}^{\prime} \boldsymbol{T}\).
@@ -505,15 +510,15 @@
 		\operatorname{det}[\lambda \boldsymbol{I}-\boldsymbol{A}]=\lambda^{n}+a_{n-1} \lambda^{n-1}+\cdots+a_{1} \lambda+a_{0}.
 	\end{equation*}
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.1 Suppose that the characteristic equation \(\operatorname{det}[\lambda \boldsymbol{I}-\boldsymbol{A}]=0\) has \(n\) distinct roots \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n}\). Then, there exist \(n\) linearly independent vectors \(\boldsymbol{v}_{1}, \boldsymbol{v}_{2}, \ldots, \boldsymbol{v}_{n}\) such that
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.1 Suppose that the characteristic equation \(\operatorname{det}[\lambda \boldsymbol{I}-\boldsymbol{A}]=0\) has \(n\) distinct roots \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n}\). Then, there exist \(n\) linearly independent vectors \(\boldsymbol{v}_{1}, \boldsymbol{v}_{2}, \ldots, \boldsymbol{v}_{n}\) such that
 	
 	\begin{equation*}
 		\boldsymbol{A} \boldsymbol{v}_{i}=\lambda_{i} \boldsymbol{v}_{i}, \quad i=1,2, \ldots, n.
 	\end{equation*}
 
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.2 All eigenvalues of a real symmetric matrix are real.
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.2 All eigenvalues of a real symmetric matrix are real.
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.3 If real \( n \times n\) matrix \(\boldsymbol{A}\) is symmetric, then a set of its eigenvectors forms an orthogonal basis for \(\mathbb{R}^{n}\).
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.3 If real \( n \times n\) matrix \(\boldsymbol{A}\) is symmetric, then a set of its eigenvectors forms an orthogonal basis for \(\mathbb{R}^{n}\).
 	
 	
 \end{itemize}
@@ -550,11 +555,11 @@
 	
 	\(\mathcal{R}(\boldsymbol{A})\) and \(\mathcal{N}(\boldsymbol{A})\) are subspaces.
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.4 \(\mathcal{R}(\boldsymbol{A})^{\perp}=\mathcal{N}\left(\boldsymbol{A}^{\top}\right)\) and \(\mathcal{N}(\boldsymbol{A})^{\perp}=\mathcal{R}\left(\boldsymbol{A}^{\top}\right) \quad\) (That's row space. Together, four fundamental spaces in Linear Algebra.)
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.4 \(\mathcal{R}(\boldsymbol{A})^{\perp}=\mathcal{N}\left(\boldsymbol{A}^{\top}\right)\) and \(\mathcal{N}(\boldsymbol{A})^{\perp}=\mathcal{R}\left(\boldsymbol{A}^{\top}\right) \quad\) (That's row space. Together, four fundamental spaces in Linear Algebra.)
 	
 	\item If \(\boldsymbol{P}\) is an orthogonal projector onto \(\mathcal{V}\), then \(\boldsymbol{P} \boldsymbol{x}=\boldsymbol{x}\) for all \(\boldsymbol{x} \in \mathcal{V}\), and \(\mathcal{R}(\boldsymbol{P})=\mathcal{V}\).
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 03.05: A matrix \(\boldsymbol{P}\) is an orthogonal projector if and only if \(\boldsymbol{P}^{2}=\boldsymbol{P}=\boldsymbol{P}^{T}\).
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 03.05: A matrix \(\boldsymbol{P}\) is an orthogonal projector if and only if \(\boldsymbol{P}^{2}=\boldsymbol{P}=\boldsymbol{P}^{T}\).
 \end{itemize}
 
 
@@ -631,13 +636,13 @@
 		\end{gathered}
 	\end{equation*}
 
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.6 Sylvester's Criterion. A quadratic form (\(\boldsymbol{Q}\) is symmetric) \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}, \boldsymbol{Q}=\boldsymbol{Q}^{\top}\), is positive definite if and only if the leading principal minors of \(\boldsymbol{Q}\) are positive.
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.6 Sylvester's Criterion. A quadratic form (\(\boldsymbol{Q}\) is symmetric) \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}, \boldsymbol{Q}=\boldsymbol{Q}^{\top}\), is positive definite if and only if the leading principal minors of \(\boldsymbol{Q}\) are positive.
 	
 	\item A necessary condition for a real quadratic form to be positive semi-definite is that the leading principal minors be nonnegative. However, it is not a sufficient condition.
 	
 	\item A real quadratic form is positive semi-definite if and only if all principal minors are nonnegative.
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.7 A symmetric matrix \(\boldsymbol{Q}\) is positive definite (or positive semidefinite) if and only if all eigenvalues of \(\boldsymbol{Q}\) are positive (or nonnegative).
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.7 A symmetric matrix \(\boldsymbol{Q}\) is positive definite (or positive semidefinite) if and only if all eigenvalues of \(\boldsymbol{Q}\) are positive (or nonnegative).
 
 \end{itemize}
 
@@ -703,7 +708,7 @@
 	\item For \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\), an example of a matrix norm is the Frobenius norm, defined as
 	
 	\begin{equation*}
-		\|\boldsymbol{A}\|_{F}=\left(\sum_{i=1}^{m} \sum_{j=1}^{n}\left(a_{i j}\right)^{2}\right)^{1 / 2}
+		\|\boldsymbol{A}\|_{F}=\left(\sum_{i=1}^{m} \sum_{j=1}^{n}\left(a_{i j}\right)^{2}\right)^{1 / 2}.
 	\end{equation*}
 	
 	\item Note that the Frobenius norm is equivalent to the Euclidean norm on \(\mathbb{R}^{m \times n}\).
@@ -730,16 +735,16 @@
 
 	\item For each matrix \(\boldsymbol{A}\) the maximum \(\max _{\|\boldsymbol{x}\|=1}\|\boldsymbol{A} \boldsymbol{x}\|\) is attainable; that is, a vector \(\boldsymbol{x}_{0}\) exists such that \(\left\|\boldsymbol{x}_{0}\right\|=1\) and \(\left\|\boldsymbol{A} \boldsymbol{x}_{0}\right\|=\|\boldsymbol{A}\|\).
 	
-	\item[\(\spadesuit\)] \(\mathcal{Theorem}\) 3.8: Let
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.8: Let
 	
 	\begin{equation*}
-		\|\boldsymbol{x}\|=\left(\sum_{k=1}^{n}\left|x_{k}\right|^{2}\right)^{1 / 2}=\sqrt{\langle\boldsymbol{x}, \boldsymbol{x}\rangle}
+		\|\boldsymbol{x}\|=\left(\sum_{k=1}^{n}\left|x_{k}\right|^{2}\right)^{1 / 2}=\sqrt{\langle\boldsymbol{x}, \boldsymbol{x}\rangle}.
 	\end{equation*}
 	
-	the matrix norm induced by this vector norm is
+	The matrix norm induced by this vector norm is
 	
 	\begin{equation*}
-		\|\boldsymbol{A}\|=\sqrt{\lambda_{1}}
+		\|\boldsymbol{A}\|=\sqrt{\lambda_{1}},
 	\end{equation*}
 	
 	where \(\lambda_{1}\) is the largest eigenvalue of the matrix \(\boldsymbol{A}^{\top} \boldsymbol{A}\).
@@ -747,7 +752,7 @@
 	\item Rayleigh's Inequality: If an \(n \times n\) matrix \(\boldsymbol{P}\) is real symmetric positive definite, then
 	
 	\begin{equation*}
-		\lambda_{\min }(\boldsymbol{P})\|\boldsymbol{x}\|^{2} \leq \boldsymbol{x}^{T} \boldsymbol{P} \boldsymbol{x} \leq \lambda_{\max }(\boldsymbol{P})\|\boldsymbol{x}\|^{2}
+		\lambda_{\min }(\boldsymbol{P})\|\boldsymbol{x}\|^{2} \leq \boldsymbol{x}^{T} \boldsymbol{P} \boldsymbol{x} \leq \lambda_{\max }(\boldsymbol{P})\|\boldsymbol{x}\|^{2},
 	\end{equation*}
 	
 	where \(\lambda_{\min }(\boldsymbol{P})\) denotes the smallest eigenvalue of \(\boldsymbol{P}\), and \(\lambda_{\max }(\boldsymbol{P})\) denotes the largest eigenvalue of \(\boldsymbol{P}\). 
