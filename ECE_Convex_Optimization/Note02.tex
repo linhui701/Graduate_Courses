@@ -1,34 +1,60 @@
 \documentclass[12pt,thmsa]{article}
 
+%maths
 \usepackage{amsmath}   % \sideset
 \usepackage{amsthm}    % for proof
 \usepackage{amsfonts}  % for \mathbb
 \usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
-\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script 
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+
+%algorithms
 \usepackage{algorithm} % http://ctan.org/pkg/algorithms
 \usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
-\usepackage{graphicx}  % Allows including images
+
+%tables
 \usepackage{booktabs}  % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{multirow}
 \usepackage{multicol}
 \usepackage{tabularx}
 \usepackage[table]{xcolor} % For \cellcolor
-\usepackage{cancel}
-\usepackage{color}     % color
-\usepackage{geometry}
-\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
-\usepackage{textcase}  % \MakeTextUppercase
-\usepackage{float}     % Force figure placement in text with [H]
 \usepackage[export]{adjustbox}
-\usepackage{enumitem}
-\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
-\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
-\usepackage{hyperref}
+
+%figures
+\usepackage{graphicx}  % Allows including images
+\usepackage{float}     % Force figure placement in text with [H]
+
+%tikzpicture
 \usepackage{tikz}
-\usetikzlibrary{matrix, shapes, arrows.meta, positioning}
+\usepackage{scalerel}
+\usepackage{pict2e}
+\usepackage{tkz-euclide}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes, positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns, arrows.meta}
+\usetikzlibrary{shadows}
+\usetikzlibrary{external}
+
+%pgfplots
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
 
+%colors
+\usepackage{color}     % color
+
+%other
+\usepackage{cancel}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\usepackage{textcase}  % \MakeTextUppercase
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
+
+%layout
+\usepackage{geometry}
 
 \geometry{
 	a4paper,
@@ -54,6 +80,13 @@
 	\fbox{\rule{0pt}{#1}\hspace{#2}}%
 }
 
+% Linhui added for vertically centered boxed content
+\newcommand{\vcenteredbox}[1]{%
+	\begingroup
+	\setbox0=\hbox{#1}%
+	\parbox{\wd0}{\box0}%
+	\endgroup
+}
 
 %------------------------------------------------------%
 \makeatletter
@@ -118,8 +151,8 @@
 	\[ H_{-}=\left\{{\color{forestgreen}{\boldsymbol{x}}} \in \mathbb{R}^{n}: \boldsymbol{u}^{\top} \boldsymbol{x} \leq v\right\}. \]
 	
 	\item  A \underline{linear variety} is a set of form
-	\[ \left\{\boldsymbol{x} \in \mathbb{R}^{n} : \boldsymbol{A}\boldsymbol{x} = \boldsymbol{b} \right\},  \]
-	for some matrix \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) and vector \(\boldsymbol{b} \in \mathbb{R}^{n}\).
+	\[ \left\{\boldsymbol{x} \in \mathbb{R}^{n} : \mathbf{A}\boldsymbol{x} = \boldsymbol{b} \right\},  \]
+	for some matrix \(\mathbf{A} \in \mathbb{R}^{m \times n}\) and vector \(\boldsymbol{b} \in \mathbb{R}^{n}\).
 \end{itemize}
 
 %------------------------------------------------------%
@@ -262,40 +295,103 @@
 \end{itemize}
 
 \newpage
+
 \begin{center}
 	Types of Matrix Derivatives\footnote{Ref: Thomas P. Minka, \href{https://tminka.github.io/papers/matrix/minka-matrix.pdf}{``Old and New Matrix Algebra Useful for Statistics''}, 2000}
 \end{center}
 \[
-\noindent\hspace*{-0.8cm}% Move table to the left
+\noindent\hspace*{-1.2cm}% Move table to the left
 \begin{aligned}
-	\begin{array}{|c|cc|cc|c|}
+	\begin{array}{|c|cl|cc|cc|}
 		\hline
-		\multirow{2}{*}{ \text { Types }} & \multicolumn{2}{c|}{\text{Scalar}} & \multicolumn{2}{c|}{\text{Vector}} & \multicolumn{1}{c|}{\text{Matrix}} \\  % Row 1
-		\cline{2-6} & \multicolumn{2}{c|}{\fbox{\vspace{1em}\hspace{1em}}} & \multicolumn{2}{c|}{\fbox{\vspace{1em}\hspace{1em}}} & \multicolumn{1}{c|}{\fbox{\vspace{1em}\hspace{1em}}} \\ % Row 2
+		\multirow{2}{*}{ \text { Types }} 
+			& \multicolumn{2}{c|}{\text{Scalar}} 
+			& \multicolumn{2}{c|}{\text{Vector}} 
+			& \multicolumn{2}{c|}{\text{Matrix}} \\  % Row 1
+		\cline{2-7} 
+		{}	
+			&  \multicolumn{2}{c|}{ \vcenteredbox{\fbox{\vspace{1em}\hspace{1em}}} } 
+			& \multicolumn{2}{c|}{ \vcenteredbox{\fbox{\vspace{1em}\hspace{1em}}} } 
+			& \multicolumn{2}{c|}{ \vcenteredbox{\fbox{\vspace{1em}\hspace{1em}}} } \\ % Row 2
 		\hline
 		\fbox{\vspace{1em}\hspace{1em}}
-		& \multirow{2}{*}{ \( \frac{\mathrm{d} y}{\mathrm{d} x} \) }  
-		& \cellcolor{gray!0}\multirow{2}{*}{ \( \frac{\mathrm{d} f(x)}{\mathrm{d} x} \) } 
-		& \multirow{2}{*}{ \( \frac{\mathrm{d} \boldsymbol{y}}{\mathrm{d} x}=\left[\frac{\partial y_i}{\partial x}\right] \) }
-		& \cellcolor{gray!0} \multirow{2}{*}{ \( \frac{\mathrm{d}  \boldsymbol{g}(t)}{\mathrm{d} t} \) }
-		& \multirow{2}{*}{ \(\frac{\mathrm{d} \mathbf{Y}}{\mathrm{d} x}=\left[\frac{\partial y_{i j}}{\partial x}\right], \frac{\mathrm{d}  \boldsymbol{A}(t)}{\mathrm{d} t}\) }\\  % Row 3
-		\cline{1-1} \text{Scalar} & (1) \qquad \qquad \quad & & & \qquad \qquad (3) &  \\  % Row 4
+			& \multirow{2}{*}{ \( \frac{\mathrm{d} y}{\mathrm{d} x} \) }  
+			& \cellcolor{gray!20}
+			& \multirow{2}{*}{ 
+					\( \frac{\mathrm{d} \boldsymbol{y}}{\mathrm{d} x}=\left[\frac{\partial y_i}{\partial x}\right] \) 
+				}
+			& \cellcolor{gray!20} 
+			& \multirow{2}{*}{ 
+				\(\frac{\mathrm{d} \mathbf{Y}}{\mathrm{d} x}=\left[\frac{\partial y_{i j}}{\partial x}\right]\)} 
+			& \cellcolor{gray!20} \\  % Row 3
+		\cline{1-1} 
+		\text{Scalar} 
+			& 
+			& \hspace{1.2cm} \multirow{-2}{*}{ \cellcolor{gray!20}
+				\( \frac{\mathrm{d} f(x)}{\mathrm{d} x} \)}  \hspace{1.5cm} (1)
+			& 
+			& \hspace{0.9cm} \cellcolor{gray!20} \multirow{-2}{*}{ 
+				\( \frac{\mathrm{d}  \boldsymbol{g}(t)}{\mathrm{d} t} \) 
+			}  \hspace{0.6cm} (3) 
+			&  
+			& \cellcolor{gray!20} \multirow{-2}{*}{ 
+				\(\frac{\mathrm{d}  \mathbf{A}(t)}{\mathrm{d} t}\) 
+			} \\  % Row 4
 		\hline 
-		 & &  \cellcolor{gray!0} \multirow{2}{*}{ \(D_{\boldsymbol{x}} f(\boldsymbol{x}) =\left[ \cdot \cdot \frac{\partial f(\boldsymbol{x})}{\partial x_j} \cdot \cdot \right] \)}  & & & \\  % Row 5
-		\fbox{\vspace{1em}\hspace{1em}} & \multirow{2}{*}{ \(\frac{\mathrm{d} y}{\mathrm{d} \boldsymbol{x}}=\left[\frac{\partial y}{\partial x_j}\right]\) }
-		& & \multirow{2}{*}{ \( \frac{\mathrm{d} \boldsymbol{y}}{\mathrm{d} \boldsymbol{x}}=\left[\frac{\partial y_i}{\partial x_j}\right]\) }
-		&  \cellcolor{gray!0} \multirow{2}{*}{ \( D \boldsymbol{g}(\boldsymbol{x}) =\left[\frac{\partial g_i(\boldsymbol{x})}{\partial x_j}\right] \)} & \\  % Row 6
+		{}
+			& 
+			& \cellcolor{gray!20}
+ 			&
+ 			& \cellcolor{gray!20} 
+ 			& 
+ 			& \\  % Row 5
+		\fbox{\vspace{1em}\hspace{1em}} 
+			& \multirow{2}{*}{ \(\frac{\mathrm{d} y}{\mathrm{d} \boldsymbol{x}}=\left[\frac{\partial y}{\partial x_j}\right]\) }
+			& \cellcolor{gray!20}\multirow{-2}{*}{ 
+				\(D_{\boldsymbol{x}} f(\boldsymbol{x}) =\left[ \cdot \cdot \frac{\partial f(\boldsymbol{x})}{\partial x_j} \cdot \cdot \right] \)}
+			& \multirow{2}{*}{ \( \frac{\mathrm{d} \boldsymbol{y}}{\mathrm{d} \boldsymbol{x}}=\left[\frac{\partial y_i}{\partial x_j}\right]\) }
+			&  \cellcolor{gray!20} 
+			& 
+			& \\  % Row 6
 		\cline{1-1}
-		\text{Vector} & &  \cellcolor{gray!0} \multirow{3}{*}{ \(\nabla_{\boldsymbol{x}} f(\boldsymbol{x}) =\left[\begin{array}{c} 
-				\cdot \\ \frac{\partial f(\boldsymbol{x})}{\partial x_j} \\ \cdot  \end{array}
-		\right]\) } & & &  \\  % Row 7
-		& (2) \qquad \qquad \quad & & & \qquad \qquad (4) & \\  % Row 8
-		&  & & &  & \\  % Row 9
+		\text{Vector} 
+			& 
+			& \cellcolor{gray!20} 
+			& 
+			& \cellcolor{gray!20}\multirow{-2}{*}{ \( D_{\boldsymbol{x}} \boldsymbol{g}(\boldsymbol{x}) =\left[\frac{\partial g_i(\boldsymbol{x})}{\partial x_j}\right] \)} 
+			& 
+			&  \\  % Row 7
+		{}
+			&
+			& \cellcolor{gray!20} \hspace{3.8cm} (2)
+			& 
+			& \cellcolor{gray!20} \hspace{2.6cm} (4) 
+			& 
+			& \\  % Row 8
+		{}
+			& 
+			&\cellcolor{gray!20} \multirow{-3}{*}{ \(\nabla_{\boldsymbol{x}} f(\boldsymbol{x}) =\left[\begin{array}{c} 
+					\cdot \\ \frac{\partial f(\boldsymbol{x})}{\partial x_j} \\ \cdot  \end{array}
+				\right]\) }
+			&
+			& \cellcolor{gray!20}  
+			& 
+			& \\ [0.1cm] % adding extra space after the row  % Row 9
 		\hline
 		\fbox{\vspace{1em}\hspace{1em}}
-		& \multirow{2}{*}{ \( \frac{\mathrm{d} y}{\mathrm{d} \mathbf{X}}=\left[\frac{\partial y}{\partial x_{j i}}\right] \) }
-		&  \multirow{2}{*}{ \( D_{\mathbf{X}} f=\left[\frac{\partial f}{\partial x_{j i}}\right] \) } & & & \\  % Row 10
-		\cline{1-1} \text{Matrix} & & & & &  \\  % Row 11
+			& \multirow{2}{*}{ \( \frac{\mathrm{d} y}{\mathrm{d} \mathbf{X}}=\left[\frac{\partial y}{\partial x_{j i}}\right] \) }
+			& \cellcolor{gray!20} 
+			& 
+			& 
+			& 
+			& \\  % Row 10
+		\cline{1-1} \text{Matrix} 
+			& 
+			& \hspace{0.6cm} \cellcolor{gray!20}\multirow{-2}{*}{ \( D_{\mathbf{X}} f=\left[\frac{\partial f}{\partial x_{j i}}\right] \) } 
+			& 
+			& 
+			& 
+			&\\  % Row 11
 		\hline
 	\end{array}
 \end{aligned}
@@ -312,15 +408,15 @@
 	For \textbf{derivative} rule (2), 
 	\[ 
 	{\color{red}{D_{\boldsymbol{x}}}} { f(\boldsymbol{x}) } =
-	{\color{black}{D_{\boldsymbol{x}}(}}{ \boldsymbol{a}^{\top} \boldsymbol{x} }{\color{black})} 
+	{\color{black}{D(}}{ \boldsymbol{a}^{\top} \boldsymbol{x} }{\color{black})} 
 	= \begin{tikzpicture}[baseline=(current bounding box.center)]
 			\matrix (m) [matrix of math nodes, inner sep=1.8pt, row sep=0pt, left delimiter={[},right delimiter={]}] {
 				\frac{\partial f}{\partial x_1} (\boldsymbol{x}) & \frac{\partial f}{\partial x_2}(\boldsymbol{x}) & \cdots & \frac{\partial f}{\partial x_n}(\boldsymbol{x}) \\
 			};
 			\draw[red] (m-1-1.north west) rectangle (m-1-4.south east);
 		\end{tikzpicture}
-	=\left[\begin{array}{ccc}
-		a_{1} & \cdots & a_{n}
+	=\left[\begin{array}{cccc}
+		a_{1} & a_{2} &  \cdots & a_{n}
 	\end{array}
 	\right] = {\color{red}{ \boldsymbol{a}^{\top} }}.
 	\]
@@ -337,7 +433,7 @@
 		\end{tikzpicture}
 	= \left[ \begin{array}{c} a_1  \\ \vdots \\ a_n \end{array} \right]
 	= {\color{blue}{ \boldsymbol{a} }}
-	= D_{\boldsymbol{x}}( f(\boldsymbol{x})  )^{\top}.
+	= D_{\boldsymbol{x}} f(\boldsymbol{x}) ^{\top}.
 	\] 
 
 	\item[({\bf{3}})] Given \(\boldsymbol{g}: \mathbb{R} \rightarrow \mathbb{R}^m \), here \(t \in \mathbb{R} \) is a scalar. \(\boldsymbol{g}(t)\) is a column vector.
@@ -347,7 +443,6 @@
 		\left[
 		\begin{array}{c}
 			g_{1}(t) \\
-			g_{2}(t) \\
 			\vdots \\
 			g_{m}(t)
 		\end{array}
@@ -362,7 +457,7 @@
 			g_{1}^{\prime}(t) \\
 			\vdots \\
 			g_{m}^{\prime}(t)
-		\end{array}\right],  \\
+		\end{array}\right].  \\
 	\end{aligned}
 	\]
 
@@ -436,15 +531,15 @@
 	\]
 	
 	Then, the derivative of \(\mathbf{A} \boldsymbol{x}\) is equivalent to \( D_{\boldsymbol{x}} \boldsymbol{g}( \boldsymbol{x} ) \),
-	\[ {\color{red}{ D_{\boldsymbol{x}}( }} \boldsymbol{g}( \boldsymbol{x} ) {\color{red}{ ) }} 
+	\[ {\color{red}D( } \boldsymbol{g}( \boldsymbol{x} ) {\color{red}{ ) }} 
 	= \underbrace{\frac{\mathrm{d}}{\mathrm{d} \boldsymbol{x}} \left(  \mathbf{A} \boldsymbol{x} \right)}_{\text{\begin{tabular}{c} Notation not used \\ in this course \end{tabular}}}
-	= {\color{black}{ D_{\boldsymbol{x}}( }} \mathbf{A} \boldsymbol{x} {\color{black}{ ) }} 
+	= {\color{black}{ D( }} \mathbf{A} \boldsymbol{x} {\color{black}{ ) }} 
 	= \left[
 		\begin{array}{c}
-			{\color{black}{D_{\boldsymbol{x}}(}}{ \boldsymbol{a}_{1}^{\top} \boldsymbol{x} }{\color{black})} \\
-			{\color{black}{D_{\boldsymbol{x}}(}}{ \boldsymbol{a}_{2}^{\top} \boldsymbol{x} }{\color{black})} \\
+			{\color{black}{D(}}{ \boldsymbol{a}_{1}^{\top} \boldsymbol{x} }{\color{black})} \\
+			{\color{black}{D(}}{ \boldsymbol{a}_{2}^{\top} \boldsymbol{x} }{\color{black})} \\
 			\vdots \\
-			{\color{black}{D_{\boldsymbol{x}}(}}{ \boldsymbol{a}_{m}^{\top} \boldsymbol{x} }{\color{black})}
+			{\color{black}{D(}}{ \boldsymbol{a}_{m}^{\top} \boldsymbol{x} }{\color{black})}
 		\end{array}
 		\right]
 	= \left[
@@ -553,33 +648,6 @@
 	\end{tikzpicture} .
 	\]
 
-%	\item It could be applied to conduct gradient,
-%	\[ \nabla^{2} \left( f(\boldsymbol{x}) \right)
-%	= \nabla \left(  \nabla f \left( \boldsymbol{x} \right) \right)
-%	= \left[\begin{array}{c}    
-%		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} }\right) \\    
-%		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} }\right) \\    
-%		\vdots \\    
-%		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} }\right)    
-%	\end{array}
-%	\right]
-%	=\left[\begin{array}{cccc}    
-%		\frac{\partial^{2} f}{\partial x_{1} \color{forestgreen}{\partial x_{1}}} 
-%		& \frac{\partial^{2} f}{\partial x_{2} \color{forestgreen}{\partial x_{1}}} 
-%		& \cdots 
-%		& \frac{\partial^{2} f}{\partial x_{n} \color{forestgreen}{\partial x_{1}}} \\    
-%		\frac{\partial^{2} f}{\partial x_{1} \color{forestgreen}{\partial x_{2}}} 
-%		& \frac{\partial^{2} f}{\partial x_{2} \color{forestgreen}{\partial x_{2}}} 
-%		& \cdots 
-%		& \frac{\partial^{2} f}{\partial x_{n} \color{forestgreen}{\partial x_{2}}} \\    
-%		\vdots & \vdots & \ddots & \vdots \\    
-%		\frac{\partial^{2} f}{\partial x_{1} \color{forestgreen}{\partial x_{n}}} 
-%		& \frac{\partial^{2} f}{\partial x_{2} \color{forestgreen}{\partial x_{n}}} 
-%		& \cdots 
-%		& \frac{\partial^{2} f}{\partial x_{n} \color{forestgreen}{\partial x_{n}}}
-%	\end{array}
-%	\right] .
-%	\]
 \end{itemize}
 
 
@@ -629,22 +697,22 @@
 \begin{itemize}
 	\item Based on the above \textbf{derivative} rule, we have
 
-	\textbf{1.} Consider \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
+	\textbf{1.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
 	\begin{align*}
-		D\left(\boldsymbol{y}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &=
-		\boldsymbol{y}^{\top} \boldsymbol{A}, \\
-		D\left(\boldsymbol{x}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &=
-		\boldsymbol{x}^{\top}\left(\boldsymbol{A}+\boldsymbol{A}^{\top}\right).  \qquad
+		D\left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{y}^{\top} \mathbf{A}, \\
+		D\left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{x}^{\top}\left(\mathbf{A}+\mathbf{A}^{\top}\right).  \qquad
 		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
 	\end{align*}
 	
 	
-	\textbf{2.} Consider \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
+	\textbf{2.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
 	\[ D\left(\boldsymbol{y}^{\top} \boldsymbol{x}\right)=\boldsymbol{y}^{\top}. \]
 	
-	\textbf{3.} Consider if \(\boldsymbol{Q}\) is a symmetric matrix, then
+	\textbf{3.} Consider if \(\mathbf{Q}\) is a symmetric matrix, then
 	\[
-	D\left(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}\right)=2 \boldsymbol{x}^{\top} \boldsymbol{Q}.
+	D\left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)=2 \boldsymbol{x}^{\top} \mathbf{Q}.
 	\]
 	
 	In particular,
@@ -654,21 +722,21 @@
 
 	\item Based on the above \textbf{gradient} rule, we have
 
-	\textbf{1.} Consider \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
+	\textbf{1.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
 	\begin{align*}
-		\nabla \left(\boldsymbol{y}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &= \boldsymbol{A}^{\top} \boldsymbol{y}, \\
-		\nabla  \left(\boldsymbol{x}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &=
-		\left(\boldsymbol{A}+\boldsymbol{A}^{\top}\right) \boldsymbol{x}.  \qquad
+		\nabla \left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) &= \mathbf{A}^{\top} \boldsymbol{y}, \\
+		\nabla  \left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\left(\mathbf{A}+\mathbf{A}^{\top}\right) \boldsymbol{x}.  \qquad
 		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
 	\end{align*}
 	
 	
-	\textbf{2.} Consider \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
+	\textbf{2.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
 	\[ \nabla \left(\boldsymbol{y}^{\top} \boldsymbol{x}\right)=\boldsymbol{y}. \]
 	
-	\textbf{3.} Consider if \(\boldsymbol{Q}\) is a symmetric matrix, then
+	\textbf{3.} Consider if \(\mathbf{Q}\) is a symmetric matrix, then
 	\[
-	\nabla \left(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}\right)=2  \boldsymbol{Q} \boldsymbol{x}.
+	\nabla \left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)=2  \mathbf{Q} \boldsymbol{x}.
 	\]
 	
 	In particular,
@@ -689,15 +757,6 @@
 
 	Proof. 
 	\(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\), \(\boldsymbol{x} \in \mathbb{R}^{n}\), write the derivative as 
-%	\[\begin{aligned}
-%		D \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)
-%		&=D\left( \sideset{^{1 \backslash m}}{}{\boldsymbol{\Big[}
-%			\begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array}}
-%		\boldsymbol{\Big]}
-%		\sideset{^{m \backslash 1}}{}
-%		{\left[ \begin{array}{c} \\ \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]}
-%		\right).
-%		\end{aligned}\]
 		\[\begin{aligned}
 		D \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)
 		&=D \left(
@@ -775,12 +834,12 @@
 	\end{aligned}\]
 
 
-	\item Let \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
+	\item Let \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
 	\begin{align*}
-		D\left(\boldsymbol{y}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &=
-		\boldsymbol{y}^{\top} \boldsymbol{A}, \\
-		D\left(\boldsymbol{x}^{\top} \boldsymbol{A} \boldsymbol{x}\right) &=
-		\boldsymbol{x}^{\top}\left(\boldsymbol{A}+\boldsymbol{A}^{\top}\right).  \qquad
+		D\left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{y}^{\top} \mathbf{A}, \\
+		D\left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{x}^{\top}\left(\mathbf{A}+\mathbf{A}^{\top}\right).  \qquad
 		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
 	\end{align*}
 
@@ -795,7 +854,7 @@
 		&=\boldsymbol{y}^{\top} D(\mathbf{A} \boldsymbol{x})+(\mathbf{A} \boldsymbol{x})^{\top}[\mathbf{0}] \\
 		&=\boldsymbol{y}^{\top} \mathbf{A}.
 	\end{aligned}\]
-	If \(\boldsymbol{A} \in \mathbb{R}^{n \times n}\),
+	If \(\mathbf{A} \in \mathbb{R}^{n \times n}\),
 	\[ \begin{aligned}    
 		D\left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right)    
 		&=D \bigg( \boldsymbol{x}^{\top}( {\color{forestgreen}{\mathbf{A} \boldsymbol{x}}} ) \bigg)
@@ -806,9 +865,9 @@
 		&=\boldsymbol{x}^{\top} \left(\mathbf{A}+\mathbf{A}^{\top}\right).
 	\end{aligned} \]
 
-	\item It follows that if \(\boldsymbol{Q}\) is a symmetric matrix, then
+	\item It follows that if \(\mathbf{Q}\) is a symmetric matrix, then
 	\[ \begin{aligned}
-		D\left(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}\right) &=2 \boldsymbol{x}^{\top} \boldsymbol{Q}, \\
+		D\left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right) &=2 \boldsymbol{x}^{\top} \mathbf{Q}, \\
 		D\left(\boldsymbol{x}^{\top} \boldsymbol{x}\right) &=2 \boldsymbol{x}^{\top}.
 	\end{aligned}
 	\]
@@ -982,10 +1041,12 @@
 %	\]
 %\end{itemize}
 
+
 \bigskip
 
 \noindent
 [Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
+
 
 
 \end{document}
