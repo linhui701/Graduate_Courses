@@ -1,0 +1,155 @@
+\documentclass[12pt,thmsa]{article}
+
+%maths
+\usepackage{amsmath}   % \sideset
+\usepackage{amsthm}    % for proof
+\usepackage{amsfonts}  % for \mathbb
+\usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+
+%algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e} % For algorithm
+%\usepackage{algorithm}% http://ctan.org/pkg/algorithms % conflict with algorithm2e
+
+%tables
+\usepackage{booktabs}  % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage[table]{xcolor} % For \cellcolor
+\usepackage[export]{adjustbox}
+
+%figures
+\usepackage{graphicx}  % Allows including images
+\usepackage{float}     % Force figure placement in text with [H]
+
+%tikzpicture
+\usepackage{tikz}
+\usepackage{scalerel}
+\usepackage{pict2e}
+\usepackage{tkz-euclide}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes, positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns, arrows.meta}
+\usetikzlibrary{shadows}
+\usetikzlibrary{external}
+
+%pgfplots
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+
+%colors
+\usepackage{color}     % color
+\usepackage[colorinlistoftodos]{todonotes}
+
+%other
+\usepackage{cancel}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\usepackage{textcase}  % \MakeTextUppercase
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
+\usepackage{tocloft}
+
+%layout
+\usepackage{geometry}
+\usepackage{fancyhdr}   % Fancy Headers
+
+
+%------------------------------------------------------%
+%              Create Center Title Page                %
+%------------------------------------------------------%
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+
+% Linhui added for newly defined color
+\definecolor{forestgreen}{RGB}{34,139,34}
+
+% Linhui added for Expectation and Variance
+\newcommand{\Exp}{{\mathbb E}\! }
+\newcommand{\Var}{\mbox{Var}\! }
+
+% Linhui added for rename the command for empty set.
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+%------------------------------------------------------%
+\makeatletter
+\def\maketitle{%
+	\par
+	\hrule height 1.5pt\vspace{1ex}
+	\par\noindent
+	
+	\begin{minipage}{0.5\textwidth}
+		\scshape
+		Purdue University $\cdot$ ece 58000 \\[1ex]
+		Optimization Methods \\
+		Prof. Żak
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\MakeTextUppercase{{\@title}}\\[0.3ex] % 0.2ex height space between two line
+		\textit{\@author}\\[0.2ex]
+		\textit{August 1, 2022}
+	\end{minipage}
+	\par\vspace{1ex}
+	\hrule height 1.5pt\vspace{1ex}
+	\par
+}
+\makeatother
+
+\author{Linhui Xie}
+\title{Review of Qualify Exam}
+%------------------------------------------------------%
+
+\begin{document}
+	\tableofcontents
+	\newpage
+	
+% Part 1: Math Review
+\include{./sections/p1_quadratic_forms}
+%\include{./sections/p1_gradient_hessian}
+%\include{./sections/p1_gradient_properties}
+%\include{./sections/p1_definiteness}
+%\include{./sections/p1_taylor_series}
+%\include{./sections/p1_feasible_direction}
+
+%% Part 2: Unconstrained Optimization
+%\include{./sections/FONC_SONC_SOSC}
+%\include{./sections/descent_direction}
+%\include{./sections/1d_search}
+%\include{./sections/steepest_descent}
+%\include{./sections/Newton's_method}
+%\include{./sections/conjugate_direction_method}
+%\include{./sections/quasi-Newton_methods}
+%\include{./sections/pseudoinverse}
+%\include{./sections/least_squares}
+%\include{./sections/recursive_least_squares}
+%\include{./sections/standard_minimization}
+%\include{./sections/particle_swarm_optimization}
+
+%% Part 3: Linear Programming
+%\include{./sections/linear_programming}
+%\include{./sections/linear_programming_and_duality}
+
+%% Part 4: Nonlinear Constrained Optimization
+%\include{./sections/FONC_SONC_SOSC_unconstrained_opt}
+%\include{./sections/Lagrange's_condition}
+%\include{./sections/KKT_condition}
+%\include{./sections/convex_and_concave}
+
+\end{document}
