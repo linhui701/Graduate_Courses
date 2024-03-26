@@ -1,0 +1,171 @@
+\maketitle
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Quadratic Forms \medskip}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+\begin{itemize}
+	\item \(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\) is a \underline{quadratic} function if
+
+	\begin{equation*}
+		f(\boldsymbol{x})=\boldsymbol{x}^{T} \boldsymbol{Q} \boldsymbol{x}+\boldsymbol{b}^{T} \boldsymbol{x}+c,
+	\end{equation*}
+	
+	where \(\boldsymbol{Q}\) is {\color{black}symmetric}.
+
+	\item \(\boldsymbol{Q}\) is symmetric if \(\boldsymbol{Q}=\boldsymbol{Q}^{\top}\).
+	
+	\item A symmetric matrix \(\boldsymbol{Q}\) is said to be \underline{positive definite} (p.d.) if \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}>0\) for {\color{black}all nonzero} vectors \(\boldsymbol{x}\).
+	
+	\item It is \underline{positive semi-definite} (p.s.d.) if \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \geq 0\) for {\color{black}all} \(\boldsymbol{x}\).
+	
+	\item Similarly, \underline{negative definite} (n.d.) and \underline{negative semi-definite} (n.s.d.),  if \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}<0\) for {\color{black}all nonzero} vectors \(\boldsymbol{x}\), or \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \leq 0\) for {\color{black}all} \(\boldsymbol{x}\), respectively.
+	
+	\item If a  \(n \times n\) matrix \(\boldsymbol{Q}_{0}\) is not symmetric, we can always replace it with the symmetric, as
+
+	\begin{equation*}
+		\begin{gathered}
+			\boldsymbol{Q}=\boldsymbol{Q}^{T}=\frac{1}{2}\left(\boldsymbol{Q}_{0}+\boldsymbol{Q}_{0}^{T}\right), \\
+			\boldsymbol{x}^{T} \boldsymbol{Q} \boldsymbol{x}=\boldsymbol{x}^{T} \boldsymbol{Q}_{0} \boldsymbol{x}=\boldsymbol{x}^{T}\left(\frac{1}{2} \boldsymbol{Q}_{0}+\frac{1}{2} \boldsymbol{Q}_{0}^{T}\right) \boldsymbol{x}.
+		\end{gathered}
+	\end{equation*}
+	
+	\item The leading principal minors of matrix \(\boldsymbol{Q}\) are,
+	
+	\begin{equation*}
+		\begin{gathered}
+			\Delta_{1}=q_{11}, \quad \Delta_{2}=\operatorname{det}\left[\begin{array}{ll}
+				q_{11} & q_{12} \\
+				q_{21} & q_{22}
+			\end{array}\right], 
+			\Delta_{3}=\operatorname{det}\left[\begin{array}{lll}
+				q_{11} & q_{12} & q_{13} \\
+				q_{21} & q_{22} & q_{23} \\
+				q_{31} & q_{32} & q_{33}
+			\end{array}\right], \quad \ldots
+		\end{gathered}
+	\end{equation*}
+
+	\item For an \(n \times n\) symmetric real matrix \(\boldsymbol{Q}\),
+	\begin{equation*}
+		\begin{aligned}
+			\boldsymbol{Q} \text{ positive-definite }  &  \Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}>0 \text { for all } \boldsymbol{x} \in \mathbb{R}^n \backslash\{\boldsymbol{0}\}, \\
+			\boldsymbol{Q}  \text{ positive semi-definite } & \Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \geq 0 \text{ for all } \boldsymbol{x} \in \mathbb{R}^n, \\
+			\boldsymbol{Q} \text { negative-definite } & \Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}<0 \text { for all } \boldsymbol{x} \in \mathbb{R}^n \backslash\{\boldsymbol{0}\}, \\
+			\boldsymbol{Q} \text { negative semi-definite } &\Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \leq 0 \text { for all } \boldsymbol{x} \in \mathbb{R}^n.
+		\end{aligned}
+	\end{equation*}
+	
+	\item For an \(n \times n\) Hermitian complex matrix \(\boldsymbol{Q}\),
+	\begin{equation*}
+		\begin{aligned}
+			\boldsymbol{Q} \text{ positive-definite }, \boldsymbol{Q} \succ 0 &  \Longleftrightarrow \quad
+			\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}>0 \text { for all } \boldsymbol{x} \in \mathbb{C}^n \backslash\{\boldsymbol{0}\}, \\
+			\boldsymbol{Q}  \text{ positive semi-definite }, \boldsymbol{Q}  \succeq 0 & \Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \geq 0 \text{ for all } \boldsymbol{x} \in \mathbb{C}^n, \\
+			\boldsymbol{Q} \text { negative-definite }, \boldsymbol{Q}  \prec 0 & \Longleftrightarrow \quad
+			\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}<0 \text { for all } \boldsymbol{x} \in \mathbb{C}^n \backslash\{\boldsymbol{0}\}, \\
+			\boldsymbol{Q} \text { negative semi-definite }, \boldsymbol{Q}  \preceq 0 &\Longleftrightarrow \quad \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} \leq 0 \text { for all } \boldsymbol{x} \in \mathbb{C}^n.
+		\end{aligned}
+	\end{equation*}
+	
+	
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.6 Sylvester's Criterion. A quadratic form (\(\boldsymbol{Q}\) is symmetric) \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}, \boldsymbol{Q}=\boldsymbol{Q}^{\top}\), is positive definite if and only if the leading principal minors of \(\boldsymbol{Q}\) are positive.
+
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) 3.7  A symmetric matrix \(\boldsymbol{Q}\) is positive definite (or positive semidefinite) if and only if all eigenvalues of \(\boldsymbol{Q}\) are positive (or non-negative).
+
+	\item A necessary condition for a real quadratic form to be positive semi-definite is that the leading principal minors be nonnegative. However, it is not a sufficient condition.
+	
+	\item A real quadratic form is positive semi-definite if and only if all principal minors are non-negative.
+	
+\end{itemize}
+
+
+
+%------------------------------------------------------%
+\subsection{Examples}
+%------------------------------------------------------%
+Example 1: (1) Given set \(\Omega=\left\{\boldsymbol{x} \in \mathbb{R}^{3}\right\}\),
+
+(2) \(\Omega=\left\{\boldsymbol{x} \in \mathbb{R}^{3}: x_{1}+x_{3}=0, x_{1}+x_{2}+x_{3}=0\right\}\), is the quadratic form,
+
+\begin{equation*}
+	f(\boldsymbol{x})=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}=\boldsymbol{x}^{\top}\left[\begin{array}{ccc}
+		5 & 3 & 0 \\
+		0 & 0 & 5 \\
+		7 & 3 & 1
+	\end{array}\right] \boldsymbol{x},
+\end{equation*}
+
+p.d, p.s.d, n.d, n.s.d, or indefinite on \(\mathbb{R}^{3}\)?
+
+\noindent
+\textbf{Short answer:}
+
+(1) Notice that \(\boldsymbol{Q}\) is not symmetric, first convert it to standard form
+
+\begin{equation*}
+	f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{Q}+\boldsymbol{Q}^{\top}\right) \boldsymbol{x}=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ccc}
+		10 & 3 & 7 \\
+		3 & 0 & 8 \\
+		7 & 8 & 2
+	\end{array}\right] \boldsymbol{x} .
+\end{equation*}
+
+Since leading principal minors \(10>0\) and \(\operatorname{det}\left[\begin{array}{cc}10 & 3 \\ 3 & 0\end{array}\right]<0, f(\boldsymbol{x})\) is indefinite on \(\mathbb{R}^{3}\).
+
+
+(2) Let \(\boldsymbol{x}=\left[\begin{array}{lll}a & 0 & -a\end{array}\right]^{\top}, a \in \mathbb{R}\), and \(a \neq 0\). Then \(f(\boldsymbol{x})=-a^{2}<0\). Therefore, \(f(\boldsymbol{x})\) is negative definite on the set \(\Omega\).
+
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+Example 2: Is the matrix
+
+\begin{equation*}
+	\boldsymbol{Q}=\left[\begin{array}{ccc}
+		\alpha^{4} & \alpha^{3} & \alpha^{2} \\
+		\alpha^{3} & \alpha^{2} & \alpha^{1} \\
+		\alpha^{2} & \alpha^{1} & 1
+	\end{array}\right]
+\end{equation*}
+
+where \(\alpha \in \mathbb{R}\), p.d, p.s.d, n.d, n.s.d or indefinite?
+
+\noindent
+\textbf{Short answer:}
+Let \(\boldsymbol{v}=\left[\begin{array}{lll}\alpha^{2} & \alpha^{1} & 1\end{array}\right]^{\top}\). Then \(\boldsymbol{Q}=\boldsymbol{v} \boldsymbol{v}^{\top}\) and \(\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}=\boldsymbol{x}^{\top} \boldsymbol{v} \boldsymbol{v}^{\top} \boldsymbol{x}=\left(\boldsymbol{x}^{\top} \boldsymbol{v}\right)^{2} \geq 0\). Therefore, \(\boldsymbol{Q}\) is positive semi-definite.
+
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+Example 3: Find the range of the coefficient \(\beta\) for the function:
+
+\begin{equation*}
+	f\left(x_{1}, x_{2}, x_{3}\right)=2 x_{1} x_{3}-x_{1}^{2}-x_{2}^{2}-5 x_{3}^{2}-2 \beta x_{1} x_{2}-4 x_{2} x_{3}
+\end{equation*}
+
+is negative semi-definite.
+
+\noindent
+\textbf{Short answer:}
+If \(f(\boldsymbol{x})\) is n.s.d, then \(-f(\boldsymbol{x})\) is p.s.d.
+
+\begin{equation*}
+	-f(\boldsymbol{x})=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}=\boldsymbol{x}^{\top}\left[\begin{array}{ccc}
+		1 & \beta & -1 \\
+		\beta & 1 & 2 \\
+		-1 & 2 & 5
+	\end{array}\right] \boldsymbol{x} .
+\end{equation*}
+
+Let \(\operatorname{det}\left[\begin{array}{ll}1 & \beta \\ \beta & 1\end{array}\right]=1-\beta^{2} \geq 0\) and \(\operatorname{det}(\boldsymbol{Q})=-5 \beta^{2}-4 \beta \geq 0\), we have \(\beta \in\left[-\frac{4}{5}, 0\right]\).
+
+\bigskip
+
+\noindent
+[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
