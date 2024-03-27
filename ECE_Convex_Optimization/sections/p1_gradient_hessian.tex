@@ -1,0 +1,374 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Gradient and Hessian}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+\begin{itemize}
+	\item[({\bf{1}})] Given \(f: \mathbb{R} \rightarrow \mathbb{R}\), if the limit exists, the derivative of \(f\) is a function \(f^{\prime}: \mathbb{R} \rightarrow \mathbb{R}\) given by
+	\[
+	D_{x}(f(x)) = \frac{\mathrm{d} f}{\mathrm{d} x} = f^{\prime}(x)=\lim _{h \rightarrow 0} \frac{f(x+h)-f(x)}{h}.
+	\]
+	
+	\item[({\bf{2}})] Given \(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\), consider a scalar \( f(\boldsymbol{x}) = a_{1} x_{1}+a_{2} x_{2}+\cdots+a_{n} x_{n} =  \boldsymbol{a}^{\top} \boldsymbol{x}\).
+	
+	For \textbf{derivative} rule (2), 
+	\[ 
+	{\color{red}{D_{\boldsymbol{x}}}} { f(\boldsymbol{x}) } =
+	{\color{black}{D(}}{ \boldsymbol{a}^{\top} \boldsymbol{x} }{\color{black})} 
+	= \begin{tikzpicture}[baseline=(current bounding box.center)]
+		\matrix (m) [matrix of math nodes, inner sep=1.8pt, row sep=0pt, left delimiter={[},right delimiter={]}] {
+			\frac{\partial f}{\partial x_1} (\boldsymbol{x}) & \frac{\partial f}{\partial x_2}(\boldsymbol{x}) & \cdots & \frac{\partial f}{\partial x_n}(\boldsymbol{x}) \\
+		};
+		\draw[red] (m-1-1.north west) rectangle (m-1-4.south east);
+	\end{tikzpicture}
+	=\left[\begin{array}{cccc}
+		a_{1} & a_{2} &  \cdots & a_{n}
+	\end{array}
+	\right] = {\color{red}{ \boldsymbol{a}^{\top} }}.
+	\]
+	
+	For \textbf{gradient} rule (2), \underline{if \(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\) is differentiable}, then the \textit{gradient} of \(f\) is a function \(\nabla f: \mathbb{R}^{n} \rightarrow \mathbb{R}^{n}\) given by
+	\[  {\color{blue}{\nabla}_{\boldsymbol{x}} } f(\boldsymbol{x})
+	= \begin{tikzpicture}[baseline=(current bounding box.center)]
+		\matrix (m) [matrix of math nodes, inner sep=2pt, left delimiter={[},right delimiter={]}, nodes in empty cells] {
+			\frac{\partial f}{\partial x_1} (\boldsymbol{x}) \\
+			|[minimum height=0.5cm]|  \vdots \\
+			\frac{\partial f}{\partial x_n} (\boldsymbol{x}) \\
+		};
+		\draw[blue] (m-1-1.north west) rectangle (m-3-1.south east);
+	\end{tikzpicture}
+	= \left[ \begin{array}{c} a_1  \\ \vdots \\ a_n \end{array} \right]
+	= {\color{blue}{ \boldsymbol{a} }}
+	= D_{\boldsymbol{x}} f(\boldsymbol{x}) ^{\top}.
+	\] 
+	
+	\item[({\bf{3}})] Given \(\boldsymbol{g}: \mathbb{R} \rightarrow \mathbb{R}^m \), here \(t \in \mathbb{R} \) is a scalar. \(\boldsymbol{g}(t)\) is a column vector.
+	\[
+	\begin{aligned}
+		\boldsymbol{g}(t) =
+		\left[
+		\begin{array}{c}
+			g_{1}(t) \\
+			\vdots \\
+			g_{m}(t)
+		\end{array}
+		\right], \quad
+		D_{t} \boldsymbol{g}(t) & =\left[
+		\begin{aligned}
+			\frac{\mathrm{d}}{\mathrm{d} t}g_{1}(t) \\
+			\vdots \qquad \\
+			\frac{\mathrm{d}}{\mathrm{d} t}g_{m}(t)
+		\end{aligned}
+		\right] =\left[\begin{array}{c}
+			g_{1}^{\prime}(t) \\
+			\vdots \\
+			g_{m}^{\prime}(t)
+		\end{array}\right].  \\
+	\end{aligned}
+	\]
+	
+	\item[({\bf{4}})] Consider \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^m \),  here \( \boldsymbol{x} \in  \mathbb{R}^n \) is a vector. Since \(g_{i}(\boldsymbol{x})\) is a scalar, \(\boldsymbol{g}=\left[g_1, \ldots, g_m\right]^{\top} \), \(\boldsymbol{g}(\boldsymbol{x})\) is a column vector.
+	\[
+	\begin{aligned}
+		\boldsymbol{g} \left( \boldsymbol{x} \right)=
+		\left[
+		\begin{array}{c}
+			g_{1}( \boldsymbol{x} ) \\
+			g_{2}( \boldsymbol{x} ) \\
+			\vdots \\
+			g_{m}( \boldsymbol{x} )
+		\end{array}
+		\right], 
+		D_{\boldsymbol{x}} \boldsymbol{g}\left( \boldsymbol{x} \right) & =\left[
+		\begin{array}{c}
+			{ \color{red}D_{\boldsymbol{x}} } g_{1}\left( x_1,x_2,\cdots,x_n \right) \vspace{0.3cm} \\
+			{ \color{red}D_{\boldsymbol{x}} } g_{2}\left( x_1,x_2,\cdots,x_n \right)  \\
+			\vdots \\
+			{ \color{red}D_{\boldsymbol{x}} } g_{m}\left( x_1,x_2,\cdots,x_n \right) 
+		\end{array}
+		\right]
+		= \begin{tikzpicture}[baseline=(current bounding box.center)]
+			\matrix [matrix of math nodes, inner sep=2pt, left delimiter={[},right delimiter={]}] (m) {
+				|[minimum height=1cm]| \frac{\partial}{\partial x_1} g_1 & \frac{\partial}{\partial x_2} g_1 & \cdots & \frac{\partial}{\partial x_n} g_1 \\
+				\frac{\partial}{\partial x_1} g_2 & \frac{\partial}{\partial x_2} g_2 & \cdots & \frac{\partial}{\partial x_n} g_2 \\
+				\vdots & \vdots & \ddots & \vdots \\
+				\frac{\partial}{\partial x_1} g_m & \frac{\partial}{\partial x_2} g_m & \cdots & \frac{\partial}{\partial x_n} g_m \\
+			};
+			\draw[red] (m-1-1.north west) rectangle (m-1-4.south east);
+			\draw[red] (m-2-1.north west) rectangle (m-2-4.south east);
+			\draw[red] (m-4-1.north west) rectangle (m-4-4.south east);
+		\end{tikzpicture}
+		= \mathbf{J}.
+	\end{aligned}
+	\]
+	The matrix \(\mathbf{J}\) is called the \underline{Jacobian matrix}, or derivative matrix, of function \(\boldsymbol{g}\).
+	
+	\item Note that, \( D \left( f(\boldsymbol{x}) \right)\) is spreading the derivative of the polynomials on the horizontal direction. The second derivative of \(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\) (also called the Hessian of \(f\) ) is
+	\[ D^{2} \left( f(\boldsymbol{x}) \right)
+	= D \left(  D f \left( \boldsymbol{x} \right)^{\top} \right)
+	= D(\nabla f(\boldsymbol{x}))
+	= \left[\begin{array}{c}    
+		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} }\right) \\    
+		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} }\right) \\    
+		\vdots \\    
+		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} }\right)    
+	\end{array}
+	\right]
+	=\begin{tikzpicture}[baseline=(current bounding box.center)]
+		\matrix (m) [matrix of math nodes, inner sep=2pt, left delimiter={[}, right delimiter={]}] {
+			|[minimum height=1cm]| \frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_1}} & \frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_1}} & \cdots & \frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_1}} \\
+			\frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_2}} & \frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_2}} & \cdots & \frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_2}} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			\frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_n}} & \frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_n}} & \cdots & \frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_n}} \\
+		};
+		\foreach \i in {1,2,4} {
+			\draw (m-\i-1.north west) rectangle (m-\i-4.south east);
+		}
+	\end{tikzpicture} .
+	\]
+\end{itemize}
+
+\begin{itemize}
+	\item In summary, the derivative rules are listed as,
+	% align automatically places the equations in math mode 
+	\begin{align*}
+		{\color{red} D(} \boldsymbol{a}^{\top} \boldsymbol{x} {\color{red})} 
+		&= \boldsymbol{a}^{\top}, \qquad &
+		\fbox{\parbox{0.36\textwidth}{\( (2) f: \mathbb{R}^{n} \rightarrow \mathbb{R}, f(\boldsymbol{x}) =  \boldsymbol{a}^{\top} \boldsymbol{x} \)}} \\
+		{\color{red} D(} \boldsymbol{g}(t) {\color{red})} 
+		&= \left[ \begin{array}{c} \vdots \\ g_{*}'(t) \\ \vdots \end{array} \right], \qquad &
+		\fbox{\parbox{0.36\textwidth}{\( (3) \boldsymbol{g}: \mathbb{R} \rightarrow \mathbb{R}^{n}, \boldsymbol{g}(t) =  \left[ \begin{array}{c} \vdots \\ g_{*}(t) \\ \vdots \end{array} \right] \)}} \\
+		{\color{red} D(} \mathbf{A} \boldsymbol{x} {\color{red})} 
+		&= {\color{black} \mathbf{A}}, \qquad &
+		\fbox{\parbox{0.36\textwidth}{\( (4) \boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}, \boldsymbol{g}(\boldsymbol{x}) =  \mathbf{A} \boldsymbol{x} \)}} \\
+		{\color{red} D(} \mathbf{A}(\alpha \boldsymbol{x}) {\color{red})} 
+		&= {\color{black} \alpha \mathbf{A}}, \\
+		\frac{\mathrm{d}}{\mathrm{d} \alpha}( {\color{black}\mathbf{A}(\alpha \boldsymbol{x})} ) &= {\color{black} \mathbf{A} \boldsymbol{x}}, \\
+		{\color{blue}\nabla} \boldsymbol{a}^{\top} \boldsymbol{x} 
+		&= \boldsymbol{a},  \qquad & 
+		\fbox{\parbox{0.36\textwidth}{\( (2) f: \mathbb{R}^{n} \rightarrow \mathbb{R}, f(\boldsymbol{x}) =  \boldsymbol{a}^{\top} \boldsymbol{x} \)}} \\
+		{\color{blue}\nabla} \mathbf{A} \boldsymbol{x} 
+		&= \mathbf{A}^{\top}, \qquad & 
+		\fbox{\parbox{0.36\textwidth}{\( (4) \boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}, \boldsymbol{g}(\boldsymbol{x}) =  \mathbf{A} \boldsymbol{x} \)}} \\
+		{\color{blue}\nabla} \mathbf{A}(\alpha \boldsymbol{x}) 
+		&=  \alpha \mathbf{A}^{\top}. \\
+	\end{align*}
+
+	\item Note that for \underline{ \(f: \mathbb{R}^n \rightarrow \mathbb{R}\) }, we have
+	\[
+	{\color{blue} \nabla} f(\boldsymbol{x})={\color{red} D} f(\boldsymbol{x})^{\top}.
+	\]
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Differentiation product rules}
+\textbf{i)} Let \(f: \mathbb{R} \rightarrow \mathbb{R}\) and \(g: \mathbb{R} \rightarrow \mathbb{R}\) be two differentiable functions, \(x \in \mathbb{R}\),
+\[ 
+\begin{aligned}
+	D \bigg (f(x) g(x) \bigg )
+	& = f(x)  D g(x)
+	+g(x)  D f(x),  \\
+	\nabla \bigg (f(x) g(x) \bigg )
+	& = f(x)  \nabla g(x)
+	+g(x)  \nabla f(x). 
+\end{aligned}
+\]
+
+\noindent
+\textbf{ii)} Let \(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\) and \(g: \mathbb{R}^{n} \rightarrow \mathbb{R}\) be two differentiable functions, \(\boldsymbol{x} \in \mathbb{R}^{n}\),
+\[ 
+\begin{aligned}
+	D \bigg (f(\boldsymbol{x}) g(\boldsymbol{x}) \bigg )
+	& = f(\boldsymbol{x}) \big [\begin{array}{ccc}
+		&D g(\boldsymbol{x}) & \end{array} \big ] 
+	+g(\boldsymbol{x}) \big [\begin{array}{ccc} & D f(\boldsymbol{x}) &
+	\end{array} \big ], \\
+	\nabla \bigg (f(\boldsymbol{x}) g(\boldsymbol{x}) \bigg )
+	& = f(\boldsymbol{x}) \left [\begin{array}{c}
+		\\ \nabla g(\boldsymbol{x}) \\  \\ \end{array} \right ] 
+	+g(\boldsymbol{x}) \left [\begin{array}{c} \\ \nabla f(\boldsymbol{x}) \\ \\
+	\end{array} \right ].
+\end{aligned}
+\]
+
+\noindent
+\textbf{iii)} Let \( \boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) and \( \boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) be two differentiable functions, \(\boldsymbol{x} \in \mathbb{R}^{n}\),
+\[ 
+\begin{aligned}
+	D \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
+	& =\boldsymbol{f}(\boldsymbol{x})^{\top} D \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} D \boldsymbol{f}(\boldsymbol{x}), \\
+	\nabla \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
+	& =\boldsymbol{f}(\boldsymbol{x})^{\top} \nabla \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} \nabla \boldsymbol{f}(\boldsymbol{x}). \\
+\end{aligned}
+\]
+
+\begin{itemize}
+	\item Based on the above \textbf{derivative} rule, we have
+	
+	\textbf{1.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
+	\begin{align*}
+		D\left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{y}^{\top} \mathbf{A}, \\
+		D\left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\boldsymbol{x}^{\top}\left(\mathbf{A}+\mathbf{A}^{\top}\right).  \qquad
+		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
+	\end{align*}
+	
+	
+	\textbf{2.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
+	\[ D\left(\boldsymbol{y}^{\top} \boldsymbol{x}\right)=\boldsymbol{y}^{\top}. \]
+	
+	\textbf{3.} Consider if \(\mathbf{Q}\) is a symmetric matrix, then
+	\[
+	D\left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)=2 \boldsymbol{x}^{\top} \mathbf{Q}.
+	\]
+	
+	In particular,
+	\[
+	D\left(\boldsymbol{x}^{\top} \boldsymbol{x}\right)=2 \boldsymbol{x}^{\top}.
+	\]
+	
+	\item Based on the above \textbf{gradient} rule, we have
+	
+	\textbf{1.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
+	\begin{align*}
+		\nabla \left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) &= \mathbf{A}^{\top} \boldsymbol{y}, \\
+		\nabla  \left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right) &=
+		\left(\mathbf{A}+\mathbf{A}^{\top}\right) \boldsymbol{x}.  \qquad
+		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
+	\end{align*}
+	
+	
+	\textbf{2.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{n}\) a given vector. Then,
+	\[ \nabla \left(\boldsymbol{y}^{\top} \boldsymbol{x}\right)=\boldsymbol{y}. \]
+	
+	\textbf{3.} Consider if \(\mathbf{Q}\) is a symmetric matrix, then
+	\[
+	\nabla \left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)=2  \mathbf{Q} \boldsymbol{x}.
+	\]
+	
+	In particular,
+	\[
+	\nabla \left(\boldsymbol{x}^{\top} \boldsymbol{x}\right)=2 \boldsymbol{x}.
+	\]
+	
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Examples}
+%------------------------------------------------------%
+Example 1: For the function
+
+\begin{equation*}
+	f(\boldsymbol{x})=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}=\boldsymbol{x}^{\top}\left[\begin{array}{cccc}
+		1 & 0 & 0 & 8 \\
+		8 & 0 & 1 & 0 \\
+		0 & 1 & 0 & 5 \\
+		8 & 0 & 3 & 1
+	\end{array}\right] \boldsymbol{x}
+\end{equation*}
+
+find \(D f(\boldsymbol{x})\) and \(F(\boldsymbol{x})\).
+
+\noindent
+\textbf{Short answer:}
+
+\begin{equation*}
+	\begin{aligned}
+		f(\boldsymbol{x}) & =\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{Q}+\boldsymbol{Q}^{\top}\right)\boldsymbol{x} \\
+		& =\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{cccc}
+			2 & 8 & 0 & 16 \\
+			8 & 0 & 2 & 0 \\
+			0 & 2 & 0 & 8 \\
+			16 & 0 & 8 & 2
+		\end{array}\right] \boldsymbol{x} \\
+		& = \frac{1}{2} \boldsymbol{x}^{\top} \tilde{\boldsymbol{Q}} \boldsymbol{x} .
+	\end{aligned}
+\end{equation*}
+
+Therefore, \(D f(\boldsymbol{x})=\boldsymbol{x}^{\top} \tilde{\boldsymbol{Q}}\), and \(F(\boldsymbol{x})=\tilde{\boldsymbol{Q}}\).
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+Example 2: Find \(D f(\boldsymbol{x})\) of \(f(\boldsymbol{x})=\boldsymbol{x}^{\top}\left[\begin{array}{ll}1 & 5 \\ 2 & 3\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{c}-2 \\ 3\end{array}\right]+\pi\); Find the Hessian of \(f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}2 & 3 \\ 7 & 1\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{c}1 \\ -3\end{array}\right]+\log 3\).
+
+\noindent
+\textbf{Short answer:}
+
+(1) \(f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}2 & 7 \\ 7 & 6\end{array}\right] \boldsymbol{x}-\left[\begin{array}{ll}-2 & 3\end{array}\right] \boldsymbol{x}+\pi\). Therefore,
+
+\begin{equation*}
+	\begin{aligned}
+		D f(\boldsymbol{x}) & =\boldsymbol{x}^{\top}\left[\begin{array}{ll}
+			2 & 7 \\
+			7 & 6
+		\end{array}\right]-\left[\begin{array}{ll}
+			-2 & 3
+		\end{array}\right] \\
+		& =\left[2 \boldsymbol{x}_{1}+7 \boldsymbol{x}_{2}+2 \quad 7 \boldsymbol{x}_{1}+6 \boldsymbol{x}_{2}-3\right] .
+	\end{aligned}
+\end{equation*}
+
+(2) \(F(\boldsymbol{x})=\left[\begin{array}{ll}2 & 5 \\ 5 & 1\end{array}\right]\)
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+Example 3: For the function \(f=f\left(x_{1}, x_{2}\right)=x_{1}^{2} x_{2}+x_{2}^{3} x_{1}\),
+
+(1) find the gradient of \(f\) at \(\boldsymbol{x}=\left[\begin{array}{ll}2 & 1\end{array}\right]^{\top}\);
+
+(2) find the rate of increase of \(f\) at the point \(\boldsymbol{x}=\left[\begin{array}{ll}2 & 1\end{array}\right]^{\top}\) in the direction \(\boldsymbol{d}=\left[\begin{array}{ll}4 & 3\end{array}\right]^{\top}\).
+
+\noindent
+\textbf{Short answer:}
+(1) \(\nabla f(\boldsymbol{x})=\left[\begin{array}{l}\frac{\partial f}{\partial x_{1}} \\ \frac{\partial f}{\partial x_{2}}\end{array}\right]=\left[\begin{array}{l}2 x_{1} x_{2}+x_{2}^{3} \\ x_{1}^{2}+3 x_{1} x_{2}^{2}\end{array}\right], \nabla f(\left[\begin{array}{c}2 \\ 1\end{array}\right])=\left[\begin{array}{c}5 \\ 10\end{array}\right]\).
+
+(2) \(\frac{\boldsymbol{d}^{\top}}{\|\boldsymbol{d}\|} \nabla f(\boldsymbol{x})=10\).
+
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+Example 4: Consider the function
+
+\begin{equation*}
+	f(\boldsymbol{x})=\left(\boldsymbol{a}^{\top} \boldsymbol{x}\right)\left(\boldsymbol{b}^{\top} \boldsymbol{x}\right),
+\end{equation*}
+
+where \(\boldsymbol{a}, \boldsymbol{b}\), and \(\boldsymbol{x}\) are \(n\)-dimensional vectors.
+
+(1) Find \(\nabla f(\boldsymbol{x})\).
+
+(2) Find the Hessian \(F(\boldsymbol{x})\).
+
+\noindent
+\textbf{Short answer:}
+(1) We have
+
+\begin{equation*}
+	f(\boldsymbol{x})=\left(\boldsymbol{a}^{\top} \boldsymbol{x}\right)\left(\boldsymbol{b}^{\top} \boldsymbol{x}\right)=\boldsymbol{x}^{\top}\left(\boldsymbol{a} \boldsymbol{b}^{\top}\right) \boldsymbol{x}=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x},
+\end{equation*}
+
+where \(\boldsymbol{Q} \in \mathbb{R}^{n \times n}\). Note that \(\boldsymbol{Q}\) can be non-symmetric. We then first symmetrize the quadratic form as
+
+\begin{equation*}
+	f=\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{Q}+\boldsymbol{Q}^{\top}\right) \boldsymbol{x}=\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}\right) \boldsymbol{x} .
+\end{equation*}
+
+Therefore,
+
+\begin{equation*}
+	\nabla f(\boldsymbol{x})=\left(\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}\right) \boldsymbol{x}
+\end{equation*}
+
+(2) \(F(x)=\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}\).
+
+\bigskip
+
+\noindent
+[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
