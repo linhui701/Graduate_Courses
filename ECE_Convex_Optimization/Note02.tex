@@ -625,14 +625,15 @@
 	\]
 	
 	\item Consider Hessian matrix, which is second order derivative of scalar. Noted that, \( D \left( f(\boldsymbol{x}) \right)\) is spreading the derivative of the polynomials on the horizontal direction. Thus, we would like to ensure each entry is located on a vertical direction, then the entry could be applied to conduct derivative, as
-	\[ D^{2} \left( f(\boldsymbol{x}) \right)
-	= D \left(  D f \left( \boldsymbol{x} \right)^{\top} \right)
-	= D(\nabla f(\boldsymbol{x}))
-	= \left[\begin{array}{c}    
-		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} }\right) \\    
-		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} }\right) \\    
-		\vdots \\    
-		D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} }\right)    
+	\[ \begin{aligned}
+	D^{2} \Big( f(\boldsymbol{x}) \Big)
+	& = D \Big(  D f \left( \boldsymbol{x} \right)^{\top} \Big)
+	= D \Big( \nabla f(\boldsymbol{x}) \Big) \\
+	& = \left[\begin{array}{ccccccc}    
+		& & & D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} }\right) & & & \\    
+		& & & D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} }\right) & & & \\    
+		& & & \vdots & & & \\    
+		& & & D\left(\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} }\right) & & & 
 	\end{array}
 	\right]
 	=\begin{tikzpicture}[baseline=(current bounding box.center)]
@@ -646,7 +647,45 @@
 			\draw (m-\i-1.north west) rectangle (m-\i-4.south east);
 		}
 	\end{tikzpicture} .
+	\end{aligned}
 	\]
+	
+	\item Similarly, the second order gradient of scalar is
+	\[ \begin{aligned}
+	\nabla^{2} \Big( f(\boldsymbol{x}) \Big)
+	& = \nabla \Big(  \nabla f \left( \boldsymbol{x} \right)^{\top} \Big)
+	= \nabla \Big( D f(\boldsymbol{x}) \Big) 
+	= \nabla \Big( \left[
+		\begin{array}{cccc}
+		\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} } &
+		\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} } & 
+		\cdots &
+		\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} } \end{array}\right] \Big) \\
+	& = \left[\begin{array}{cccc}
+		& & &  \\
+		& & &  \\
+		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{1}} }\right) &    
+		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{2}} }\right) &    
+		\cdots &    
+		\nabla \left(\frac{\partial f}{ \color{forestgreen}{\partial x_{n}} }\right) \\ 
+		& & & \\
+		& & &  \\
+	\end{array}
+	\right]
+	=\begin{tikzpicture}[baseline=(current bounding box.center)]
+		\matrix (m) [matrix of math nodes, inner sep=2pt, left delimiter={[}, right delimiter={]}] {
+			|[minimum width=1.5cm]| \frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_1}} & \frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_2}} & \cdots & \frac{\partial^2 f}{\partial x_1 \partial \textcolor{forestgreen}{x_n}} \\
+			\frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_1}} & \frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_2}} & \cdots & \frac{\partial^2 f}{\partial x_2 \partial \textcolor{forestgreen}{x_n}} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			\frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_1}} & \frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_2}} & \cdots & \frac{\partial^2 f}{\partial x_n \partial \textcolor{forestgreen}{x_n}} \\
+		};
+		\foreach \i in {1,2,4} {
+			\draw (m-1-\i.north west) rectangle (m-4-\i.south east);
+		}
+	\end{tikzpicture} .
+	\end{aligned}
+	\]
+	
 
 \end{itemize}
 
@@ -688,14 +727,37 @@
 \[ 
 \begin{aligned}
 	D \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
-	& =\boldsymbol{f}(\boldsymbol{x})^{\top} D \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} D \boldsymbol{f}(\boldsymbol{x}), \\
+	& = \left[ \begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} \right]
+		\left[ \begin{array}{ccc} & & \\ & D \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array} \right]
+		+ \left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
+		\left[ \begin{array}{ccc} & & \\ & 	D \boldsymbol{f}(\boldsymbol{x})  & \\ & & \end{array} \right], \\
 	\nabla \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
-	& = \nabla \boldsymbol{f}(\boldsymbol{x}) \left [\begin{array}{c}\\  \boldsymbol{g}(\boldsymbol{x}) \\  \\ \end{array} \right ] 
-   		+ \nabla\boldsymbol{g} (\boldsymbol{x}) \left[\begin{array}{c}\\  f(\boldsymbol{x}) \\  \\ \end{array} \right] . \\
+	& = \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{f}(\boldsymbol{x}) & \\ & & \end{array} \right]
+		\left[\begin{array}{c}\\  \boldsymbol{g}(\boldsymbol{x}) \\  \\ \end{array} \right ] 
+   		+ \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{g} (\boldsymbol{x}) & \\ & & \end{array} \right]
+   		\left[\begin{array}{c}\\  \boldsymbol{f}(\boldsymbol{x}) \\  \\ \end{array} \right] . \\
 \end{aligned}
 \]
 
+
+%------------------------------------------------------%
+\subsection{Differentiation rules}
+
 \begin{itemize}
+	\item If \(f=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}\) is a scalar, \(f^{\top}=f\).
+	
+	\item If \(\mathbf{Q}\) is not symmetric, we can always replace it with a symmetric matrix, 
+	\[
+	\left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)^{\top}=\boldsymbol{x}^{\top} \mathbf{Q}^{\top} \boldsymbol{x}=\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x} .
+	\]
+	
+	Continue with manipulations,
+	\[
+	\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}=\frac{1}{2} \boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}+\frac{1}{2} \boldsymbol{x}^{\top} \mathbf{Q x}=\boldsymbol{x}^{\top}\left(\frac{\mathbf{Q}+\mathbf{Q}^{\top}}{2}\right) \boldsymbol{x},
+	\]
+	where \(\frac{1}{2}\left(\mathbf{Q}+\mathbf{Q}^{\top}\right) = \frac{1}{2}\left(\mathbf{Q}+\mathbf{Q}^{\top}\right)^{\top}\) is a symmetric matrix.
+	
+	
 	\item Based on the above \textbf{derivative} rule, we have
 
 	\textbf{1.} Consider \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
@@ -749,14 +811,47 @@
 
 
 %------------------------------------------------------%
-\subsection{Derivation details}
+\subsection{Derivative details}
 
 \begin{itemize}
 	\item Let \(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) be two differentiable functions, \(\boldsymbol{x} \in \mathbb{R}^{n}\),
 	\[ D \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
 	=\boldsymbol{f}(\boldsymbol{x})^{\top} D \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} D \boldsymbol{f}(\boldsymbol{x}). \]
+	
+	We can write it into compact matrix form as,
+	\[
+	\begin{aligned}
+		D\left( \sideset{^{1 \backslash m}}{}{ 
+			\left. \boldsymbol{\Big[}
+			\begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} 
+			\boldsymbol{\Big]}
+			\right.
+			}
+		\sideset{^{m \backslash 1}}{}{ 
+			\left[ \begin{array}{c} \\ \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+		}
+		\right)
+		& = \hspace{0.6cm}
+		\left. \sideset{^{1 \backslash m}}{}{
+			\left[ \begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} \right]
+		}
+		\sideset{^{m \backslash n}}{}{
+			\left[ \begin{array}{c} \\ D \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+		}
+		\right. \\
+		&  \hspace{0.7cm} +
+		\left. \sideset{^{1 \backslash m}}{}{
+			\left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
+		}
+		\sideset{^{m \backslash n}}{}{
+			\left[ \begin{array}{c} \\ D\boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right].
+		}
+		\right.
+	\end{aligned}
+	\]
 
-	Proof. 
+	\textbf{Short proof},
+	
 	\(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\), \(\boldsymbol{x} \in \mathbb{R}^{n}\), write the derivative as 
 		\[\begin{aligned}
 		D \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)
@@ -793,7 +888,7 @@
 		& \\
 		& =  f_{1}(\boldsymbol{x})D g_{1}(\boldsymbol{x}) + \cdots +
 		f_{\color{forestgreen}{m}}(\boldsymbol{x})D g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
-		& \qquad \qquad \qquad \qquad \qquad \qquad \qquad \quad
+		& \hspace{7 cm}
 		+ g_{1}(\boldsymbol{x})D f_{1}(\boldsymbol{x}) + \cdots +
 		g_{\color{forestgreen}{m}}(\boldsymbol{x})D f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
 		& \\
@@ -818,22 +913,31 @@
 		\right]
 		\right. \\
 		\end{aligned}\]
+	
 		\[\begin{aligned}
 		{\color{white}D \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)}
-		& = \left. \sideset{^{1 \backslash m}}{} {\boldsymbol{\Big[}
+		& = 
+		\left. \sideset{^{1 \backslash m}}{}{
+			\left[
 			\begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array}
-			\boldsymbol{\Big]}}
-		\sideset{^{m \backslash n}}{}
-		{\left[ \begin{array}{c} \\ D \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]}
+			\right]
+			}
+		\sideset{^{m \backslash n}}{}{
+			\left[ \begin{array}{c} \\ D \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+			}
 		\right. +
-		\left. \sideset{^{1 \backslash m}}{}{\boldsymbol{\Big[}
+		\left. \sideset{^{1 \backslash m}}{}{
+			\left[
 			\begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array}
-			\boldsymbol{\Big]}}
-		\sideset{^{m \backslash n}}{}
-		{\left[ \begin{array}{c} \\ D\boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]}
+			\right]
+			}
+		\sideset{^{m \backslash n}}{}{
+			\left[ \begin{array}{c} \\ D\boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]
+			}
 		\right. . \\
 	\end{aligned}\]
-
+	
+	\vspace{5cm}
 
 	\item Let \(\mathbf{A} \in \mathbb{R}^{m \times n}\) be a given matrix and \(\boldsymbol{y} \in \mathbb{R}^{m}\) a given vector. Then,
 	\begin{align*}
@@ -843,9 +947,8 @@
 		\boldsymbol{x}^{\top}\left(\mathbf{A}+\mathbf{A}^{\top}\right).  \qquad
 		\fbox{\parbox{0.1\textwidth}{ if \(m=n\) }}
 	\end{align*}
-
 	
-	Proof,
+	\textbf{Short proof},
 	\[\begin{aligned}    
 		D\left(\boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}\right) 
 		&=D \bigg ( \boldsymbol{y}^{\top}( {\color{forestgreen}{\mathbf{A} \boldsymbol{x}}} ) \bigg )
@@ -873,7 +976,7 @@
 	\end{aligned}
 	\]
 	
-	Proof,
+	\textbf{Short proof},
 	\[ \begin{aligned}    
 		D\left(\boldsymbol{x}^{\top} \mathbf{Q} \boldsymbol{x}\right)    
 		&=D \bigg( \boldsymbol{x}^{\top}( {\color{forestgreen}{\mathbf{Q} \boldsymbol{x}}} ) \bigg) \\
@@ -900,62 +1003,307 @@
 	\]
 \end{itemize}
 
+
+\newpage
+%------------------------------------------------------%
+\subsection{Gradient details}
+\begin{itemize}
+	\item Consider \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^m \),  here \( \boldsymbol{x} \in  \mathbb{R}^n \) is a vector. Since \(g_{i}(\boldsymbol{x})\) is a scalar, \(\boldsymbol{g}=\left[g_1, \ldots, g_m\right]^{\top} \), \(\boldsymbol{g}(\boldsymbol{x})\) is a column vector. 
+	\[
+	\begin{aligned}
+		\boldsymbol{g} \left( \boldsymbol{x} \right)=
+		\left[
+		\begin{array}{c}
+			g_{1}( \boldsymbol{x} ) \\
+			g_{2}( \boldsymbol{x} ) \\
+			\vdots \\
+			g_{m}( \boldsymbol{x} )
+		\end{array}
+		\right], 
+		\nabla_{\boldsymbol{x}} \boldsymbol{g}\left( \boldsymbol{x} \right) & =\left[
+		\begin{array}{ccc}
+			\vdots & \vdots & \vdots \\
+			{ \color{blue}\nabla_{\boldsymbol{x}} } g_{1} &
+			\cdots &
+			{ \color{blue}\nabla_{\boldsymbol{x}} } g_{m} \\
+			\vdots & \vdots & \vdots \\
+		\end{array}
+		\right]
+		= \begin{tikzpicture}[baseline=(current bounding box.center)]
+			\tikzset{
+				mynode/.style={minimum height=1cm}
+			}
+			\matrix [matrix of math nodes, inner sep=2pt, left delimiter={[},right delimiter={]}] (m) {
+				|[minimum width=1.3cm]| \frac{\partial}{\partial x_1} g_1 & \frac{\partial}{\partial x_1} g_2 & \cdots & \frac{\partial}{\partial x_1} g_m \\
+				\frac{\partial}{\partial x_2} g_1 & \frac{\partial}{\partial x_2} g_2 & \cdots & \frac{\partial}{\partial x_2} g_m \\
+				\vdots & \vdots & \ddots & \vdots \\
+				\frac{\partial}{\partial x_n} g_1 & \frac{\partial}{\partial x_n} g_2 & \cdots & \frac{\partial}{\partial x_n} g_m \\
+			};
+			\draw[blue] (m-1-1.north west) rectangle (m-4-1.south east);
+			\draw[blue] (m-1-2.north west) rectangle (m-4-2.south east);
+			\draw[blue] (m-1-4.north west) rectangle (m-4-4.south east);
+		\end{tikzpicture}.
+	\end{aligned}
+	\]
+	
+	\item Not standard derivations in this course, just offer some intuitions on how to obtained the gradients on production rules.
+	
+	\item Let \(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{m}\) be two differentiable functions, \(\boldsymbol{x} \in \mathbb{R}^{n}\),
+	\[ 	\nabla \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
+	 = \nabla \boldsymbol{f}(\boldsymbol{x}) \left[\begin{array}{c}\\  \boldsymbol{g}(\boldsymbol{x}) \\  \\ \end{array} \right] 
+	+ \nabla\boldsymbol{g} (\boldsymbol{x}) \left[\begin{array}{c}\\  f(\boldsymbol{x}) \\  \\ \end{array} \right]. \]
+	
+	Proof. 
+	\(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\), \(\boldsymbol{x} \in \mathbb{R}^{n}\), write the derivative as 
+	\[\begin{aligned}
+		\nabla \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)
+		&=\nabla \left(
+		\boldsymbol{\Big[} \begin{array}{ccc}
+			f_{1}(\boldsymbol{x}) & \cdots & f_{\color{forestgreen}{m}}(\boldsymbol{x})
+		\end{array}
+		\boldsymbol{\Big]}
+		\left[ \begin{array}{c}
+			g_{1}(\boldsymbol{x}) \\ \vdots \\ g_{\color{forestgreen}{m}}(\boldsymbol{x})
+		\end{array}
+		\right]
+		\right)
+		\\
+		& \\
+		&=\nabla \left(
+		\boldsymbol{\Big[} \begin{array}{ccc}
+			f_{1} \left(x_{1}, x_{2}, \ldots, x_{n}\right) 
+			& \cdots 
+			& f_{\color{forestgreen}{m}}\left(x_{1}, x_{2}, \ldots, x_{n}\right)
+		\end{array}
+		\boldsymbol{\Big]}
+		\left[ \begin{array}{cc}
+			g_{1}\left(x_{1}, x_{2}, \ldots, x_{n}\right) \\
+			\vdots \\
+			g_{\color{forestgreen}{m}}\left(x_{1}, x_{2}, \ldots, x_{n}\right)
+		\end{array}
+		\right] \right)\\
+		& \\
+		& = \nabla \Big(
+		f_{1}(\boldsymbol{x})g_{1}(\boldsymbol{x}) + \cdots + 
+		f_{\color{forestgreen}{m}}(\boldsymbol{x})g_{\color{forestgreen}{m}}(\boldsymbol{x})
+		\Big) \\
+		& \\
+		& =  f_{1}(\boldsymbol{x})\nabla g_{1}(\boldsymbol{x}) + \cdots +
+		f_{\color{forestgreen}{m}}(\boldsymbol{x})\nabla g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+		& \qquad \qquad \qquad \qquad \qquad \qquad \qquad \quad
+		+ g_{1}(\boldsymbol{x})\nabla f_{1}(\boldsymbol{x}) + \cdots +
+		g_{\color{forestgreen}{m}}(\boldsymbol{x})\nabla f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+		& \\
+		& = \left.
+			\boldsymbol{\Big[} \begin{array}{ccc}
+				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\boldsymbol{\Big]}
+			\left[ \begin{array}{c}
+				f_{1}(\boldsymbol{x}) \\ \vdots \\ f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\right]
+			\right. +
+			\left.
+			\boldsymbol{\Big[} \begin{array}{ccc}
+				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\boldsymbol{\Big]}
+			\left[ \begin{array}{c}
+				g_{1}(\boldsymbol{x}) \\ \vdots \\ g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\right]
+			\right. \\
+		& =  \left.
+			\boldsymbol{\Big[} \begin{array}{ccc}
+				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\boldsymbol{\Big]}
+			\left[ \begin{array}{c}
+				g_{1}(\boldsymbol{x}) \\ \vdots \\ g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\right]
+			\right. + 
+			\left.
+			\boldsymbol{\Big[} \begin{array}{ccc}
+				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\boldsymbol{\Big]}
+			\left[ \begin{array}{c}
+				f_{1}(\boldsymbol{x}) \\ \vdots \\ f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\end{array}
+			\right]
+			\right.\\
+	\end{aligned}\]
+
+	\[\begin{aligned}
+	{\color{white} \nabla \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)}
+	& = \left. 
+		\sideset{^{n \backslash m}}{}{
+			\left[
+			\begin{array}{ccc}  & &\\ &  \nabla \boldsymbol{f}(\boldsymbol{x}) & \\  & & \\  \end{array}
+			\right]
+		}
+		\sideset{^{m \backslash 1}}{}{
+			\left[ \begin{array}{c} \\  \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+		}
+		\right. +
+		\left. 
+		\sideset{^{n \backslash m}}{}{
+			\left[ \begin{array}{ccc} & & \\ & \nabla \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array} \right]
+		}
+		\sideset{^{m \backslash 1}}{}{
+			\left[ \begin{array}{c} \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]
+		}
+		\right. \\
+	\end{aligned}\]
+
+\end{itemize}
+
+
+\newpage
+\begin{itemize}
+	\item For example, 	if \(\mathbf{A} \in \mathbb{R}^{n \times n}\),
+	
+	\[ \begin{aligned}    
+		\nabla \left(\boldsymbol{x}^{\top} \mathbf{A} \boldsymbol{x}\right)    
+		&=\nabla \bigg( \boldsymbol{x}^{\top}( {\color{black}{\mathbf{A} \boldsymbol{x}}} ) \bigg) \\ 
+		&=\nabla \left(
+		\boldsymbol{\Big[} \begin{array}{ccc}
+			x_{1} & \cdots & x_{n}
+		\end{array}
+		\boldsymbol{\Big]}
+		\left[ \begin{array}{c}
+			\boldsymbol{a}_{1}^{\top}\boldsymbol{x} \\ \vdots \\ \boldsymbol{a}_{n}^{\top}\boldsymbol{x}
+		\end{array}
+		\right]
+		\right)
+		\\
+		& \\
+		&=\nabla \bigg( x_{1}\boldsymbol{a}_{1}^{\top}\boldsymbol{x} + \cdots + x_{n}\boldsymbol{a}_{n}^{\top}\boldsymbol{x} \bigg) \\
+		& \\
+		&= {\color{forestgreen} x_{1} \nabla (\boldsymbol{a}_{1}^{\top}\boldsymbol{x}) + \cdots + x_{n} \nabla (\boldsymbol{a}_{n}^{\top}\boldsymbol{x})} \\
+		& \quad + \boldsymbol{a}_{1}^{\top}\boldsymbol{x} \nabla \bigg(1x_{1}+0x_{2}+ \cdots+ 0x_{n}\bigg) + \cdots +  \boldsymbol{a}_{n}^{\top}\boldsymbol{x} \nabla \bigg( 0x_{1}+0x_{2}+ \cdots+ 1x_{n} \bigg)\\
+		& \\
+		&= \boldsymbol{a}_{1}^{\top}\boldsymbol{x} \left[ \begin{array}{c} 1 \\ 0 \\ \vdots \\ 0 \end{array}\right] + \cdots + \boldsymbol{a}_{n}^{\top}\boldsymbol{x} \left[ \begin{array}{c} 0 \\ 0 \\ \vdots \\ 1 \end{array}\right]
+		+ {\color{forestgreen} \boldsymbol{a}_{1} x_{1} + \cdots + \boldsymbol{a}_{n} x_{n}}
+		\\
+		& \\
+		& = \left[ \begin{array}{cccc} 
+				1  & 0 & \cdots & 0 \\
+				0 & 1  & \cdots & 0 \\
+				\vdots  & \vdots & \ddots & \vdots   \\
+				0 & 0 & \cdots & 1 
+				 \end{array}\right]
+			 \left[ \begin{array}{c} 
+			 	\boldsymbol{a}_{1}^{\top}\boldsymbol{x} \\
+			 	\boldsymbol{a}_{2}^{\top}\boldsymbol{x} \\
+			 	\vdots     \\
+			 	\boldsymbol{a}_{n}^{\top}\boldsymbol{x}
+			 \end{array}\right] 
+		  + \boldsymbol{\Big[} \begin{array}{cccc}
+			  	\boldsymbol{a}_{1} & \boldsymbol{a}_{2} & \cdots & \boldsymbol{a}_{n}
+			  \end{array}
+			  \boldsymbol{\Big]}
+			  \left[ \begin{array}{c} x_{1} \\ x_{2} \\ \vdots \\ x_{n} \end{array}\right]
+		\\
+		& \\
+		&= \left[ \begin{array}{ccc} && \\  &\mathbf{I}& \\ &&\\ \end{array} \right]
+			\left[ \begin{array}{c} \\  \mathbf{A}\boldsymbol{x} \\ \\ \end{array} \right]
+		  + \left[ \begin{array}{ccc} && \\  &\mathbf{A}^{\top}& \\ &&\\ \end{array} \right]
+		  	\left[ \begin{array}{c} \\ \boldsymbol{x} \\ \\ \end{array} \right] 
+		  	= \left( \mathbf{A} + \mathbf{A}^{\top} \right) \boldsymbol{x}
+		\\
+		& \\
+		& = \left[
+			\begin{array}{ccc}  & &\\ &  \nabla \boldsymbol{f}(\boldsymbol{x}) & \\  & & \\  \end{array}
+			\right]
+		{\left[ \begin{array}{c} \\  \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]} +
+			\left[
+			\begin{array}{ccc} & \nabla \boldsymbol{g}(\boldsymbol{x}) & \end{array}
+			\right]
+		{\left[ \begin{array}{c} \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]} \\
+		& \\
+		& = \nabla \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big),
+	\end{aligned} \]
+	
+	where \(\boldsymbol{f}(\boldsymbol{x})=\boldsymbol{x}\), \(\boldsymbol{g}(\boldsymbol{x})=\mathbf{A}\boldsymbol{x} \).
+\end{itemize}
+
 \newpage
 \begin{itemize}
 	\item Hand writing derivation: given
 	\(\underline{y} \in \mathbb{R}^{m}, \underline{A} \in \mathbb{R}^{m \times n}, \underline{x} \in \mathbb{R}^{n}\), write the derivative as
 	
 	\[ 
-	\begin{align} D_{\boldsymbol{x}}
+	\begin{aligned} D_{\boldsymbol{x}}
 		\left(  \boldsymbol{y}^{\top} \mathbf{A} \boldsymbol{x}
 		\right) 
 		&= D_{ \underline{x} } \left(  \underline{y}^{\top} \underline{A} \hspace{0.5em} \underline{x}  \right)\\
 		& \\
 		&=D \left( 
-		\sideset{^{1 \backslash m}}{}
-		{\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]} 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]}
-		\sideset{^{n \backslash 1}}{}
-		{ \left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]}
+			\sideset{^{1 \backslash m}}{}{
+				\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]
+			} 
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]
+			}
+			\sideset{^{n \backslash 1}}{}{
+				\left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]
+			}
 		\right)\\
 		& \\
 		&=   \left. 
-		\sideset{^{1 \backslash m}}{}
-		{\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]}
-		\right. D \left( 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]}
-		\sideset{^{n \backslash 1}}{}
-		{ \left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]}
+			\sideset{^{1 \backslash m}}{}{
+				\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]
+			}
+			\right. D \left( 
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]
+			}
+			\sideset{^{n \backslash 1}}{}{
+				\left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]
+			}
 		\right) \\
 		& \quad + \left( 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]}
-		\sideset{^{n \backslash 1}}{}
-		{ \left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]}
-		\right)^{\top} 
-		\left. 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & D \underline{y} & \\ & &\end{array} \right]}
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]
+			}
+			\sideset{^{n \backslash 1}}{}{
+				\left[ \begin{array}{c}  \\  \underline{x}  \\ \\ \end{array} \right]
+			}
+			\right)^{\top} 
+			\left. 
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & D \underline{y} & \\ & &\end{array} \right]
+			}
 		\right.
 		\\
-		&=   \sideset{^{1 \backslash m}}{}
-		{\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]} 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]}
-		+ \sideset{^{1 \backslash n}}{}
-		{\Big[ \begin{array}{ccc} & \underline{x}^{\top} & \end{array}\Big]} 
-		\sideset{^{n \backslash m}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A}^{\top} & \\ & &\end{array} \right]}
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\  & \underline{0} &  \\ & & \end{array} \right]} \\
-		&=    \sideset{^{1 \backslash m}}{}
-		{\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]} 
-		\sideset{^{m \backslash n}}{}
-		{ \left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]} \\
+		&=   
+			\sideset{^{1 \backslash m}}{}{
+				\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]
+			} 
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]
+			}
+			+ \sideset{^{1 \backslash n}}{}{
+				\Big[ \begin{array}{ccc} & \underline{x}^{\top} & \end{array}\Big]
+			} 
+			\sideset{^{n \backslash m}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A}^{\top} & \\ & &\end{array} \right]
+			}
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\  & \underline{0} &  \\ & & \end{array} \right]
+			} \\
+		&=  
+			\sideset{^{1 \backslash m}}{}{
+				\Big[ \begin{array}{ccc} & \underline{y}^{\top} & \end{array}\Big]
+			} 
+			\sideset{^{m \backslash n}}{}{
+				\left[ \begin{array}{ccc} & & \\ & \underline{A} & \\ & &\end{array} \right]
+			} \\
 		&= \boldsymbol{y}^{\top} \mathbf{A}.
-	\end{align} \\
+	\end{aligned} \\
 	\]
 \end{itemize}
 
