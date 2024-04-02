@@ -1068,7 +1068,6 @@
 		\right]
 		\right)
 		\\
-		& \\
 		&=\nabla \left(
 		\boldsymbol{\Big[} \begin{array}{ccc}
 			f_{1} \left(x_{1}, x_{2}, \ldots, x_{n}\right) 
@@ -1090,7 +1089,7 @@
 		& \\
 		& =  f_{1}(\boldsymbol{x})\nabla g_{1}(\boldsymbol{x}) + \cdots +
 		f_{\color{forestgreen}{m}}(\boldsymbol{x})\nabla g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
-		& \qquad \qquad \qquad \qquad \qquad \qquad \qquad \quad
+		& \hspace{7.3cm}
 		+ g_{1}(\boldsymbol{x})\nabla f_{1}(\boldsymbol{x}) + \cdots +
 		g_{\color{forestgreen}{m}}(\boldsymbol{x})\nabla f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
 		& \\
@@ -1114,6 +1113,9 @@
 			\end{array}
 			\right]
 			\right. \\
+		& \\
+		& = \underbrace{\boldsymbol{f}(\boldsymbol{x})^{\top}}_{1 \times m} \underbrace{D \boldsymbol{g}(\boldsymbol{x})}_{m \times n}+\underbrace{\boldsymbol{g}(\boldsymbol{x})^{\top}}_{1 \times m} \underbrace{D \boldsymbol{f}(\boldsymbol{x})}_{m \times n} \\
+		& \\
 		& =  \left.
 			\boldsymbol{\Big[} \begin{array}{ccc}
 				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x})
@@ -1220,7 +1222,7 @@
 			\right]
 		{\left[ \begin{array}{c} \\  \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]} +
 			\left[
-			\begin{array}{ccc} & \nabla \boldsymbol{g}(\boldsymbol{x}) & \end{array}
+			\begin{array}{ccc} & &\\ & \nabla \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array}
 			\right]
 		{\left[ \begin{array}{c} \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]} \\
 		& \\
