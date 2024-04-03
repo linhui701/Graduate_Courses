@@ -584,7 +584,7 @@
 	\]
 \end{itemize}
 
-\medskip 
+\smallskip
 
 %------------------------------------------------------%
 \subsection{Differentiation rules on composite function}
@@ -605,7 +605,7 @@
 	\]
 
 	\item The differentiated composite function with \textbf{derivative} rule is 
-	\[
+	\[ \hspace{-0.6cm}
 	h^{\prime}(t)=D_{\boldsymbol{g}} f(\boldsymbol{g}(t)) D_{t} \boldsymbol{g}(t)
 	=\nabla f(\boldsymbol{g}(t))^{\top}
 	\left[\begin{array}{c}
@@ -650,6 +650,7 @@
 	\end{aligned}
 	\]
 	
+	\vspace{-0.5cm}
 	\item Similarly, the second order gradient of scalar is
 	\[ \begin{aligned}
 	\nabla^{2} \Big( f(\boldsymbol{x}) \Big)
@@ -689,7 +690,7 @@
 
 \end{itemize}
 
-
+\vspace{-0.6cm}
 %------------------------------------------------------%
 \subsection{Differentiation product rules}
 
@@ -731,11 +732,15 @@
 		\left[ \begin{array}{ccc} & & \\ & D \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array} \right]
 		+ \left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
 		\left[ \begin{array}{ccc} & & \\ & 	D \boldsymbol{f}(\boldsymbol{x})  & \\ & & \end{array} \right], \\
+	& \\
 	\nabla \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
 	& = \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{f}(\boldsymbol{x}) & \\ & & \end{array} \right]
 		\left[\begin{array}{c}\\  \boldsymbol{g}(\boldsymbol{x}) \\  \\ \end{array} \right ] 
    		+ \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{g} (\boldsymbol{x}) & \\ & & \end{array} \right]
-   		\left[\begin{array}{c}\\  \boldsymbol{f}(\boldsymbol{x}) \\  \\ \end{array} \right] . \\
+   		\left[\begin{array}{c}\\  \boldsymbol{f}(\boldsymbol{x}) \\  \\ \end{array} \right]  \\
+   	& \\
+   	& = D \boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) + 
+   		  D \boldsymbol{g}(\boldsymbol{x})^{\top} \boldsymbol{f}(\boldsymbol{x}). \\
 \end{aligned}
 \]
 
@@ -819,36 +824,36 @@
 	=\boldsymbol{f}(\boldsymbol{x})^{\top} D \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} D \boldsymbol{f}(\boldsymbol{x}). \]
 	
 	We can write it into compact matrix form as,
-	\[
-	\begin{aligned}
-		D\left( \sideset{^{1 \backslash m}}{}{ 
-			\left. \boldsymbol{\Big[}
-			\begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} 
-			\boldsymbol{\Big]}
-			\right.
-			}
-		\sideset{^{m \backslash 1}}{}{ 
-			\left[ \begin{array}{c} \\ \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
-		}
-		\right)
-		& = \hspace{0.6cm}
-		\left. \sideset{^{1 \backslash m}}{}{
-			\left[ \begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} \right]
-		}
-		\sideset{^{m \backslash n}}{}{
-			\left[ \begin{array}{c} \\ D \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
-		}
-		\right. \\
-		&  \hspace{0.7cm} +
-		\left. \sideset{^{1 \backslash m}}{}{
-			\left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
-		}
-		\sideset{^{m \backslash n}}{}{
-			\left[ \begin{array}{c} \\ D\boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right].
-		}
-		\right.
-	\end{aligned}
-	\]
+%	\[
+%	\begin{aligned}
+%		D\left( \sideset{^{1 \backslash m}}{}{ 
+%			\left. \boldsymbol{\Big[}
+%			\begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} 
+%			\boldsymbol{\Big]}
+%			\right.
+%			}
+%		\sideset{^{m \backslash 1}}{}{ 
+%			\left[ \begin{array}{c} \\ \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+%		}
+%		\right)
+%		& = \hspace{0.6cm}
+%		\left. \sideset{^{1 \backslash m}}{}{
+%			\left[ \begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} \right]
+%		}
+%		\sideset{^{m \backslash n}}{}{
+%			\left[ \begin{array}{c} \\ D \boldsymbol{g}(\boldsymbol{x}) \\ \\ \end{array} \right]
+%		}
+%		\right. \\
+%		&  \hspace{0.7cm} +
+%		\left. \sideset{^{1 \backslash m}}{}{
+%			\left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
+%		}
+%		\sideset{^{m \backslash n}}{}{
+%			\left[ \begin{array}{c} \\ D\boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right].
+%		}
+%		\right.
+%	\end{aligned}
+%	\]
 
 	\textbf{Short proof},
 	
@@ -888,7 +893,7 @@
 		& \\
 		& =  f_{1}(\boldsymbol{x})D g_{1}(\boldsymbol{x}) + \cdots +
 		f_{\color{forestgreen}{m}}(\boldsymbol{x})D g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
-		& \hspace{7 cm}
+		& \hspace{6 cm}
 		+ g_{1}(\boldsymbol{x})D f_{1}(\boldsymbol{x}) + \cdots +
 		g_{\color{forestgreen}{m}}(\boldsymbol{x})D f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
 		& \\
@@ -897,18 +902,23 @@
 			f_{1}(\boldsymbol{x}) & \cdots & f_{\color{forestgreen}{m}}(\boldsymbol{x})
 		\end{array}
 		\boldsymbol{\Big]}
-		\left[ \begin{array}{c}
-			D g_{1}(\boldsymbol{x}) \\ \vdots \\ D g_{\color{forestgreen}{m}}(\boldsymbol{x})
+		\left[ \begin{array}{ccc}
+			& D g_{1}(\boldsymbol{x}) & \\ 
+			& \vdots & \\ 
+			& D g_{\color{forestgreen}{m}}(\boldsymbol{x}) & \\
 		\end{array}
 		\right]
-		\right. +
+		\right.  \\
+		& \hspace{6cm} +
 		\left.
 		\boldsymbol{\Big[} \begin{array}{ccc}
 			g_{1}(\boldsymbol{x}) & \cdots & g_{\color{forestgreen}{m}}(\boldsymbol{x})
 		\end{array}
 		\boldsymbol{\Big]}
-		\left[ \begin{array}{c}
-			D f_{1}(\boldsymbol{x}) \\ \vdots \\ D f_{\color{forestgreen}{m}}(\boldsymbol{x})
+		\left[ \begin{array}{ccc}
+			& D f_{1}(\boldsymbol{x}) & \\ 
+			& \vdots & \\ 
+			& D f_{\color{forestgreen}{m}}(\boldsymbol{x}) & \\
 		\end{array}
 		\right]
 		\right. \\
@@ -1055,7 +1065,8 @@
 	
 	Proof. 
 	\(\boldsymbol{f}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\) and \(\boldsymbol{g}: \mathbb{R}^{n} \rightarrow \mathbb{R}^{\color{forestgreen}{m}}\), \(\boldsymbol{x} \in \mathbb{R}^{n}\), write the derivative as 
-	\[\begin{aligned}
+	\[ \hspace{-1cm}
+	\begin{aligned}
 		\nabla \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)
 		&=\nabla \left(
 		\boldsymbol{\Big[} \begin{array}{ccc}
@@ -1081,7 +1092,6 @@
 			g_{\color{forestgreen}{m}}\left(x_{1}, x_{2}, \ldots, x_{n}\right)
 		\end{array}
 		\right] \right)\\
-		& \\
 		& = \nabla \Big(
 		f_{1}(\boldsymbol{x})g_{1}(\boldsymbol{x}) + \cdots + 
 		f_{\color{forestgreen}{m}}(\boldsymbol{x})g_{\color{forestgreen}{m}}(\boldsymbol{x})
@@ -1094,43 +1104,64 @@
 		g_{\color{forestgreen}{m}}(\boldsymbol{x})\nabla f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
 		& \\
 		& = \left.
-			\boldsymbol{\Big[} \begin{array}{ccc}
-				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\left[ \begin{array}{ccc}
+				& & \\
+				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+				& & \\
 			\end{array}
-			\boldsymbol{\Big]}
+			\right]
 			\left[ \begin{array}{c}
 				f_{1}(\boldsymbol{x}) \\ \vdots \\ f_{\color{forestgreen}{m}}(\boldsymbol{x})
 			\end{array}
 			\right]
 			\right. +
 			\left.
-			\boldsymbol{\Big[} \begin{array}{ccc}
-				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\left[ \begin{array}{ccc}
+				& & \\ \nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+				& & \\
 			\end{array}
-			\boldsymbol{\Big]}
+			\right]
 			\left[ \begin{array}{c}
 				g_{1}(\boldsymbol{x}) \\ \vdots \\ g_{\color{forestgreen}{m}}(\boldsymbol{x})
 			\end{array}
 			\right]
 			\right. \\
-		& \\
-		& = \underbrace{\boldsymbol{f}(\boldsymbol{x})^{\top}}_{1 \times m} \underbrace{D \boldsymbol{g}(\boldsymbol{x})}_{m \times n}+\underbrace{\boldsymbol{g}(\boldsymbol{x})^{\top}}_{1 \times m} \underbrace{D \boldsymbol{f}(\boldsymbol{x})}_{m \times n} \\
+		& = \underbrace{ \left[ \begin{array}{ccc}
+				& & \\ 
+				&D \boldsymbol{g}(\boldsymbol{x})^{\top} & \\
+				& &
+				\end{array} \right]}_{n \times {\color{forestgreen}{m}}}
+				 \underbrace{ \left[ \begin{array}{c} 
+				 \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\
+			 	\end{array} \right]}_{{\color{forestgreen}{m}} \times 1}
+			+\underbrace{ \left[ \begin{array}{ccc}
+				& & \\ 
+				& D \boldsymbol{f}(\boldsymbol{x})^{\top} & \\
+				& &
+				\end{array} \right]}_{n \times {\color{forestgreen}{m}}} 
+				\underbrace{\left[ \begin{array}{c} 
+				\\  \boldsymbol{g}(\boldsymbol{x}) \\ \\ 
+				\end{array} \right]}_{{\color{forestgreen}{m}} \times 1} \\
 		& \\
 		& =  \left.
-			\boldsymbol{\Big[} \begin{array}{ccc}
-				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\left[ \begin{array}{ccc}
+				& & \\
+				\nabla f_{1}(\boldsymbol{x}) & \cdots & \nabla f_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+				& &\\
 			\end{array}
-			\boldsymbol{\Big]}
+			\right]
 			\left[ \begin{array}{c}
 				g_{1}(\boldsymbol{x}) \\ \vdots \\ g_{\color{forestgreen}{m}}(\boldsymbol{x})
 			\end{array}
 			\right]
 			\right. + 
 			\left.
-			\boldsymbol{\Big[} \begin{array}{ccc}
-				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x})
+			\left[ \begin{array}{ccc}
+				& & \\
+				\nabla g_{1}(\boldsymbol{x}) & \cdots & \nabla g_{\color{forestgreen}{m}}(\boldsymbol{x}) \\
+				& & \\
 			\end{array}
-			\boldsymbol{\Big]}
+			\right]
 			\left[ \begin{array}{c}
 				f_{1}(\boldsymbol{x}) \\ \vdots \\ f_{\color{forestgreen}{m}}(\boldsymbol{x})
 			\end{array}
@@ -1138,7 +1169,8 @@
 			\right.\\
 	\end{aligned}\]
 
-	\[\begin{aligned}
+	\[  \hspace{-2.2cm}
+	\begin{aligned}
 	{\color{white} \nabla \Big(\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x})\Big)}
 	& = \left. 
 		\sideset{^{n \backslash m}}{}{
@@ -1155,7 +1187,7 @@
 			\left[ \begin{array}{ccc} & & \\ & \nabla \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array} \right]
 		}
 		\sideset{^{m \backslash 1}}{}{
-			\left[ \begin{array}{c} \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right]
+			\left[ \begin{array}{c} \\ \boldsymbol{f}(\boldsymbol{x}) \\ \\ \end{array} \right].
 		}
 		\right. \\
 	\end{aligned}\]
@@ -1203,10 +1235,14 @@
 			 	\vdots     \\
 			 	\boldsymbol{a}_{n}^{\top}\boldsymbol{x}
 			 \end{array}\right] 
-		  + \boldsymbol{\Big[} \begin{array}{cccc}
-			  	\boldsymbol{a}_{1} & \boldsymbol{a}_{2} & \cdots & \boldsymbol{a}_{n}
+		  + \left[ \begin{array}{cccc}
+			  	& & &  \\
+			  	& & &  \\
+			  	\boldsymbol{a}_{1} & \boldsymbol{a}_{2} & \cdots & \boldsymbol{a}_{n} \\
+			  	& & &  \\
+			  	& & &  \\
 			  \end{array}
-			  \boldsymbol{\Big]}
+			  \right]
 			  \left[ \begin{array}{c} x_{1} \\ x_{2} \\ \vdots \\ x_{n} \end{array}\right]
 		\\
 		& \\
