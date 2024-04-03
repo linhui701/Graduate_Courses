@@ -1,0 +1,185 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Taylor Series Expansion}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+\begin{itemize}
+	\item Suppose \(f \in \mathcal{C}^{2}\). The Taylor series expansion of a real-valued function \(f\) : \(\mathbb{R}^{n} \rightarrow \mathbb{R}\) about the point \(\boldsymbol{x}_{0} \in \mathbb{R}^{n}\) is
+\end{itemize}
+
+\begin{equation*}
+	\begin{aligned}
+		f(\boldsymbol{x})=f\left(\boldsymbol{x}_{0}\right) 
+		& + \left[ \begin{array}{ccc}
+			& D f\left(\boldsymbol{x}_{0}\right) & \\
+			\end{array}
+			\right]
+			\left[ \begin{array}{c} 
+				 \\ \left(\boldsymbol{x}-\boldsymbol{x}_{0}\right) \\ \\
+			\end{array}
+			\right] \\
+		& +\frac{1}{2}
+			\left[ \begin{array}{ccc} 
+				& \left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)^{\top}  & \\
+			\end{array}
+			\right]
+			\left[ \begin{array}{ccc}
+				& & \\
+				& D^2 f\left(\boldsymbol{x}_{0}\right) & \\
+				& & \\
+			\end{array}
+			\right]
+			\left[ \begin{array}{c} 
+				\\ \left(\boldsymbol{x}-\boldsymbol{x}_{0}\right) \\ \\
+			\end{array}
+			\right]
+			+o\left(\left\|\boldsymbol{x}-\boldsymbol{x}_{0}\right\|^{2}\right) .
+	\end{aligned}
+\end{equation*}
+
+\begin{itemize}
+	\item The linear approximation of \(f\) about the point \(\boldsymbol{x}_{0}\) is
+\end{itemize}
+
+\begin{equation*}
+	l(\boldsymbol{x})=f\left(\boldsymbol{x}_{0}\right)+D f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right) .
+\end{equation*}
+
+\begin{itemize}
+	\item The quadratic approximation of \(f\) about the point \(\boldsymbol{x}_{0}\) is
+\end{itemize}
+
+\begin{equation*}
+	q(\boldsymbol{x})=f\left(\boldsymbol{x}_{0}\right)+D f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)+\frac{1}{2}\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)^{\top} D^{2} f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right) .
+\end{equation*}
+
+%------------------------------------------------------%
+\subsection{Examples}
+
+\begin{enumerate}
+	\item Compute the linear \(l\left(x_{1}, x_{2}\right)\) and quadratic \(q\left(x_{1}, x_{2}\right)\) approximations of the function \(f\left(x_{1}, x_{2}\right)=x_{1}+\frac{3 x_{2}}{x_{1}}\), at the point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}1 & 2\end{array}\right]^{\top}\).
+\end{enumerate}
+
+\textbf{Short answer:}
+
+(1) \[l(\boldsymbol{x})=f\left(\boldsymbol{x}^{(0)}\right)+D f\left(\boldsymbol{x}^{(0)}\right)\left(\boldsymbol{x}-\boldsymbol{x}^{(0)}\right),\]
+
+\begin{equation*}
+	D f(\boldsymbol{x}^{(0)})
+	=\left[\begin{array}{ll}
+		\frac{\partial f}{\partial x_{1}} & \frac{\partial f}{\partial x_{2}}
+		\end{array}
+		\right]
+	=\left[\begin{array}{ll}
+		1-\frac{3 x_{2}}{x_{1}^{2}} & \frac{3}{x_{1}}
+		\end{array}
+		\right]
+	=\left[\begin{array}{ll}
+		-5 & 3
+	\end{array}\right].
+\end{equation*}
+
+Therefore,
+
+\begin{equation*}
+	l(\boldsymbol{x})=7+\left[\begin{array}{ll}
+		-5 & 3
+	\end{array}\right]\left[\begin{array}{l}
+		x_{1}-1 \\
+		x_{2}-2
+	\end{array}\right]=-5 x_{1}+3 x_{2}+6 .
+\end{equation*}
+
+(2)
+\[q(\boldsymbol{x})=l(\boldsymbol{x})+\frac{1}{2}\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)^{\top} D^{2} f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right). \]
+
+\begin{equation*}
+	F(\boldsymbol{x}^{(0)})
+	=D^{2} f(\boldsymbol{x})
+	=\left[\begin{array}{cc}
+		\frac{6 x_{2}}{x_{1}^{3}} & -\frac{3}{x_{1}^{2}} \\
+		-\frac{3}{x_{1}^{2}} & 0
+	\end{array} 
+	\right]
+	= \left[\begin{array}{cc}12 & -3 \\ -3 & 0\end{array}\right].
+\end{equation*}
+
+Therefore,
+
+\begin{equation*}
+	\begin{aligned}
+		q(\boldsymbol{x}) & =l(\boldsymbol{x})+\frac{1}{2}\left[\begin{array}{ll}
+			x_{1}-1 & x_{2}-2
+		\end{array}\right]\left[\begin{array}{cc}
+			12 & -3 \\
+			-3 & 0
+		\end{array}\right]\left[\begin{array}{l}
+			x_{1}-1 \\
+			x_{2}-2
+		\end{array}\right] \\
+		& =6 x_{1}^{2}-3 x_{1} x_{2}-11 x_{1}+6 x_{2}+6 .
+	\end{aligned}
+\end{equation*}
+
+
+%------------------------------------------------------%
+\bigskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Perform a second-order Taylor series expansion of the function
+	
+	\begin{equation*}
+		f=f\left(x_{1}, x_{2}\right)=3 x_{1}^{2}x_{2}+x_{1} x_{2}^{4}-5 x_{1}+7,
+	\end{equation*}
+	
+	at the point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 1\end{array}\right]^{\top}\).
+\end{enumerate}
+	
+\textbf{Short answer:}
+
+\begin{equation*}
+	\begin{aligned}
+		f(\boldsymbol{x}) & =f\left(\boldsymbol{x}_{0}\right)+D f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right) \\
+		 	  & \hspace{1.6cm} +\frac{1}{2}\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)^{\top} 
+		 	  	D^{2} f\left(\boldsymbol{x}_{0}\right)\left(\boldsymbol{x}-\boldsymbol{x}_{0}\right)+o\left(\left\|\boldsymbol{x}-\boldsymbol{x}_{0}\right\|^{2}\right) . \\
+		Df(\boldsymbol{x}) & =\nabla f(\boldsymbol{x})^{\top}
+			= \left[\begin{array}{c}
+			6 x_{1} x_{2}+x_{2}^{4}-5 \\
+			3 x_{1}^{2}+4 x_{1} x_{2}^{3}
+			\end{array}\right]^{\top} . \\
+		F(\boldsymbol{x}) & =D^{2} f(\boldsymbol{x})=
+			\left[\begin{array}{cc}
+			6 x_{2} & 6 x_{1}+4 x_{2}^{3} \\
+			6 x_{1}+4 x_{2}^{3} & 12 x_{1} x_{2}^{2}
+			\end{array}\right] .
+	\end{aligned}
+\end{equation*}
+
+We have \(D f\left(\boldsymbol{x}^{(0)}\right)=\left[\begin{array}{ll}-4 & 0\end{array}\right]\), and \(F\left(\boldsymbol{x}^{(0)}\right)=\left[\begin{array}{ll}6 & 4 \\ 4 & 0\end{array}\right]\). Therefore,
+
+\begin{equation*}
+	\begin{aligned}
+	q(\boldsymbol{x})
+		  & = 3(0)^{2}(1)+(0)(1)^{4}-5(0)+7 
+		  		+ \left[\begin{array}{cc} -4 & 0 \\ \end{array}\right] 
+		  		\left[\begin{array}{c} x_{1}-0 \\ x_{2}-1 \end{array}\right]\\
+		  &	\qquad +  \frac{1}{2} \left[\begin{array}{c} x_{1}-0 \\ x_{2}-1 \end{array}\right]^{\top}
+		  		\left[\begin{array}{ll}6 & 4 \\ 4 & 0\end{array}\right]
+		  		\left[\begin{array}{c} x_{1}-0 \\ x_{2}-1 \end{array}\right] \\
+		  & = 7 - 4x_{1} + \left[\begin{array}{cccc} 3x_{1}+2x_{2} -2 & & 2x_{1} \end{array}\right]
+		  		\left[\begin{array}{c} x_{1}-0 \\ x_{2}-1 \end{array}\right] \\
+		  & =3 x_{1}^{2}+4 x_{1} x_{2}-8 x_{1}+7. \\
+		 f(\boldsymbol{x})
+		 & =q(\boldsymbol{x})+o\left(\left\|\boldsymbol{x}-\boldsymbol{x}_{0}\right\|^{2}\right) \\
+		 & =3 x_{1}^{2}+4 x_{1} x_{2}-8 x_{1}+7 +o\left(\left\|\boldsymbol{x}-\boldsymbol{x}_{0}\right\|^{2}\right).
+	\end{aligned}
+\end{equation*}
+
+\bigskip
+
+\noindent
+[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
