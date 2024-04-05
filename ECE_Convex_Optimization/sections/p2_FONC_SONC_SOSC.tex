@@ -1,0 +1,158 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{FONC, SONC and SOSC}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+
+\begin{itemize}
+	\item \(\mathscr{THEOREM}\)6.1 (\textbf{FONC}) Let \(\Omega\) be a subset of \(\mathbb{R}^{n}\) and \(f \in \mathcal{C}^{1}\) a real-valued function on \(\Omega\). If \(\boldsymbol{x}^{*}\) is a local minimizer of \(f\) over \(\Omega\), then for any feasible direction \(\boldsymbol{d}\) at \(\boldsymbol{x}^{*}\), we have
+	
+	\begin{equation*}
+		\boldsymbol{d}^{\top} \nabla f\left(\boldsymbol{x}^{*}\right) \geq 0.
+	\end{equation*}
+
+	\item \(\mathscr{COROLLARY}\)6.1 (Interior Case \textbf{FONC}) Let \(\Omega\) be a subset of \(\mathbb{R}^{n}\) and \(f \in \mathcal{C}^{1}\), a real-valued function on \(\Omega\). If \(\boldsymbol{x}^{*}\) is a local minimizer of \(f\) over \(\Omega\) and if \(\boldsymbol{d}^{*}\) is an interior point of \(\Omega\), then
+	
+	\begin{equation*}
+		\nabla f\left(\boldsymbol{x}^{*}\right)=0 .
+	\end{equation*}
+
+	\item \(\mathscr{THEOREM}\)6.2 (\textbf{SONC}) Let \(\Omega \subset \mathbb{R}^{n}, f \in \mathcal{C}^{2}\) a function on \(\Omega, \boldsymbol{x}^{*}\) a local minimizer of \(f\) over \(\Omega\), and \(\boldsymbol{d}\) a feasible direction at \(x^{*}\). If \(\boldsymbol{d}^{\top} \nabla f\left(x^{*}\right)=0\), then
+	
+	\begin{equation*}
+		\boldsymbol{d}^{\top} \boldsymbol{F} \left(\boldsymbol{x}^{*}\right) \boldsymbol{d} \geq 0,
+	\end{equation*}
+	
+	where \(F\) is the Hessian of \(f\).
+
+	\item  \(\mathscr{COROLLARY}\)6.2 (Interior Case \textbf{SONC}) Let \(\boldsymbol{x}^{*}\) be an interior point of \(\Omega \subset \mathbb{R}^{n}\). If \(\boldsymbol{x}^{*}\) is a local minimizer of \(f: \Omega \rightarrow \mathbb{R}, f \in \mathcal{C}^{2}\), then
+	
+	\begin{equation*}
+		\nabla f\left(\boldsymbol{x}^{*}\right)=0,
+	\end{equation*}
+	
+	and \(F\left(\boldsymbol{x}^{*}\right)\) is positive semi-definite; that is, for all \(\boldsymbol{d} \in \mathbb{R}^{n}\),
+	
+	\begin{equation*}
+		\boldsymbol{d}^{\top} \boldsymbol{F} \left(\boldsymbol{x}^{*}\right) \boldsymbol{d} \geq 0 .
+	\end{equation*}
+
+	\item \(\mathscr{THEOREM}\)6.3 (Interior Case \textbf{SOSC}) Let \(f \in \mathcal{C}^{2}\) be defined on a region in which \(\boldsymbol{x}^{*}\) is an interior point. Suppose that
+	
+	\begin{enumerate}
+		\item \(\nabla f\left(\boldsymbol{x}^{*}\right)=0\),
+		
+		\item \(\boldsymbol{F} \left(\boldsymbol{x}^{*}\right) \succ 0\).
+		
+	\end{enumerate}
+	
+	Then, \(\boldsymbol{x}^{*}\) is a strict local minimizer of \(f\).
+	
+	\item (Recall) A vector \(\boldsymbol{d} \in \mathbb{R}^{n}, \boldsymbol{d} \neq \boldsymbol{0}\), is a feasible direction at \(\boldsymbol{x} \in \Omega\) if there exists \(\alpha_{0}>0\) such that \(\boldsymbol{x}+\alpha \boldsymbol{d}  \in \Omega\) for all \(\alpha \in\left[0, \alpha_{0}\right]\).
+
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Examples}
+
+\noindent
+\begin{enumerate}
+	\item Does the function
+
+	\begin{equation*}
+		f(\boldsymbol{x})=\boldsymbol{x}^{\top}\left[\begin{array}{cc}
+			-2 & 2 \\
+			0 & -1
+		\end{array}\right] \boldsymbol{x}+\boldsymbol{x}^{\top}\left[\begin{array}{c}
+			1 \\
+			-1
+		\end{array}\right]
+	\end{equation*}
+	
+	where \(\boldsymbol{x} \in \mathbb{R}^{2}\), have a minimizer or a maximizer? If it does, then find it; otherwise explain why it does not.
+\end{enumerate}
+
+\textbf{Short answer:}
+
+For an unconstrained optimization problem, if a point is a maximizer or a miminizer, then it satisfies the FONC, that is \(\nabla f(\boldsymbol{x})=0\). We calculate the gradient of \(f\) as follows:
+
+\begin{equation*}
+	f(\boldsymbol{x})=\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}+\boldsymbol{x}^{\top} \boldsymbol{b}=\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{Q}+\boldsymbol{Q}^{\top}\right) \boldsymbol{x}+\boldsymbol{x}^{\top} \boldsymbol{b} .
+\end{equation*}
+
+Then
+
+\begin{equation*}
+	\nabla f(\boldsymbol{x})=\left(\boldsymbol{Q}+\boldsymbol{Q}^{\top}\right) \boldsymbol{x}+\boldsymbol{b}.
+\end{equation*}
+
+Let \(\nabla f(\boldsymbol{x})=0\), we have
+
+\begin{equation*}
+	\left[\begin{array}{cc}
+		-4 & 2 \\
+		2 & -2
+	\end{array}\right] \boldsymbol{x}=\left[\begin{array}{c}
+		-1 \\
+		1
+	\end{array}\right].
+\end{equation*}
+
+Hence
+
+\begin{equation*}
+	\boldsymbol{x}^{*}=\left[\begin{array}{c}
+		0 \\
+		-0.5
+	\end{array}\right] .
+\end{equation*}
+
+\(F(\boldsymbol{x})\) is n.d. since \(-F(\boldsymbol{x})\) is p.d. \(\Rightarrow \boldsymbol{x}^{*}\) is a maximizer.
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item 
+	(1) Does the function: \(f\left(x_{1}, x_{2}\right)=x_{1}^{2}+2 x_{1} x_{2}+x_{2}^{2}-x_{1}+x_{2}+5\) have a minimizer or a maximizer? If it does, then find it; otherwise explain why it does not. (2) Does the function: \(f\left(x_{1}, x_{2}\right)=x_{1} x_{2}-2 x_{1}^{2}-x_{2}^{2}-x_{1}-x_{2}+5\) have a minimizer or a maximizer? If it does, then find it, otherwise explain why it does not.
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+(1) \(\nabla f(\boldsymbol{x})=\left[\begin{array}{l}2 x_{1}+2 x_{2}-1 \\ 2 x_{1}+2 x_{2}+1\end{array}\right]=\left[\begin{array}{l}0 \\ 0\end{array}\right] \Rightarrow\) no solution for \(x\). Therefore, no critical points satisfy FONC, no minimizer nor maximizer.
+
+(2) \(\nabla f(\boldsymbol{x})=\left[\begin{array}{l}x_{2}-4 x_{1}-1 \\ x_{1}-2 x_{2}-1\end{array}\right]=\left[\begin{array}{l}0 \\ 0\end{array}\right] \Rightarrow \boldsymbol{x}^{*}=\left[\begin{array}{l}-\frac{3}{7} \\ -\frac{5}{7}\end{array}\right]\).
+
+\(\boldsymbol{F} (\boldsymbol{x})=\left[\begin{array}{cc}-4 & 1 \\ 1 & -2\end{array}\right] .-\boldsymbol{F} (\boldsymbol{x})\) is p.d \(\Leftrightarrow F(\boldsymbol{x})\) is n.d. Therefore, \(\boldsymbol{x}^{*}\) is a strict maximizer (SOSC).
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	
+	\item For the function: \(f\left(x_{1}, x_{2}\right)=\frac{1}{3} x_{1}^{3}+\frac{1}{3} x_{2}^{3}-x_{1} x_{2}\),
+
+	(1) Find two real points that satisfy the FONC for the extremum.
+	
+	(2) Which point is a strict local minimizer? Justify your answer.
+
+\end{enumerate}
+
+\textbf{Short answer:}
+
+(1) \[\nabla f(\boldsymbol{x})=\left[\begin{array}{l}x_{1}^{2}-x_{2} \\ x_{2}^{2}-x_{1}\end{array}\right]=\left[\begin{array}{l}0 \\ 0\end{array}\right] \Rightarrow \boldsymbol{x}^{(1)}=\left[\begin{array}{l}0 \\ 0\end{array}\right], \boldsymbol{x}^{(2)}=\left[\begin{array}{l}1 \\ 1\end{array}\right]\].
+
+(2) \[\boldsymbol{F} (\boldsymbol{x})=\left[\begin{array}{cc}2 x_{1} & -1 \\ -1 & 2 x_{2}\end{array}\right].\]
+
+\[
+\boldsymbol{F} \left(\boldsymbol{x}^{(1)}\right)=\left[\begin{array}{cc}0 & -1 \\ -1 & 0  \end{array}\right] \text{ is indefinite; } \boldsymbol{F} \left(\boldsymbol{x}^{(2)}\right)=\left[\begin{array}{cc}2 & -1 \\ -1 & 2 \end{array}\right] \succ 0.
+\]
+
+Therefore, \(\boldsymbol{x}^{(2)}\) satisfies SOSC, \(\boldsymbol{x}^{(2)}\) is a strict local minimizer.
