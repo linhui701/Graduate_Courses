@@ -36,6 +36,7 @@
 \usetikzlibrary{patterns, arrows.meta}
 \usetikzlibrary{shadows}
 \usetikzlibrary{external}
+\usetikzlibrary{3d}
 
 %pgfplots
 \usepackage{pgfplots}
@@ -62,11 +63,13 @@
 
 
 %------------------------------------------------------%
-%              Create Center Title Page                %
+%              Create Center Title Page                              %
 %------------------------------------------------------%
 \usepackage{titling}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
+
+\graphicspath{ {./Figure/} }
 
 \geometry{
 	a4paper,
@@ -79,6 +82,7 @@
 % Linhui added for newly defined color
 \definecolor{forestgreen}{RGB}{34,139,34}
 
+
 % Linhui added for Expectation and Variance
 \newcommand{\Exp}{{\mathbb E}\! }
 \newcommand{\Var}{\mbox{Var}\! }
@@ -86,6 +90,7 @@
 % Linhui added for rename the command for empty set.
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
+
 
 %------------------------------------------------------%
 \makeatletter
@@ -122,34 +127,34 @@
 	
 % Part 1: Math Review
 \include{./sections/p1_quadratic_forms}
-%\include{./sections/p1_gradient_hessian}
-%\include{./sections/p1_gradient_properties}
-%\include{./sections/p1_definiteness}
-%\include{./sections/p1_taylor_series}
-%\include{./sections/p1_feasible_direction}
+\include{./sections/p1_gradient_hessian}
+\include{./sections/p1_gradient_properties}
+\include{./sections/p1_definiteness}
+\include{./sections/p1_taylor_series}
+\include{./sections/p1_convex}
 
-%% Part 2: Unconstrained Optimization
-%\include{./sections/FONC_SONC_SOSC}
-%\include{./sections/descent_direction}
-%\include{./sections/1d_search}
-%\include{./sections/steepest_descent}
-%\include{./sections/Newton's_method}
-%\include{./sections/conjugate_direction_method}
-%\include{./sections/quasi-Newton_methods}
-%\include{./sections/pseudoinverse}
-%\include{./sections/least_squares}
-%\include{./sections/recursive_least_squares}
-%\include{./sections/standard_minimization}
-%\include{./sections/particle_swarm_optimization}
+% Part 2: Unconstrained Optimization
+\include{./sections/p2_FONC_SONC_SOSC}
+%\include{./sections/p2_descent_direction}
+%\include{./sections/p2_1d_search}
+%\include{./sections/p2_steepest_descent}
+%\include{./sections/p2_Newton's_method}
+%\include{./sections/p2_conjugate_direction_method}
+%\include{./sections/p2_quasi-Newton_methods}
+%\include{./sections/p2_pseudoinverse}
+%\include{./sections/p2_least_squares}
+%\include{./sections/p2_recursive_least_squares}
+%\include{./sections/p2_standard_minimization}
+%\include{./sections/p2_particle_swarm_optimization}
 
 %% Part 3: Linear Programming
-%\include{./sections/linear_programming}
-%\include{./sections/linear_programming_and_duality}
+%\include{./sections/p3_linear_programming}
+%\include{./sections/p3_linear_programming_and_duality}
 
 %% Part 4: Nonlinear Constrained Optimization
-%\include{./sections/FONC_SONC_SOSC_unconstrained_opt}
-%\include{./sections/Lagrange's_condition}
-%\include{./sections/KKT_condition}
-%\include{./sections/convex_and_concave}
+%\include{./sections/p4_FONC_SONC_SOSC_unconstrained_opt}
+%\include{./sections/p4_Lagrange's_condition}
+%\include{./sections/p4_KKT_condition}
+%\include{./sections/p4_convex_and_concave}
 
 \end{document}
