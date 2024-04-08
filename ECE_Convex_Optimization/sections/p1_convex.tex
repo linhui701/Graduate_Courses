@@ -1,0 +1,158 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Convex set}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+
+
+\medskip
+
+%------------------------------------------------------%
+\subsection{Examples}
+\noindent
+%------------------------------------------------------%
+
+\noindent
+\begin{enumerate}
+	
+	\item Show that the set \(\left\{\boldsymbol{x} \in \mathbb{R}^{n}:\|\boldsymbol{x}\| \leq r\right\}\) is convex, where \(r>0\) is a given real number and \(\|\boldsymbol{x}\|=\sqrt{\boldsymbol{x}^{\top} \boldsymbol{x}}\) is the Euclidean norm of \(\boldsymbol{x} \in \mathbb{R}^{n} \).
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+To show that the set \(S = \{\boldsymbol{x} \in \mathbb{R}^{n} : \|\boldsymbol{x}\| \leq r\}\) is convex, where \(r>0\) is a given real number and \(\|\boldsymbol{x}\|=\sqrt{\boldsymbol{x}^{\top} \boldsymbol{x}}\) is the Euclidean norm of \(\boldsymbol{x} \in \mathbb{R}^{n}\), we need to demonstrate that for any two points \(\boldsymbol{x}, \boldsymbol{y} \in S\) and any \(\lambda \in [0, 1]\), the point \(\lambda \boldsymbol{x} + (1-\lambda) \boldsymbol{y}\) also belongs to \(S\), i.e., \[ \|\lambda \boldsymbol{x} + (1-\lambda) \boldsymbol{y}\| \leq r. \] Given \(\boldsymbol{x}, \boldsymbol{y} \in S\), it implies \(\|\boldsymbol{x}\| \leq r\) and \(\|\boldsymbol{y}\| \leq r\). For any \(\lambda \in [0, 1]\), consider: \[ \|\lambda \boldsymbol{x} + (1-\lambda) \boldsymbol{y}\|^2 = \lambda^2 \|\boldsymbol{x}\|^2 + 2\lambda(1-\lambda) \boldsymbol{x}^{\top}\boldsymbol{y} + (1-\lambda)^2 \|\boldsymbol{y}\|^2. \] By applying the Cauchy-Schwarz inequality, \(\boldsymbol{x}^{\top}\boldsymbol{y} \leq \|\boldsymbol{x}\|\|\boldsymbol{y}\|\), we have: \[ \|\lambda \boldsymbol{x} + (1-\lambda) \boldsymbol{y}\|^2 \leq \lambda^2 r^2 + 2\lambda(1-\lambda) r^2 + (1-\lambda)^2 r^2 = r^2. \] Hence, taking the square root on both sides, we obtain \(\|\lambda \boldsymbol{x} + (1-\lambda) \boldsymbol{y}\| \leq r\), proving the convexity of \(S\). 
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	
+	\item Prove
+	(a) let \( \boldsymbol{A}\) be an \(m \times n\) matrix, \( \boldsymbol{b} \in \mathbb{R}^m\), and let \(S=\left\{ \boldsymbol{x} \in \mathbb{R}^n:  \boldsymbol{A}  \boldsymbol{x}= \boldsymbol{x}\right\}\). Then the set \(S\) is a convex subset of \(\mathbb{R}^n\).
+	(b) In \(\mathbb{R}^n\) the set \(H=\left\{ \boldsymbol{x} \in \mathbb{R}^n: a_1 x_1+\ldots+a_n x_n=c\right\}\) is a convex set. For any particular choice of constants \(a_i\) it is a hyperplane in \(\mathbb{R}^n\).
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+(a) Let \( \boldsymbol{x}^{(1)},  \boldsymbol{x}^{(2)} \in S\). Then
+\[
+ \boldsymbol{A}\left((1-\lambda)  \boldsymbol{x}^{(1)}+\lambda  \boldsymbol{x}^{(2)}\right)=(1-\lambda)  \boldsymbol{A}\left( \boldsymbol{x}^{(1)}\right)+\lambda  \boldsymbol{A}\left( \boldsymbol{x}^{(2)}\right)=(1-\lambda)  \boldsymbol{b}+\lambda  \boldsymbol{b}= \boldsymbol{b} .
+\]
+
+(b) Just take \( \boldsymbol{A}=\left(a_1, \ldots, a_n\right)\) in (a).
+
+
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	
+	\item Prove that the intersection of any number of convex sets is convex.
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+Let \(\left\{K_\alpha\right\}_{\alpha \in A}\) be a family of convex sets, and let \(\mathcal{K}:=\cap_{\alpha \in A} K_\alpha\). Then, for any \(x, y \in \mathcal{K}\) by definition of the intersection of a family of sets, \(x, y \in K_\alpha\) for all \(\alpha \in A\) and each of these sets is convex. Hence for any \(\alpha \in A\), and \(\lambda \in[0,1],(1-\lambda) x+\lambda y \in K_\alpha\). Hence \((1-\lambda) x+\lambda y \in \mathcal{K}\).
+
+
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{3}
+	
+	\item Let \(f_1, f_2, \ldots, f_k\) be convex functions and \(w_1, w_2, \ldots, w_k\) be nonnegative real numbers. Prove that \(f(x)=\sum_{i=1}^k w_i f_i(x)\) is a convex function.
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+For any \(i=1, \ldots, k\), any \(x, y \in \operatorname{dom} f_i\), and \(\lambda \in[0,1]\), we have
+\[
+f_i(\lambda x+(1-\lambda) y) \leq \lambda f_i(x)+(1-\lambda) f_i(y)
+\]
+
+Then it follows that
+\[
+f(\lambda x+(1-\lambda) y)=\sum_{i=1}^k w_i f_i(\lambda x+(1-\lambda) y) \leq \sum_{i=1}^k w_i\left(\lambda f_i(x)+(1-\lambda) f_i(y)\right)=\lambda f(x)+(1-\lambda) f(y)
+\]
+
+Hence, \(f(x)\) is convex.
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{4}
+	
+	\item (a) Prove that \(|x|^\alpha\) is convex on \(\mathbb{R}\) for \(\alpha \geq 1\).
+	(b) Prove that if \(f_1, f_2: \mathbb{R}^N \rightarrow \mathbb{R}\) are convex, then \(\max \left(f_1, f_2\right)\) is convex.
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+(a) When \(\alpha=1\), we can directly verify the convexity of \(|x|\) by definition. When \(\alpha>1, f(x)=x^\alpha\) is twice-differentiable and \(f^{\prime \prime}(x)=\alpha(\alpha-1) x^{\alpha-2} \geq 0\). Then the result follows from second-order condition.
+(b) Let \(f=\max \left(f_1, f_2\right)\). Since \(\forall x, y \in \mathbb{R}^N, \lambda \in[0,1]\), we have
+\[
+f_i(\lambda x+(1-\lambda) y) \leq \lambda f_i(x)+(1-\lambda) f_i(y) \leq \lambda f(x)+(1-\lambda) f(y), i=1,2 .
+\]
+
+Therefore,
+\[
+f(\lambda x+(1-\lambda) y)=\max \left(f_1(\lambda x+(1-\lambda) y), f_2(\lambda x+(1-\lambda) y) \leq \lambda f(x)+(1-\lambda) f(y)\right.
+\]
+
+
+%------------------------------------------------------%
+\medskip
+\noindent
+\begin{enumerate}
+	\setcounter{enumi}{5}
+	
+	\item (a) Prove that the Quadratic-Over-Linear function \(f\left(x_1, x_2\right)=\frac{x_1^2}{x_2}\) is convex on \(\mathbb{R} \times(0, \infty)\).
+	(b) Prove that the quadratic function
+	\[
+	f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\mathrm{T}} \boldsymbol{P} \boldsymbol{x}+\boldsymbol{q}^{\mathrm{T}} \boldsymbol{x}+r,
+	\]
+	where \(\boldsymbol{P}\) is symmetric, is convex if and only if \(\boldsymbol{P}\) is positive semi-definite.
+	
+\end{enumerate}
+
+
+\textbf{Short answer:}
+
+(a) We have
+\[
+\nabla^2 f=\left(\begin{array}{cc}
+	\frac{2}{x_2} & \frac{-2 x_1}{x_2^2} \\
+	\frac{-2 x_1}{x_2^2} & \frac{2 x_1^2}{x^3}
+\end{array}\right)=\frac{2}{x_2^3}\left(\begin{array}{cc}
+	x_2^2 & -x_1 x_2 \\
+	-x_1 x_2 & x_1^2
+\end{array}\right) .
+\]
+
+Since \(\nabla^2 f \succeq 0, \forall\left(x_1, x_2\right) \in \mathbb{R} \times(0, \infty), f\left(x_1, x_2\right)\) is convex on \(\mathbb{R} \times(0, \infty)\).
+(b) Just note that the Hessian of \(f\) is
+\[
+\nabla^2 f=\left(\frac{\partial^2 f(\boldsymbol{x})}{\partial x_i \partial x_j}\right)_{1 \leq i, j \leq N}= \boldsymbol{P}
+\]
+and use second-order condition.
+
+
