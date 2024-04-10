@@ -1,0 +1,250 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{One Dimensional Search}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept (p. 123)}
+Many of the methods we have described rely on an initial interval in which the minimizer is known to lie. This interval is also called a bracket, and procedures for finding such a bracket are called bracketing methods. To find a bracket \([a, b]\) containing the minimizer, assuming uni-modality, it suffices to find three points \(a<c<b\) such that \(f(c)<f(a)\) and \(f(c)<f(b)\). A simple bracketing procedure is as follows. First, we pick three arbitrary points \(x_{0}<x_{1}<x_{2}\). If \(f\left(x_{1}\right)<f\left(x_{0}\right)\) and \(f\left(x_{1}\right)<f\left(x_{2}\right)\), then we are done - the desired bracket is \(\left[x_{0}, x_{2}\right]\). If not,say \(f\left(x_{0}\right)>f\left(x_{1}\right)>f\left(x_{2}\right)\), then we pick a point \(x_{3}>x_{2}\) and check if \(f\left(x_{2}\right)<f\left(x_{3}\right)\). If it holds, then again we are done - the desired bracket is \(\left[x_{1}, x_{3}\right]\). Otherwise, we continue with this process until the function increases. Typically, each new point chosen involves an expansion in distance between successive test points. An analogous process applies if the initial three points are such that \(f\left(x_{0}\right)<f\left(x_{1}\right)<f\left(x_{2}\right)\).
+
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Many iterative optimization methods use a variable step size. The step size is determined by using a line search which involves locating the minimizer of a function of many variables in a specified direction \(d\). This involves the location of an interval in which the minimizer lies and then the interval is reduced. Once the uncertainty interval is determined, one can use the Golden Section search or the Fibonacci method to reduce the uncertainty interval.
+
+
+We now describe a method that can be used to determine an interval containing the minimizer. We begin by evaluating the given function, say \(f\), at an initial point \(\boldsymbol{x}^{(0)}\). The next step is to evaluate the function at a second point which is a distance \(\epsilon\) from \(\boldsymbol{x}^{(0)}\), where \(\epsilon\) is the chosen parameter, that is, we evaluate \(f\) at \(\boldsymbol{x}^{(0)}+\epsilon \boldsymbol{d}\). We then continue to evaluate \(f\) at new points, successively doubling the distance between the points. The process stops when the function increases between two consecutive evaluations. In the one-dimensional example in Figure 1, the function \(f\) increases between \(x_{2}\) and \(x_{3}\) and therefore the minimizer is bracketed in the interval \(\left[x_{1}, x_{3}\right]\).
+
+Consider now the function
+
+\begin{equation*}
+	f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		2 & 1 \\
+		1 & 2
+	\end{array}\right] \boldsymbol{x}
+\end{equation*}
+
+with the initial guess \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0.8 & 0.25\end{array}\right]^{\top}\). Assume that the direction of travel is the negative gradient of \(f\). Take \(\epsilon=0.075\). Bracket the minimizer, that is, use the above described method to find an initial uncertainty region.
+
+\medskip
+
+\noindent
+Example 2: Consider the function \(f=2 x_{1}^{2}+x_{2}^{2}\) and the point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}-2 & -1\end{array}\right]^{\top}\). Bracket the minimizer of \(f\) on the line passing through \(\boldsymbol{x}^{(0)}\) in the direction \(\boldsymbol{d}=\left[\begin{array}{ll}10 & 10\end{array}\right]^{\top}\). Use \(\epsilon=0.1\).
+
+\textbf{Short answer}:
+
+We first evaluate \(f\left(\boldsymbol{x}^{(0)}\right)\) to obtain \(f\left(\boldsymbol{x}^{(0)}\right)=9\). Next, we evaluate \(f\) at
+
+\begin{equation*}
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\epsilon d=\left[\begin{array}{ll}
+		-1 & 0
+	\end{array}\right] .
+\end{equation*}
+
+\begin{equation*}
+	f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		2 & 1 \\
+		1 & 2
+	\end{array}\right] \boldsymbol{x}
+\end{equation*}
+
+then the negative derivative of \(f\) at point \(\boldsymbol{x}^{(0)}=[0.8-0.25]^{\top}\) is 
+\[\boldsymbol{d}=-\nabla f\left(\boldsymbol{x}^{(0)}\right)=-\left[\begin{array}{ll}2 & 1 \\ 1 & 2\end{array}\right] \boldsymbol{x}^{(0)}=-\left[\begin{array}{ll}2 & 1 \\ 1 & 2\end{array}\right]\left[\begin{array}{c}0.8 \\ -0.25\end{array}\right]=-\left[\begin{array}{c}1.35 \\ 0.3\end{array}\right].\]
+
+Now for \(\boldsymbol{x}=\boldsymbol{x}^{(0)}\), the value of the function is \(f\left(\boldsymbol{x}^{(0)}\right)=0.5025\).
+
+First iteration:
+
+\[\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\epsilon \boldsymbol{d}=\left[\begin{array}{c}0.8 \\ -0.25\end{array}\right]-0.075\left[\begin{array}{c}1.35 \\ 0.3\end{array}\right]=\left[\begin{array}{c}0.6987 \\ -0.2725\end{array}\right],\]
+\[f\left(\boldsymbol{x}^{(1)}\right)=0.3721<f\left(\boldsymbol{x}^{(0)}\right).\]
+
+Second iteration:
+
+\[\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(0)}+3 \epsilon \boldsymbol{d}=\left[\begin{array}{c}0.8 \\ -0.25\end{array}\right]-3 \times 0.075\left[\begin{array}{c}1.35 \\ 0.3\end{array}\right]=\left[\begin{array}{c}0.4963 \\ -0.3175\end{array}\right],\] \[f\left(\boldsymbol{x}^{(2)}\right)=0.1895<f\left(\boldsymbol{x}^{(1)}\right).\]
+
+Third iteration:
+
+\[\boldsymbol{x}^{(3)}=\boldsymbol{x}^{(0)}+7 \epsilon \boldsymbol{d}=\left[\begin{array}{c}0.8 \\ -0.25\end{array}\right]-7 \times 0.075\left[\begin{array}{c}1.35 \\ 0.3\end{array}\right]=\left[\begin{array}{c}0.0912 \\ -0.4075\end{array}\right],\] \[f\left(\boldsymbol{x}^{(3)}\right)=0.1372<f\left(\boldsymbol{x}^{(2)}\right).\]
+
+Fourth iteration:
+
+\[\boldsymbol{x}^{(4)}=\boldsymbol{x}^{(0)}+15 \epsilon \boldsymbol{d}=\left[\begin{array}{c}0.8 \\ -0.25\end{array}\right]-15 \times 0.075\left[\begin{array}{c}1.35 \\ 0.3\end{array}\right]=\left[\begin{array}{c}-0.7188 \\ -0.5875\end{array}\right],\] \[f\left(\boldsymbol{x}^{(4)}\right)=1.2840>f\left(\boldsymbol{x}^{(3)}\right).\]
+
+The iteration stops.
+
+Thus the final initial uncertainty region based by bracketing is \[\left(\boldsymbol{x}^{(2)}, \boldsymbol{x}^{(4)}\right)=\left(\left[\begin{array}{c}0.4963 \\ -0.3175\end{array}\right],\left[\begin{array}{c}-0.7188 \\ -0.5875\end{array}\right]\right).\]
+
+The length is 1.2447.
+
+We obtain \(f\left(\boldsymbol{x}^{(1)}\right)=2\). We proceed to evaluate \(f\) at
+
+\begin{equation*}
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+2 \epsilon \boldsymbol{d}=\left[\begin{array}{ll}
+		1 & 2
+	\end{array}\right] .
+\end{equation*}
+
+We obtain \(f\left(\boldsymbol{x}^{(2)}\right)=6\). Note that
+
+\begin{equation*}
+	f\left(\boldsymbol{x}^{(0)}\right)>f\left(\boldsymbol{x}^{(1)}\right), f\left(\boldsymbol{x}^{(1)}\right)<f\left(\boldsymbol{x}^{(2)}\right) .
+\end{equation*}
+
+Therefore, the bracket is the line segment
+
+\begin{equation*}
+	\left[\begin{array}{ll}
+		\boldsymbol{x}^{(0)} & \boldsymbol{x}^{(2)}
+	\end{array}\right] .
+\end{equation*}
+
+
+\subsection{Concept}
+Golden section algorithm and Fibonacci algorithm.
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: It is known that the minimizer of \(f(x)=x^{2}+2 x\) is located in the interval \([-3,5]\). Box in the minimizer within the range 2.0. Assume that the last useful value of the factor reducing the uncertainty is \(2 / 3\), that is, assume that the last step has the form
+
+\begin{equation*}
+	1-\rho_{N}=\frac{F_{2}}{F_{3}}=\frac{2}{3}
+\end{equation*}
+
+
+\textbf{Short answer}:
+
+Since
+
+\begin{equation*}
+	\left(1-\rho_{1}\right)\left(1-\rho_{2}\right) \times \cdots \times\left(1-\rho_{N-1}\right)\left(1-\rho_{N}\right)=\frac{F_{N+1}}{F_{N+2}} \frac{F_{N}}{F_{N+1}} \cdots \frac{F_{3}}{F_{4}} \frac{F_{2}}{F_{3}}=\frac{2}{F_{N+2}},
+\end{equation*}
+
+the uncertainty range is reduced by the factor
+
+\begin{equation*}
+	\frac{2}{F_{N+2}} \text {. }
+\end{equation*}
+
+To find the iterations, we need to solve the equation
+
+\begin{equation*}
+	\frac{2}{F_{N+2}} \times(\text { old range }) \leq(\text { new range })
+\end{equation*}
+
+We then have
+
+\begin{equation*}
+	\frac{2}{F_{N+2}} \leq \frac{2}{5-(-3)}
+\end{equation*}
+
+which gives
+
+\begin{equation*}
+	F_{N+2} \geq 8
+\end{equation*}
+
+Therefore, \(N+2=5, N=3\).
+
+Iteration 1:
+
+\[
+	\begin{aligned}
+		a_{1}&=a_{0}+\rho_{1}\left(b_{0}-a_{0}\right)=-3+\frac{3}{8}(5+3)=0 \\
+		b_{1}&=a_{0}+\left(1-\rho_{0}\right)\left(b_{0}-a_{0}\right)=-3+\frac{5}{8}(5+3)=-1 \\
+	\end{aligned}
+\]
+\[
+	\begin{aligned}
+		f\left(a_{1}\right) &=0 \\
+		f\left(b_{1}\right) &=8 \\
+		f\left(a_{1}\right)&<f\left(b_{1}\right)
+	\end{aligned}
+\]
+
+The uncertainty range is reduced to \(\left[a_{0}, b_{1}\right]=[-3,2]\).
+
+Iteration 2:
+
+\[
+\begin{aligned}
+	a_{2}&=a_{0}+\rho_{2}\left(b_{1}-a_{0}\right)=-3+\frac{3}{5}(2+3)=-1 \\
+	b_{2}&=a_{1}=0 \\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+	f\left(a_{2}\right)&=-1 \\
+	f\left(b_{2}\right)&=0 \\
+	f\left(a_{2}\right)&<f\left(b_{2}\right)
+\end{aligned}
+\]
+
+
+The uncertainty range is reduced to \(\left[a_{0}, b_{2}\right]=[-3,0]\).
+
+Iteration 3:
+
+\[
+\begin{aligned}
+	a_{3}&=a_{0}+\rho_{3}\left(b_{2}-a_{0}\right)=-3+\frac{1}{3}(0+3)=-2 \\
+	b_{3}&=a_{2}=-1 \\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+	f\left(a_{3}\right)&=0 \\
+	 f\left(b_{3}\right)&=-1 \\
+	f\left(a_{3}\right)&>f\left(b_{3}\right)
+\end{aligned}
+\]
+
+
+The uncertainty range is reduced to \(\left[a_{3}, b_{2}\right]=[-2,0]\). We conclude that the minimizer is located in the interval \([-2,0]\).
+
+\medskip
+
+\noindent
+Example 2: Suppose that \(\rho_{1}, \cdots, \rho_{N}\) are the values used in the Fibonacci search method. Show that for each \(k=1, \cdots, N, 0 \leq \rho_{k} \leq 1 / 2\), and for each \(k=1, \cdots, N-1\),
+
+\[
+	\rho_{k+1}=1-\frac{\rho_{k}}{1-\rho_{k}} .
+\]
+
+\textbf{Short answer}:
+Suppose that \(\rho_{1}, \cdots, \rho_{N}\) are the values used in the Fibonacci search method. Show that for each \(k=1, \cdots, N, 0 \leq \rho_{k} \leq 1 / 2\), and for each \(k=1, \cdots, N-1\),
+
+\[
+	\rho_{k+1}=1-\frac{\rho_{k}}{1-\rho_{k}} .
+\]
+
+\[\rho_{k}=1-\frac{F_{N-k+1}}{F_{N-k+2}}.\] 
+
+Then
+
+\[
+	\begin{aligned}
+		1-\frac{\rho_{k}}{1-\rho_{k}} & =1-\frac{1-\frac{F_{N-k+1}}{F_{N-k+2}}}{\frac{F_{N-k+1}}{F_{N-k+2}}} \\
+		& =1-\frac{F_{N-k+2}-F_{N-k+1}}{F_{N-k+1}} \\
+		& =1-\frac{F_{N-k}}{F_{N-k+1}} \\
+		& =\rho_{k+1} .
+	\end{aligned}
+\]
+
+\(\rho_{1}=1 / 2\), which means \(0 \leq \rho_{1} \leq 1 / 2\). Assume \(0 \leq \rho_{k} \leq 1 / 2\), then for \(\rho_{k+1}\), we have
+
+\[
+	1 \leq \frac{1}{1-\rho_{k}} \leq 2
+\]
+
+which means
+
+\[
+	\frac{1}{2} \leq \frac{\rho_{k}}{1-\rho_{k}} \leq 1
+\]
+
+Since \(\rho_{k+1}=1-\frac{\rho_{k}}{1-\rho_{k}}\). Therefore,
+
+\[
+	0 \leq \rho_{k+1} \leq \frac{1}{2} .
+\]
