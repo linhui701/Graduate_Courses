@@ -1,0 +1,178 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Steepest Descent}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+One can consider a search for a stationary point as an iterative procedure of generating a point \(\boldsymbol{x}^{(k+1)}\) which takes steps of certain length \(\alpha_{k}\) at direction \(\boldsymbol{d}^{(k)}\) from the previous point \(\boldsymbol{x}^{(k)}\). The direction \(\boldsymbol{d}^{(k)}\) decides which direction we search next, and the step size determines how far we go in that particular direction. We can write this update rule as:
+
+\[
+	\boldsymbol{x}^{(k+1)}=\boldsymbol{x}^{(k)}+\alpha_{k} \boldsymbol{d}^{(k)} .
+\]
+
+A steepest descent algorithm would be an algorithm which follows the above update rule, where at each iteration, the direction \(\nabla \boldsymbol{x}^{(k)}\) is the steepest direction we can take. That is, the algorithm continues its search in the direction which will minimize the value of function, given the current point. Or in other words, given a particular point \(\boldsymbol{x}\), we would like to find the direction \(\boldsymbol{d}\) s.t. \(f(\boldsymbol{x}+\boldsymbol{d})\) is minimized. The step size \(\alpha_{k}\) is chosen to achieve the maximum amount of decrease of the objective function at each individual step. Specifically, \(\alpha_{k}\) is chosen to minimize
+
+\[
+	\Phi_{k}(\alpha)=f\left(\boldsymbol{x}^{(k)}-\alpha \nabla f\left(\boldsymbol{x}^{(k)}\right)\right) .
+\]
+
+To summarize, the steepest descent algorithm proceeds as follows: At each step, starting from the point \(\boldsymbol{x}^{(k)}\), we conduct a line search in the direction \(-\nabla f\left(\boldsymbol{x}^{(k)}\right)\) until a minimizer, \(\boldsymbol{x}^{(k+1)}\), is found.
+
+Given a function \(f\), the direction of ascent of \(f\) at the point \(\boldsymbol{x}^{*}\) satisfies \(\boldsymbol{d}^{\top} \nabla\) \(f\left(\boldsymbol{x}^{*}\right)>0\). Similarly, the direction of descent satisfies \(\boldsymbol{d}^{\top} \nabla f\left(\boldsymbol{x}^{*}\right)<0\).
+
+Cannot use \(\boldsymbol{Q}\), since \(x_{1}\) has power of 3.
+
+Example 1:
+
+\[
+	f\left(x_{1}, x_{2}\right)=\frac{1}{3} x_{1}^{3}-\left(2 x_{2}+1\right) x_{1}+\frac{1}{2} x_{2}^{2}
+\]
+
+perform one iteration of the steepest descent algorithm starting from \(\boldsymbol{x}^{(0)}=\) \(\left[\begin{array}{ll}-1 & 0\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}-\alpha_{0} \boldsymbol{g}^{(0)},
+\]
+
+where
+
+\[
+	\boldsymbol{g}^{(0)}=\left[\begin{array}{c}
+		x_{1}^{2}-2 x_{2}-1 \\
+		-2 x_{1}+x_{2}
+	\end{array}\right]_{\boldsymbol{x}^{(0)}}=\left[\begin{array}{l}
+		0 \\
+		2
+	\end{array}\right] .
+\]
+
+We calculate the step size \(\alpha_{0}\) as follows:
+
+\[
+	\alpha_{0}=\arg \min f\left(\boldsymbol{x}^{(0)}-\alpha_{0} \boldsymbol{g}^{(0)}\right) .
+\]
+
+Let
+
+\[
+	\begin{aligned}
+		\Phi\left(\alpha_{0}\right) & =f\left(\boldsymbol{x}^{(0)}-\alpha_{0} \boldsymbol{g}^{(0)}\right)=f\left(\left[\begin{array}{c}
+			-1 \\
+			-2 \alpha_{0}
+		\end{array}\right]\right) \\
+		& =2 \alpha_{0}^{2}-4 \alpha_{0}+\frac{2}{3}
+	\end{aligned}
+\]
+
+Apply FONC to obtain
+
+\[
+	4 \alpha_{0}-4=0, \alpha_{0}=1
+\]
+
+By SOSC, \(\alpha_{0}\) is the local minimizer. Therefore,
+
+\[
+	\boldsymbol{x}^{(1)}=\left[\begin{array}{c}
+		-1 \\
+		0
+	\end{array}\right]-\left[\begin{array}{l}
+		0 \\
+		2
+	\end{array}\right]=\left[\begin{array}{l}
+		-1 \\
+		-2
+	\end{array}\right] .
+\]
+
+
+Example 2: Perform two iterations leading to the minimization of
+
+\[
+	f\left(x_{1}, x_{2}\right)=2 x_{1}^{2}+2 x_{1} x_{2}+x_{2}^{2}+x_{1}-x_{2}+6
+\]
+
+using the method of steepest descent. The starting point is \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\). 
+
+\textbf{Short answer}:
+
+The function \(f\) is a quadratic, we represent it in standard form as follows:
+
+\[
+	\begin{array}{rlr}
+		f & =\frac{1}{2} \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}-\boldsymbol{x}^{\top} \boldsymbol{b}+c  \\
+		& =\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+			4 & 2 \\
+			2 & 2
+		\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{c}
+			-1 \\
+			1
+		\end{array}\right]+6 .
+	\end{array}
+\]
+
+Iteration 1:
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}-\alpha_{0} \boldsymbol{g}^{(0)}.
+\]
+
+We first compute \(\boldsymbol{g}^{(0)}\) :
+
+\begin{equation*}
+	\boldsymbol{g}^{(0)}=\left[\begin{array}{l}
+		4 x_{1}+2 x_{2}+1 \\
+		2 x_{2}+2 x_{2}-1
+	\end{array}\right]_{\boldsymbol{x}^{(0)}}=\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right] .
+\end{equation*}
+
+We the compute the step size \(\alpha_{0}\) :
+
+\[
+	\alpha_{0}=\frac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{g}^{(0)}}{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{g}^{(0)}}=\frac{2}{2}=1 .
+\]
+
+
+Iteration 2:
+
+\[
+	\boldsymbol{x}^{(1)}=\left[\begin{array}{l}
+		-1 \\
+		-1
+	\end{array}\right] \text {. }
+\]
+
+\[
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}-\alpha_{1} \boldsymbol{g}^{(1)},
+\]
+
+where
+
+\[
+	\boldsymbol{g}^{(1)}=\nabla f\left(\boldsymbol{x}^{(1)}\right)=\left[\begin{array}{l}
+		-1 \\
+		-1
+	\end{array}\right]
+\]
+
+and
+
+\[
+	\alpha_{1}=\frac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{g}^{(1)}}{g\boldsymbol{g}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{g}^{(1)}}=\frac{1}{5}.
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{x}^{(2)}=\left[\begin{array}{c}
+		-\frac{4}{5} \\
+		1 \frac{1}{5}
+	\end{array}\right] .
+\]
