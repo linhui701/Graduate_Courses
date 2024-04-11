@@ -231,12 +231,17 @@
 	\item The \underline{directional derivative} is the rate of increase of \(f\) at \(\boldsymbol{x}\) in the direction of \(\boldsymbol{d}\),
 	\[
 	\frac{\partial f}{\partial \boldsymbol{d}} \triangleq \lim _{\alpha \rightarrow 0} \frac{f(\boldsymbol{x}+\alpha \boldsymbol{d})-f(\boldsymbol{x})}{\alpha}
-	=\left.\frac{d}{d \alpha} f(\boldsymbol{x}+\alpha \boldsymbol{d})\right|_{\alpha=0}=\boldsymbol{d}^{\top} \nabla f(\boldsymbol{x}),
+	=\left.\frac{d}{d \alpha} f(\boldsymbol{x}+\alpha \boldsymbol{d})\right|_{\alpha=0}
+	=\nabla f(\boldsymbol{x})^{\top} \boldsymbol{d}
+	=\langle\nabla f(\boldsymbol{x}), \boldsymbol{d}\rangle
+	=\boldsymbol{d}^{\top} \nabla f(\boldsymbol{x}),
 	\]where
 	\[
 	f(\boldsymbol{x}+\alpha \boldsymbol{d})
 	=f(\boldsymbol{x})+\alpha \boldsymbol{d}^{\top} \nabla f(\boldsymbol{x})+R_{2}.
 	\]
+	
+	\item If \(\|\boldsymbol{d}\|=1\), then \(\partial f / \partial \boldsymbol{d}\) is the \underline{rate of increase} of \(f\) at \(\boldsymbol{x}\) in the direction \(\boldsymbol{d}\).
 \end{itemize}
 
 \textbf{Short derivation}:
@@ -352,8 +357,9 @@ For quadratic approximation, we can think about it in this way,
 		& = f( \boldsymbol{x}^{(0)} ) \quad & +  
 			\left[ \quad D f(\boldsymbol{x}^{(0)})  \quad \right]
 			\left[ \begin{array}{c} \\ \boldsymbol{d} \\ \\ \end{array} \right] \\
+		& & \\
 		&  &+
-			\frac{1}{2} \left[  \qquad \boldsymbol{d}^{\top} \qquad   \right]
+			\dfrac{1}{2} \left[  \qquad \boldsymbol{d}^{\top} \qquad   \right]
 			\left[\begin{array}{ccc} 
 				& &  \\ 
 				&  \mathbf{F} \left( \boldsymbol{x}^{(0)} + {\color{forestgreen}{1}} \boldsymbol{d} \right) &   \\ 
@@ -363,9 +369,10 @@ For quadratic approximation, we can think about it in this way,
 	\end{array}
 	\]
 
+
 \bigskip
 
 \noindent
-[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
+[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``\href{https://www.amazon.com/Introduction-Optimization-Edwin-K-Chong/dp/1118279018}{An introduction to optimization}", 4th Edition, John Wiley and Sons, Inc. 2013.
 
 \end{document}
