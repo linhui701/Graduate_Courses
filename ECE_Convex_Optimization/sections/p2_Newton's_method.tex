@@ -1,0 +1,132 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Newton's Method}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+In numerical analysis, Newton's method, also known as the Newton-Raphson method, named after Isaac Newton and Joseph Raphson, is a root-finding algorithm which produces successively better approximations to the roots (or zeros) of a real-valued function. The most basic version starts with a single-variable function \(f\) defined for a real variable \(x\), the function's derivative \(f^{\prime}\), and an initial guess \(x_{0}\) for a root of \(f\). If the function satisfies sufficient assumptions and the initial guess is close, then
+
+\[
+	x_{1}=x_{0}-\frac{f\left(x_{0}\right)}{f^{\prime}\left(x_{0}\right)}
+\]
+
+is a better approximation of the root than \(x_{0}\). Geometrically, \(\left(x_{1}, 0\right)\) is the intersection of the \(x\)-axis and the tangent of the graph of \(f\) at \(\left(x_{0}, f\left(x_{0}\right)\right)\) : that is, the improved guess is the unique root of the linear approximation at the initial point.
+
+The general Newton's method is:
+
+\[
+	\boldsymbol{x}^{(k+1)}=\boldsymbol{x}^{(k)}-\boldsymbol{F}\left(\boldsymbol{x}^{(k)}\right)^{-1} \boldsymbol{g}^{(k)},
+\]
+
+where \(\boldsymbol{x} \in \mathbb{R}^{n}, \boldsymbol{g}^{(k)}=\nabla f\left(\boldsymbol{x}^{(k)}\right)\).
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Use an iterative algorithm of your choice to estimate a root of the equation,
+
+\[
+	f(x)=3 x^{2}+20 x-100=0 .
+\]
+
+The starting point is \(x^{(0)}=6\). Perform one iteration.
+
+\textbf{Short answer}:
+
+We use the Newton's method of tangents to estimate the equation's root. We compute
+
+\[
+	\begin{aligned}
+		x^{(1)} & =x^{(0)}-\frac{f\left(x^{(0)}\right)}{f^{\prime}\left(x^{(0)}\right)} . \\
+		f^{\prime}(x) & =6 x+20 . x^{(1)}=6-\frac{128}{56}=3 \frac{5}{7} .
+	\end{aligned}
+\]
+
+Example 2: Minimize the function
+
+\[
+	f\left(x_{1}, x_{2}\right)=\frac{1}{3} x_{1}^{3}-\left(2 x_{2}+1\right) x_{1}+\frac{1}{2} x_{2}^{2}
+\]
+
+using Newton's method starting from \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}3 & 0\end{array}\right]^{\top}\). Perform one iteration.
+
+\textbf{Short answer}:
+
+\[
+	\begin{aligned}
+		\nabla f(\boldsymbol{x})= & \left[\begin{array}{c}
+				x_{1}^{2}-2 x_{2}-1 \\
+				-2 x_{1}+x_{2}
+			\end{array}\right], & \nabla f\left(\boldsymbol{x}^{(0)}\right) & =\left[\begin{array}{c}
+				8 \\
+				-6
+			\end{array}\right]   \\
+		\boldsymbol{F}(\boldsymbol{x})= & \left[\begin{array}{cc}
+				2 x_{1} & -2 \\
+				-2 & 1
+			\end{array}\right], & \boldsymbol{F} \left(\boldsymbol{x}^{(0)}\right)^{-1} & =\frac{1}{2}\left[\begin{array}{ll}
+				1 & 2 \\
+				2 & 6
+			\end{array}\right] .  \\
+		&  & \boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}-\boldsymbol{F}\left(\boldsymbol{x}^{(0)}\right)^{-1} \boldsymbol{g}^{(0)} & .
+	\end{aligned}
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{x}^{(1)}=\left[\begin{array}{l}
+		3 \\
+		0
+	\end{array}\right]-\frac{1}{2}\left[\begin{array}{ll}
+		1 & 2 \\
+		2 & 6
+	\end{array}\right]\left[\begin{array}{c}
+		8 \\
+		-6
+	\end{array}\right]=\left[\begin{array}{c}
+		5 \\
+		10
+	\end{array}\right] .
+\]
+
+Example 3: Apply Newton's method to the function
+
+\[
+	f\left(x_{1}, x_{2}\right)=x_{1}^{2}-2 x_{2}^{2}-x_{1}+3 .
+\]
+
+The starting point is \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\). Is the point that you obtain indeed a minimizer?
+
+Solution:
+
+\[
+	f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}-\boldsymbol{x}^{\top} \boldsymbol{b}+c=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{cc}
+		2 & 0 \\
+		0 & -4
+	\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{l}
+		1 \\
+		0
+	\end{array}\right]+3 .
+\]
+
+Since it is quadratic form,
+
+\[
+	\boldsymbol{x}^{*}=\boldsymbol{Q}^{-1} \boldsymbol{b}=\left[\begin{array}{c}
+		\frac{1}{2} \\
+		0
+	\end{array}\right]
+\]
+
+Since
+
+\[
+	\boldsymbol{F}(\boldsymbol{x})=\left[\begin{array}{cc}
+		2 & 0 \\
+		0 & -4
+	\end{array}\right]
+\]
+
+is indefinite, \(\underline{x^{*} \text{ is not a minimizer nor a maximizer}}\). (SONC)
