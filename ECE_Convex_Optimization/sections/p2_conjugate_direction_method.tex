@@ -1,0 +1,297 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Conjugate Direction Method}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+We present the conjugate direction algorithm for minimizing the quadratic function of \(n\) variables
+
+\[
+	f(x)=\frac{1}{2} \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}-\boldsymbol{x}^{\top} \boldsymbol{b} + c,
+\]
+
+where \(\boldsymbol{Q}=\boldsymbol{Q}^{\top} \succ 0, x \in \mathbb{R}^{n}\). Note that because \(\boldsymbol{Q} \succ 0\), the function \(f\) has a global minimizer that can be found by solving \(\boldsymbol{Q} \boldsymbol{x}=\boldsymbol{b}\).
+
+Basic Conjugate Direction Algorithm: Given a starting point \(\boldsymbol{x}^{(0)}\) and \(\boldsymbol{Q}\)-conjugate directions \(\boldsymbol{d}^{(0)}, \boldsymbol{d}^{(1)}, \ldots, \boldsymbol{d}^{(n-1)} ;\) for \(k \geq 0\),
+
+\[
+	\begin{aligned}
+		\boldsymbol{g}^{(k)} & =\nabla f\left(\boldsymbol{x}^{(k)}\right)=\boldsymbol{Q} \boldsymbol{x}^{(k)}-\boldsymbol{b}, \\
+		\alpha_{k} & =-\frac{\boldsymbol{g}^{(k)^{\top}} \boldsymbol{d}^{(k)}}{\boldsymbol{d}^{(k)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(k)}}, \\
+		\boldsymbol{x}^{(k+1)} & =\boldsymbol{x}^{(k)}+\alpha_{k} \boldsymbol{d}^{(k)} .
+	\end{aligned}
+\]
+
+\begin{itemize}
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) For any starting point \(\boldsymbol{x}^{(0)}\), the basic conjugate direction algorithm converges to the unique \(\boldsymbol{x}^{*}\) (that solves \(\boldsymbol{Q} \boldsymbol{x}=\boldsymbol{b}\) ) in n step; that is, \(\boldsymbol{x}^{(n)}=\boldsymbol{x}^{*}\).
+\end{itemize}
+	
+The conjugate gradient algorithm does not use prespecified conjugate directions, but instead computes the directions as the algorithm progresses. At each stage of the algorithm, the direction is calculated as a linear combination of the previous direction and the current gradient, in such a way that all the directions are mutually \(Q\)-conjugate, hence the name conjugate gradient algorithm. This calculation exploits the fact that for a quadratic function of \(\mathrm{n}\) variables, we can locate the function minimizer by performing \(n\) searches along mutually conjugate directions. The conjugate gradient algorithm is summarized in the following Algorithm \ref{alg:Conjugate}.
+
+
+\begin{algorithm}
+\caption{Conjugate gradient algorithm} \label{alg:Conjugate}
+\begin{spacing}{2}
+	\begin{algorithmic}[1]
+		\State Set \(k = 0\); select the initial point \(x^{(0)}\).
+		\State \(\boldsymbol{g}^{(0)} = \nabla f(\boldsymbol{x}^{(0)})\). If \(\boldsymbol{g}^{(0)} = 0\), stop; else, set \(\boldsymbol{d}^{(0)} = -\boldsymbol{g}^{(0)}\).
+		\State \(\alpha_k = \dfrac{\boldsymbol{g}^{(k)\top} \boldsymbol{d}^{(k)}}{\boldsymbol{d}^{(k)\top} \boldsymbol{Q} \boldsymbol{d}^{(k)}}\).
+		\State \(\boldsymbol{x}^{(k+1)} = \boldsymbol{x}^{(k)} + \alpha_k \boldsymbol{d}^{(k)}\).
+		\State \(\boldsymbol{g}^{(k+1)} = \nabla f(\boldsymbol{x}^{(k+1)})\). If \(\boldsymbol{g}^{(k+1)} = 0\), stop.
+		\State \(\beta_k = \dfrac{\boldsymbol{g}^{(k+1)\top} \boldsymbol{Q} \boldsymbol{d}^{(k)}}{\boldsymbol{d}^{(k)\top} \boldsymbol{Q} \boldsymbol{d}^{(k)}}\).
+		\State \(\boldsymbol{d}^{(k+1)} = -\boldsymbol{g}^{(k+1)} + \beta_k \boldsymbol{d}^{(k)}\).
+		\State Set \(k := k + 1\); go to step 3.
+	\end{algorithmic}
+\end{spacing}
+\end{algorithm}
+
+Check textbook page 186 for the conjugate gradient algorithm for \textit{non-quadratic} problems.
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Given
+
+\[
+	\boldsymbol{Q}=\left[\begin{array}{ll}
+		2 & 1 \\
+		1 & 1
+	\end{array}\right], \boldsymbol{d}^{(0)}=\left[\begin{array}{l}
+		1 \\
+		1
+	\end{array}\right] .
+\]
+
+Find a vector \(\boldsymbol{d}^{(1)}\) such that \(\boldsymbol{d}^{(0)}\) and \(\boldsymbol{d}^{(1)}\) are \(\boldsymbol{Q}\)-orthogonal.
+
+\textbf{Short answer}:
+
+We need
+
+\[
+	\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(1)}=\left[\begin{array}{ll}
+		1 & 1
+	\end{array}\right]\left[\begin{array}{ll}
+		2 & 1 \\
+		1 & 1
+	\end{array}\right]\left[\begin{array}{l}
+		d_{1} \\
+		d_{2}
+	\end{array}\right]=0
+\]
+
+Therefore, we calculate \(\boldsymbol{d}^{(1)}=\left[\begin{array}{c}1 \\ -\frac{3}{2}\end{array}\right]\).
+
+Example 2: Find a minimizer
+
+\[
+	f\left(x_{1}, x_{2}\right)=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		4 & 2 \\
+		2 & 2
+	\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{c}
+		-1 \\
+		1
+	\end{array}\right], \boldsymbol{x} \in \mathbb{R}^{2},
+\]
+
+using the conjugate direction method with the initial point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\), and \(Q\)-conjugate directions \(\boldsymbol{d}^{(0)}=\left[\begin{array}{ll}1 & 0\end{array}\right]^{\top}\), and \(\boldsymbol{d}^{(1)}=\left[\begin{array}{ll}-\frac{3}{8} & \frac{3}{4}\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:
+
+We have
+
+\[
+	\boldsymbol{g}^{(0)}=-\boldsymbol{b}=\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right]
+\]
+
+and hence
+
+\[
+	\alpha_{0}=-\dfrac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}}=-\dfrac{\left[\begin{array}{ll}
+			1 & -1
+		\end{array}\right]\left[\begin{array}{l}
+			1 \\
+			0
+		\end{array}\right]}{\left[\begin{array}{ll}
+			1 & 0
+		\end{array}\right]\left[\begin{array}{ll}
+			4 & 2 \\
+			2 & 2
+		\end{array}\right]\left[\begin{array}{l}
+			1 \\
+			0
+		\end{array}\right]}=-\frac{1}{4} .
+\]
+
+Thus,
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{c}
+		-\frac{1}{4} \\
+		0
+	\end{array}\right] .
+\]
+
+To find \(\boldsymbol{x}^{(2)}\), we compute
+
+\[
+	\boldsymbol{g}^{(1)}=\boldsymbol{Q} \boldsymbol{x}^{(1)}-\boldsymbol{b}=\left[\begin{array}{ll}
+		4 & 2 \\
+		2 & 2
+	\end{array}\right]\left[\begin{array}{c}
+		-\frac{1}{4} \\
+		0
+	\end{array}\right]-\left[\begin{array}{c}
+		-1 \\
+		1
+	\end{array}\right]=\left[\begin{array}{c}
+		0 \\
+		-\frac{3}{2}
+	\end{array}\right]
+\]
+
+and
+
+\[
+	\alpha_{1}=-\dfrac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{d}^{(1)}}{\boldsymbol{d}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(1)}}=-\dfrac{\left[\begin{array}{ll}
+			0 & -\frac{3}{2}
+		\end{array}\right]\left[\begin{array}{c}
+			-\frac{3}{8} \\
+			\frac{3}{4}
+		\end{array}\right]}{\left[\begin{array}{ll}
+			-\frac{3}{8} & \frac{3}{4}
+		\end{array}\right]\left[\begin{array}{ll}
+			4 & 2 \\
+			2 & 2
+		\end{array}\right]\left[\begin{array}{c}
+			-\frac{3}{8} \\
+			\frac{3}{4}
+		\end{array}\right]}=2 .
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+\alpha_{1} \boldsymbol{d}^{(1)}=\left[\begin{array}{c}
+		-1 \\
+		\frac{3}{2}
+	\end{array}\right] .
+\]
+
+Because \(f\) is a quadratic function in two variables, \(\boldsymbol{x}^{(2)}=\boldsymbol{x}^{*}\). Since \(\boldsymbol{F}(\boldsymbol{x})\) is p.d, \(\boldsymbol{x}^{*}\) is a strict minimizer.
+
+
+
+Example 3: Maximize
+
+\[
+	f\left(x_{1}, x_{2}\right)=3 x_{1}-x_{1}^{2}-x_{2}^{2}-x_{1} x_{2}
+\]
+
+using the conjugate gradient method. The starting point is \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:
+
+Maximize \(f \Leftrightarrow\) minimize \(-f\).
+
+\[
+	\hat{f}=-f=x_{1}^{2}+x_{2}^{2}-3 x_{1}+x_{1} x_{2}=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		2 & 1 \\
+		1 & 2
+	\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{l}
+		3 \\
+		0
+	\end{array}\right] .
+\]
+
+\textbf{Iteration 1}:
+
+\[
+	\begin{aligned}
+		& \boldsymbol{g}^{(0)}=-\boldsymbol{b}=\left[\begin{array}{c}
+			-3 \\
+			0
+		\end{array}\right], \\
+		& \boldsymbol{d}^{(0)}=\left[\begin{array}{l}
+			3 \\
+			0
+		\end{array}\right] \text {, } \\
+		& \alpha_{0}=-\frac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}}=-\frac{\left[\begin{array}{ll}
+				-3 & 0
+			\end{array}\right]\left[\begin{array}{l}
+				3 \\
+				0
+			\end{array}\right]}{\left[\begin{array}{ll}
+				3 & 0
+			\end{array}\right]\left[\begin{array}{ll}
+				2 & 1 \\
+				1 & 2
+			\end{array}\right]\left[\begin{array}{l}
+				3 \\
+				0
+			\end{array}\right]}=\frac{1}{2}, \\
+		& \boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{l}
+			\frac{3}{2} \\
+			0
+		\end{array}\right] \text {, } \\
+		& \boldsymbol{g}^{(1)}=\boldsymbol{Q} \boldsymbol{x}^{(1)}-\boldsymbol{b}=\left[\begin{array}{l}
+			0 \\
+			\frac{3}{2}
+		\end{array}\right] \neq 0 .
+	\end{aligned}
+\]
+
+\textbf{Iteration 2:}
+\[
+	\begin{aligned}
+		& \beta_{0}=\frac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}}=\frac{\left[\begin{array}{ll}
+				0 & \frac{3}{2}
+			\end{array}\right]\left[\begin{array}{ll}
+				2 & 1 \\
+				1 & 2
+			\end{array}\right]\left[\begin{array}{l}
+				3 \\
+				0
+			\end{array}\right]}{\left[\begin{array}{ll}
+				3 & 0
+			\end{array}\right]\left[\begin{array}{ll}
+				2 & 1 \\
+				1 & 2
+			\end{array}\right]\left[\begin{array}{l}
+				3 \\
+				0
+			\end{array}\right]}=\frac{1}{4}, \\
+		& \boldsymbol{d}^{(1)}=-\boldsymbol{g}^{(1)}+\beta_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{c}
+			\frac{3}{4} \\
+			-\frac{3}{2}
+		\end{array}\right], \\
+		& \alpha_{1}=-\frac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{d}^{(1)}}{\boldsymbol{d}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(1)}}=-\frac{\left[\begin{array}{ll}
+				0 & \frac{3}{2}
+			\end{array}\right]\left[\begin{array}{c}
+				\frac{3}{4} \\
+				-\frac{3}{2}
+			\end{array}\right]}{\left[\begin{array}{ll}
+				\frac{3}{4} & \left.-\frac{3}{2}\right]
+			\end{array}\right]\left[\begin{array}{ll}
+				2 & 1 \\
+				1 & 2
+			\end{array}\right]\left[\begin{array}{c}
+				\frac{3}{4} \\
+				-\frac{3}{2}
+			\end{array}\right]}=\frac{2}{3}, \\
+		& \boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+\alpha_{1} \boldsymbol{d}^{(1)}=\left[\begin{array}{c}
+			2 \\
+			-1
+		\end{array}\right], \\
+		& \boldsymbol{g}^{(2)}=\boldsymbol{Q} \boldsymbol{x}^{(2)}-\boldsymbol{b}=\left[\begin{array}{l}
+			0 \\
+			0
+		\end{array}\right] .
+	\end{aligned}
+\]
+
+Since \(\boldsymbol{F}(\boldsymbol{x}) \succ 0, \boldsymbol{x}^{*}=\boldsymbol{x}^{(2)}\) is a strict minimizer of \(\hat{f}\). Therefore, \(\boldsymbol{x}^{*}\) is a strict maximizer of \(f\). The max value is \(f\left(\boldsymbol{x}^{(2)}\right)=6-4-1+2=3\).
