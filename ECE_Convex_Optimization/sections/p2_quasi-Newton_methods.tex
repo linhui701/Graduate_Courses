@@ -1,0 +1,437 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Quasi-Newton Methods}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+The rank one algorithm is summarized in Algorithm \ref{alg:RankOne}. The DFP algorithm is summarized in Algorithm \ref{alg:DFP}. The BFGS algorithm is summarized in Algorithm \ref{alg:BFGS}.
+
+\begin{algorithm}
+\caption{Rank one algorithm} \label{alg:RankOne}
+\begin{spacing}{1.5}
+	\begin{algorithmic}[1]
+		\State Set \( k := 0 \); select \( \boldsymbol{x}^{(0)} \) and a real symmetric positive definite \( \boldsymbol{H}_0 \).
+		\State If \( \boldsymbol{g}^{(0)} = 0 \), stop; else, \( \boldsymbol{d}^{(k)} = -\boldsymbol{H}_k \boldsymbol{g}^{(k)} \).
+		\State Compute \( \alpha_k = \arg \min_{\alpha \geq 0} f(\boldsymbol{x}^{(k)} + \alpha \boldsymbol{d}^{(k)}) \), \( \boldsymbol{x}^{(k+1)} = \boldsymbol{x}^{(k)} + \alpha_k \boldsymbol{d}^{(k)} \).
+		\State Compute:
+		\begin{align*}
+			\Delta \boldsymbol{x}^{(k)} &= \alpha_k \boldsymbol{d}^{(k)}, \\
+			\Delta \boldsymbol{g}^{(k)} &= \boldsymbol{g}^{(k+1)} - \boldsymbol{g}^{(k)}, \\
+			\boldsymbol{H}_{k+1} &= \boldsymbol{H}_k + \frac{(\Delta \boldsymbol{x}^{(k)} - \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)}) (\Delta \boldsymbol{x}^{(k)} - \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)})^{\top}}{\Delta \boldsymbol{g}^{(k)\top} (\Delta \boldsymbol{x}^{(k)} - \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)})}
+		\end{align*}
+		\State Set \( k = k + 1 \); go to step 2.
+	\end{algorithmic}
+\end{spacing}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{DFP algorithm} \label{alg:DFP}
+\begin{spacing}{1.5}
+	\begin{algorithmic}[1]
+		\State Set \( k := 0 \); select \( \boldsymbol{x}^{(0)} \) and a real symmetric positive definite \( \boldsymbol{H}_0 \).
+		\State If {\( \boldsymbol{g}^{(0)} = 0 \)} stop; else, \( \boldsymbol{d}^{(k)} := -\boldsymbol{H}_k \boldsymbol{g}^{(k)} \).
+		\State Compute \( \alpha_k := \arg \min_{\alpha \geq 0} f(\boldsymbol{x}^{(k)} + \alpha \boldsymbol{d}^{(k)}), \boldsymbol{x}^{(k+1)} := \boldsymbol{x}^{(k)} + \alpha_k \boldsymbol{d}^{(k)} \).
+		\State Compute:
+		\begin{align*}
+			\Delta \boldsymbol{x}^{(k)} &:= \alpha_k \boldsymbol{x}^{(k)}, \\
+			\Delta \boldsymbol{g}^{(k)} &:= \boldsymbol{g}^{(k+1)} - \boldsymbol{g}^{(k)}, \\
+			\boldsymbol{H}_{k+1} &:= \boldsymbol{H}_k + \frac{(\Delta \boldsymbol{x}^{(k)} - \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)}) (\Delta \boldsymbol{x}^{(k)} - \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)})^{\top}}{\Delta \boldsymbol{g}^{(k)\top} \Delta \boldsymbol{x}^{(k)}} \\
+			&\phantom{:=} - \frac{\boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)} (\Delta \boldsymbol{g}^{(k)})^{\top} \boldsymbol{H}_k}{\Delta \boldsymbol{g}^{(k)\top} \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)}}.
+		\end{align*}
+		\State Set \( k := k + 1 \); go to step 2.
+	\end{algorithmic}
+\end{spacing}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{BFGS algorithm}  \label{alg:BFGS}
+\begin{spacing}{1.5}
+	\begin{algorithmic}[1]
+		\State Set \( k := 0 \); select \( \boldsymbol{x}^{(0)} \) and a real symmetric positive definite \( \boldsymbol{H}_0 \).
+		\State If {\( \boldsymbol{g}^{(0)} = 0 \)} stop; else, \( \boldsymbol{d}^{(k)} := -\boldsymbol{H}_k \boldsymbol{g}^{(k)} \).
+		\State Compute \( \alpha_k := \arg \min_{\alpha \geq 0} f(\boldsymbol{x}^{(k)} + \alpha \boldsymbol{d}^{(k)}), \boldsymbol{x}^{(k+1)} := \boldsymbol{x}^{(k)} + \alpha_k \boldsymbol{d}^{(k)} \).
+		\State Compute:
+		\begin{align*}
+			\Delta \boldsymbol{x}^{(k)} &:= \alpha_k \boldsymbol{d}^{(k)}, \\
+			\Delta \boldsymbol{g}^{(k)} &:= \boldsymbol{g}^{(k+1)} - \boldsymbol{g}^{(k)}, \\
+			\boldsymbol{H}_{k+1} &:= \boldsymbol{H}_k + \dfrac{1 + \dfrac{\Delta \boldsymbol{g}^{(k)\top} \boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)}}{\Delta \boldsymbol{g}^{(k)\top} \Delta \boldsymbol{x}^{(k)}}}{\Delta \boldsymbol{g}^{(k)\top} \Delta \boldsymbol{x}^{(k)}} \Delta \boldsymbol{x}^{(k)} \Delta \boldsymbol{x}^{(k)\top} \\
+			&\phantom{:= \boldsymbol{H}_k } - \frac{\boldsymbol{H}_k \Delta \boldsymbol{g}^{(k)} \Delta \boldsymbol{x}^{(k)\top} + \Delta \boldsymbol{x}^{(k)} \Delta \boldsymbol{g}^{(k)\top} \boldsymbol{H}_k}{\Delta \boldsymbol{g}^{(k)\top} \Delta \boldsymbol{x}^{(k)}}.
+		\end{align*}
+		\State Set \( k := k + 1 \); go to step 2.
+	\end{algorithmic}
+\end{spacing}
+\end{algorithm}
+
+
+\newpage
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Let
+
+\[
+	f\left(x_{1}, x_{2}\right)=x_{1}^{2}+\frac{1}{2} x_{2}^{2}+3 .
+\]
+
+Apply the rank one correction algorithm to minimize \(f\). Use \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}1 & 2\end{array}\right]^{\top}\) and \(\boldsymbol{H}_{0}=\boldsymbol{I}_{2}\).
+
+\textbf{Short answer}:
+
+We can represent \(f\) as
+
+\[
+	f=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		2 & 0 \\
+		0 & 1
+	\end{array}\right] \boldsymbol{x}+3
+\]
+
+Thus,
+
+\[
+	\boldsymbol{g}^{(k)}=\left[\begin{array}{ll}
+		2 & 0 \\
+		0 & 1
+	\end{array}\right] \boldsymbol{x}^{(k)}
+\]
+
+Since \(\boldsymbol{H}_{0}=\boldsymbol{I}_{2}, \boldsymbol{d}^{(0)}=-\boldsymbol{H}_{0} \boldsymbol{g}^{(0)}=\left[\begin{array}{ll}-2 & 2\end{array}\right]^{\top}\). The objective function is quadratic, and hence
+
+\[
+	\alpha_{0}=\arg \min _{\alpha \geq 0} f\left(\boldsymbol{x}^{(0)}+\alpha \boldsymbol{d}^{(0)}\right)=-\frac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}}
+\]
+
+\[
+	=\frac{\left[\begin{array}{ll}
+			2 & 2
+		\end{array}\right]\left[\begin{array}{l}
+			2 \\
+			2
+		\end{array}\right]}{\left[\begin{array}{ll}
+			2 & 2
+		\end{array}\right]\left[\begin{array}{ll}
+			2 & 0 \\
+			0 & 1
+		\end{array}\right]\left[\begin{array}{l}
+			2 \\
+			2
+		\end{array}\right]}=\frac{2}{3},
+\]
+
+and thus
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{c}
+		-\frac{1}{3} \\
+		\frac{2}{3}
+	\end{array}\right] .
+\]
+
+We then compute
+
+\[
+	\begin{aligned}
+		\Delta \boldsymbol{x}^{(0)} & =\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{ll}
+			-\frac{4}{3} & -\frac{4}{3}
+		\end{array}\right]^{\top} \\
+		\boldsymbol{g}^{(1)} & = \boldsymbol{Q} \boldsymbol{x}^{(1)}=\left[\begin{array}{ll}
+			-\frac{2}{3} & \frac{2}{3}
+		\end{array}\right]^{\top}, \\
+		\Delta \boldsymbol{g}^{(0)} & =\boldsymbol{g}^{(1)}-\boldsymbol{g}^{(0)}=\left[\begin{array}{ll}
+			-\frac{8}{3} & -\frac{4}{3}
+		\end{array}\right]^{\top} .
+	\end{aligned}
+\]
+
+We obtain
+
+\[
+	\boldsymbol{H}_{1}=\boldsymbol{H}_{0}+\frac{\left(\Delta \boldsymbol{x}^{(0)}-\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}\right)\left(\Delta \boldsymbol{x}^{(0)}-\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}\right)^{\top}}{\Delta \boldsymbol{g}^{(0)^{\top}}\left(\Delta \boldsymbol{x}^{(0)}-\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}\right)}=\left[\begin{array}{cc}
+		\frac{1}{2} & 0 \\
+		0 & 1
+	\end{array}\right] .
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{d}^{(1)}=-\boldsymbol{H}_{1} \boldsymbol{g}^{(1)}=\left[\begin{array}{cc}
+		\frac{1}{3} & -\frac{2}{3}
+	\end{array}\right]^{\top}
+\]
+
+and
+
+\[
+	\alpha_{1}=-\frac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{d}^{(1)}}{\boldsymbol{d}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(1)}}=1 .
+\]
+
+We now compute
+
+\[
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+\alpha_{1} \boldsymbol{d}^{(1)}=\left[\begin{array}{ll}
+		0 & 0
+	\end{array}\right]^{\top} .
+\]
+
+Note that \(\boldsymbol{g}^{(2)}=0\), and therefore \(\boldsymbol{x}^{(2)}=\boldsymbol{x}^{*}\). As expected, the algorithm solves the problem in two steps. Since \(\boldsymbol{F}(\boldsymbol{x}) \succ 0, \boldsymbol{x}^{*}\) is a strict minimizer.
+
+
+\medskip
+
+Example 2: Minimize
+
+\[
+	f=\frac{1}{2}\left(x_{1}^{2}+2 x_{2}^{2}\right)-x_{1}+x_{2}+7
+\]
+
+using the rank two correction (DFP) method. The starting point is \(\boldsymbol{x}^{(0)}=\) \(\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:
+
+We can represent \(f\) as
+
+\[
+	f=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		1 & 0 \\
+		0 & 2
+	\end{array}\right] \boldsymbol{x}-\boldsymbol{x}^{\top}\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right]+7
+\]
+
+Thus,
+
+Let \(\boldsymbol{H}_{0}=\boldsymbol{I}_{2}\), we have
+
+\[
+	\boldsymbol{g}^{(k)}=\left[\begin{array}{ll}
+		1 & 0 \\
+		0 & 2
+	\end{array}\right] \boldsymbol{x}^{(k)}-\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right]
+\]
+
+The objective function is quadratic, and hence
+
+\[
+	\boldsymbol{d}^{(0)}=-\boldsymbol{H}_{0} \boldsymbol{g}^{(0)}=\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right] .
+\]
+
+\[
+	\begin{aligned}
+		\alpha_{0} & =\arg \min _{\alpha \geq 0} f\left(\boldsymbol{x}^{(0)}+\alpha \boldsymbol{d}^{(0)}\right)=-\frac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}} \\
+		& =\frac{\left[\begin{array}{ll}
+				-1 & 1
+			\end{array}\right]\left[\begin{array}{c}
+				1 \\
+				-1
+			\end{array}\right]}{\left[\begin{array}{ll}
+				1 & -1
+			\end{array}\right]\left[\begin{array}{ll}
+				1 & 0 \\
+				0 & 2
+			\end{array}\right]\left[\begin{array}{c}
+				1 \\
+				-1
+			\end{array}\right]}=\frac{2}{3},
+	\end{aligned}
+\]
+
+and thus
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{c}
+		\frac{2}{3} \\
+		-\frac{2}{3}
+	\end{array}\right] .
+\]
+
+We then compute
+
+\[
+	\begin{aligned}
+		\Delta \boldsymbol{x}^{(0)} & =\boldsymbol{x}^{(1)}-\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}
+			\frac{2}{3} & -\frac{2}{3}
+		\end{array}\right]^{\top} \\
+		\boldsymbol{g}^{(1)} & =\boldsymbol{Q} \boldsymbol{x}^{(1)}-\boldsymbol{b}=\left[\begin{array}{ll}
+			-\frac{1}{3} & -\frac{1}{3}
+		\end{array}\right]^{\top}, \\
+		\Delta \boldsymbol{g}^{(0)} & =\boldsymbol{g}^{(1)}-\boldsymbol{g}^{(0)}=\left[\begin{array}{ll}
+			\frac{2}{3} & -\frac{4}{3}
+		\end{array}\right]^{\top} .
+	\end{aligned}
+\]
+
+We obtain
+
+\[
+	\boldsymbol{H}_{1}=\boldsymbol{H}_{0}+\frac{\Delta \boldsymbol{x}^{(0)} \Delta \boldsymbol{x}^{(0)^{\top}}}{\Delta \boldsymbol{x}^{(0)^{\top}} \Delta \boldsymbol{g}^{(0)}}-\frac{\left[\boldsymbol{H}_{k} \Delta \boldsymbol{g}^{(0)}\right]\left[\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}\right]^{\top}}{\Delta \boldsymbol{g}^{(0)^{\top}} \boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}}=\frac{1}{15}\left[\begin{array}{cc}
+		2 & 1 \\
+		1 & -7
+	\end{array}\right] .
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{d}^{(1)}=-\boldsymbol{H}_{1} \boldsymbol{g}^{(1)}=\frac{1}{15}\left[\begin{array}{ll}
+		1 & -2
+	\end{array}\right]^{\top}
+\]
+
+We now compute
+
+\[
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+\alpha_{1} \boldsymbol{d}^{(1)}=\left[\begin{array}{ll}
+		1 & -0.5
+	\end{array}\right]^{\top} .
+\]
+
+Note that \(\boldsymbol{g}^{(2)}=0\), and therefore \(\boldsymbol{x}^{(2)}=\boldsymbol{x}^{*}\). As expected, the algorithm solves the problem in two steps. Since \(\boldsymbol{F}(\boldsymbol{x}) \succ 0, \boldsymbol{x}^{*}\) is a strict minimizer.
+
+\medskip
+
+Example 3: Maximize
+
+\[
+	f=x_{1}-x_{2}-\frac{1}{2} x_{1}^{2}-x_{2}^{2}+3
+\]
+
+using the BFGS method. The starting point is \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\) and \(\boldsymbol{H}_{0}=\boldsymbol{I}_{2}\).
+
+\textbf{Short answer}:
+
+Our objective function is a quadratic form
+
+\[
+	f=-\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		1 & 0 \\
+		0 & 2
+	\end{array}\right] \boldsymbol{x}+\boldsymbol{x}^{\top}\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right]+3 .
+\]
+
+We minimize its negative
+
+\[
+	-f=\frac{1}{2} \boldsymbol{x}^{\top}\left[\begin{array}{ll}
+		1 & 0 \\
+		0 & 2
+	\end{array}\right] \boldsymbol{x} - \boldsymbol{x}^{\top}\left[\begin{array}{c}
+		1 \\
+		-1
+	\end{array}\right]-3 .
+\]
+
+We have
+
+\[
+	\begin{gathered}
+		\boldsymbol{g}^{(k)}=\left[\begin{array}{ll}
+			1 & 0 \\
+			0 & 2
+		\end{array}\right] \boldsymbol{x}^{(k)}-\left[\begin{array}{c}
+			1 \\
+			-1
+		\end{array}\right] . \\
+		\boldsymbol{d}^{(0)}=-\boldsymbol{H}_{0} \boldsymbol{g}^{(0)}=\left[\begin{array}{c}
+			1 \\
+			-1
+		\end{array}\right] .
+	\end{gathered}
+\]
+
+The objective function is quadratic, and hence
+
+\[
+	\begin{aligned}
+		\alpha_{0} & =\arg \min _{\alpha \geq 0} f\left(\boldsymbol{x}^{(0)}+\alpha \boldsymbol{d}^{(0)}\right)=-\frac{\boldsymbol{g}^{(0)^{\top}} \boldsymbol{d}^{(0)}}{\boldsymbol{d}^{(0)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(0)}} \\
+		& =\frac{\left[\begin{array}{ll}
+				-1 & 1
+			\end{array}\right]\left[\begin{array}{c}
+				1 \\
+				-1
+			\end{array}\right]}{\left[\begin{array}{ll}
+				1 & -1
+			\end{array}\right]\left[\begin{array}{ll}
+				1 & 0 \\
+				0 & 2
+			\end{array}\right]\left[\begin{array}{c}
+				1 \\
+				-1
+			\end{array}\right]}=\frac{2}{3},
+	\end{aligned}
+\]
+
+and thus
+
+\[
+	\boldsymbol{x}^{(1)}=\boldsymbol{x}^{(0)}+\alpha_{0} \boldsymbol{d}^{(0)}=\left[\begin{array}{c}
+		\frac{2}{3} \\
+		-\frac{2}{3}
+	\end{array}\right] .
+\]
+
+We then compute
+
+\[
+	\begin{aligned}
+		\Delta \boldsymbol{x}^{(0)} & =\boldsymbol{x}^{(1)}-\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}
+			\frac{2}{3} & -\frac{2}{3}
+		\end{array}\right]^{\top} \\
+		\boldsymbol{g}^{(1)} & =\boldsymbol{Q} \boldsymbol{x}^{(1)}-\boldsymbol{b}=\left[\begin{array}{ll}
+			-\frac{1}{3} & -\frac{1}{3}
+		\end{array}\right]^{\top}, \\
+		\Delta \boldsymbol{g}^{(0)} & =\boldsymbol{g}^{(1)}-\boldsymbol{g}^{(0)}=\left[\begin{array}{ll}
+			\frac{2}{3} & -\frac{4}{3}
+		\end{array}\right]^{\top} .
+	\end{aligned}
+\]
+
+We obtain
+
+\[
+	\begin{aligned}
+		\boldsymbol{H}_{1} & =\boldsymbol{H}_{0}+\left(1+\frac{\Delta \boldsymbol{g}^{(0)^{\top}} \boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)}}{\Delta \boldsymbol{g}^{(0)^{\top}} \Delta \boldsymbol{x}^{(0)}}\right) \frac{\Delta \boldsymbol{x}^{(0)} \Delta \boldsymbol{x}^{(0)^{\top}}}{\Delta \boldsymbol{x}^{(0)^{\top}} \Delta \boldsymbol{g}^{(0)}} \\
+		& -\frac{\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)} \Delta \boldsymbol{x}^{(0)^{\top}}+\left(\boldsymbol{H}_{0} \Delta \boldsymbol{g}^{(0)} \Delta \boldsymbol{x}^{(0)^{\top}}\right)^{\top}}{\Delta \boldsymbol{g}^{(0)^{\top}} \Delta \boldsymbol{x}^{(0)}} \\
+		& =\frac{1}{9}\left[\begin{array}{cc}
+			11 & 1 \\
+			1 & 5
+		\end{array}\right] .
+	\end{aligned}
+\]
+
+Then,
+
+\[
+	\boldsymbol{d}^{(1)}=-\boldsymbol{H}_{1} \boldsymbol{g}^{(1)}=\left[\begin{array}{ll}
+		\frac{4}{9} & \frac{2}{9}
+	\end{array}\right]^{\top} .
+\]
+
+We next compute
+
+\[
+	\alpha_{1}=-\frac{\boldsymbol{g}^{(1)^{\top}} \boldsymbol{d}^{(1)}}{\boldsymbol{d}^{(1)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(1)}}=\frac{3}{4} .
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{x}^{(2)}=\boldsymbol{x}^{(1)}+\alpha_{1} \boldsymbol{d}^{(1)}=\left[\begin{array}{ll}
+		1 & -0.5
+	\end{array}\right]^{\top} .
+\]
+
+Note that \(\boldsymbol{g}^{(2)}=0\), and therefore \(\boldsymbol{x}^{(2)}=\boldsymbol{x}^{*}\). As expected, the algorithm solves the problem in two steps. Since \(\boldsymbol{F}(\boldsymbol{x}) \succ 0, \boldsymbol{x}^{*}\) is a strict minimizer of \(-f\). \(\boldsymbol{x}^{*}\) is a strict maximizer of \(f\).
