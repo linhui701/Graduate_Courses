@@ -1,0 +1,120 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Pseudoinverse}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+\subsection{Concept}
+\begin{itemize} 
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) Given \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\), a matrix \(\boldsymbol{A}^{\dagger} \in \mathbb{R}^{n \times m}\) is called a pesudoinverse of the matrix \(\boldsymbol{A}\) if
+	\[
+		\boldsymbol{A} \boldsymbol{A}^{\dagger} \boldsymbol{A}=\boldsymbol{A},
+	\]
+
+	and there exist matrices \(\boldsymbol{U} \in \mathbb{R}^{n \times n}, \boldsymbol{V} \in \mathbb{R}^{m \times m}\) such that
+
+	\[
+		\boldsymbol{A}^{\dagger}=\boldsymbol{U} \boldsymbol{A}^{\top}, \text { and } \boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top} \boldsymbol{V} .
+	\]
+
+\end{itemize}
+
+For the case in which a matrix \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) with \(m \geq n\) and \(\operatorname{rank}(\boldsymbol{A})=n\), We have the \underline{left pseudoinverse} of \(\boldsymbol{A}\) :
+
+\[
+	\boldsymbol{A}^{\dagger}=\left(\boldsymbol{A}^{\top} \boldsymbol{A}\right)^{-1} \boldsymbol{A}^{\top} .
+\]
+
+For the case in which a matrix \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) with \(m \leq n\) and \(\operatorname{rank}(\boldsymbol{A})=m\), We have the \underline{right pseudoinverse} of \(\boldsymbol{A}\) :
+
+\[
+	\boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top}\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)^{-1} .
+\]
+
+\begin{itemize}
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) Let \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\). If a pseudoinverse \(\boldsymbol{A}^{\dagger}\) of \(\boldsymbol{A}\) exists, then it is unique.
+
+	\item[\(\spadesuit\)] \(\mathscr{THEOREM}\) Let \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\) have a full-rank factorization \(\boldsymbol{A}=\boldsymbol{B} \boldsymbol{C}\), with \(\operatorname{rank}(\boldsymbol{A})=\operatorname{rank}(\boldsymbol{B})=\operatorname{rank}(\boldsymbol{C})=r, \boldsymbol{B} \in \mathbb{R}^{m \times r}, \boldsymbol{C} \in \mathbb{R}^{r \times n}\). Then,
+
+	\[
+		\boldsymbol{A}^{\dagger}=\boldsymbol{C}^{\dagger} \boldsymbol{B}^{\dagger} .
+	\]
+\end{itemize}
+
+
+%------------------------------------------------------%
+\subsection{Example}
+Example 1: Simplify
+\[
+	\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\dagger}
+\]
+
+
+\textbf{Short answer}:
+
+Let \(\boldsymbol{A} \in \mathbb{R}^{m \times n}\).
+
+Case 1:
+
+If \(\operatorname{rank}(\boldsymbol{A})=n>m\), we have
+
+\[
+	\boldsymbol{A}^{\dagger}=\left(\boldsymbol{A}^{\top} \boldsymbol{A}\right)^{-1} \boldsymbol{A}^{\top} .
+\]
+
+Then
+
+\[
+	\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top} \boldsymbol{A}\left(\boldsymbol{A}^{\top} \boldsymbol{A}\right)^{-1} \boldsymbol{A}^{\top}=\boldsymbol{A}^{\top} .
+\]
+
+Case 2:
+
+If \(\operatorname{rank}(\boldsymbol{A})=m>n\), we have
+
+\[
+	\boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top}\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)^{-1} .
+\]
+
+Then
+
+\[
+	\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\top}\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)^{-1}=\boldsymbol{A}^{\top}
+\]
+
+\textbf{Case 3:}
+If \(\operatorname{rank}(\boldsymbol{A})=r\) and \(r<\min \{m, n\}\), we have
+
+\[
+	\boldsymbol{A}=\boldsymbol{B} \boldsymbol{C},
+\]
+
+where \(\boldsymbol{B} \in \mathbb{R}^{m \times r}\), and \(\boldsymbol{C} \in \mathbb{R}^{r \times n}\). Then
+
+\[
+	\boldsymbol{A}^{\dagger}=\boldsymbol{C}^{\dagger} \boldsymbol{B}^{\dagger}
+\]
+
+where
+
+\[
+	\boldsymbol{B}^{\dagger}=\left(\boldsymbol{B}^{\top} \boldsymbol{B}\right)^{-1} \boldsymbol{B}^{\top}
+\]
+
+and
+
+\[
+	\boldsymbol{C}^{\dagger}=\boldsymbol{C}^{\top}\left(\boldsymbol{C} \boldsymbol{C}^{\top}\right)^{-1}
+\]
+
+Hence,
+
+\[
+	\begin{aligned}
+		\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\dagger} & =\boldsymbol{C}^{\top} \boldsymbol{B}^{\top} \boldsymbol{B} \boldsymbol{C} \boldsymbol{C}^{\dagger} \boldsymbol{B}^{\dagger} \\
+		& =\boldsymbol{C}^{\top} \boldsymbol{B}^{\top} \boldsymbol{B} \boldsymbol{C} \boldsymbol{C}^{\top}\left(\boldsymbol{C} \boldsymbol{C}^{\top}\right)^{-1}\left(\boldsymbol{B}^{\top} \boldsymbol{B}\right)^{-1} \boldsymbol{B}^{\top} \\
+		& =\boldsymbol{C}^{\top} \boldsymbol{B}^{\top}=A^{\top} .
+	\end{aligned}
+\]
+
+Therefore, in conclusion, \(\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{A}^{\dagger}=\boldsymbol{A}^{\top}\).
