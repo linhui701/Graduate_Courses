@@ -199,9 +199,19 @@
 \[ 
 \begin{aligned}
 	D \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
-	& =\boldsymbol{f}(\boldsymbol{x})^{\top} D \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} D \boldsymbol{f}(\boldsymbol{x}), \\
+	& = \left[ \begin{array}{ccc} & \boldsymbol{f}(\boldsymbol{x})^{\top} & \end{array} \right]
+	\left[ \begin{array}{ccc} & & \\ & D \boldsymbol{g}(\boldsymbol{x}) & \\ & & \end{array} \right]
+	+ \left[ \begin{array}{ccc} & \boldsymbol{g}(\boldsymbol{x})^{\top} & \end{array} \right]
+	\left[ \begin{array}{ccc} & & \\ & 	D \boldsymbol{f}(\boldsymbol{x})  & \\ & & \end{array} \right], \\
+	& \\
 	\nabla \bigg (\boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) \bigg )
-	& =\boldsymbol{f}(\boldsymbol{x})^{\top} \nabla \boldsymbol{g}(\boldsymbol{x})+\boldsymbol{g}(\boldsymbol{x})^{\top} \nabla \boldsymbol{f}(\boldsymbol{x}). \\
+	& = \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{f}(\boldsymbol{x}) & \\ & & \end{array} \right]
+	\left[\begin{array}{c}\\  \boldsymbol{g}(\boldsymbol{x}) \\  \\ \end{array} \right ] 
+	+ \left[ \begin{array}{ccc} & & \\ &  \nabla \boldsymbol{g} (\boldsymbol{x}) & \\ & & \end{array} \right]
+	\left[\begin{array}{c}\\  \boldsymbol{f}(\boldsymbol{x}) \\  \\ \end{array} \right]  \\
+	& \\
+	& = D \boldsymbol{f}(\boldsymbol{x})^{\top} \boldsymbol{g}(\boldsymbol{x}) + 
+	D \boldsymbol{g}(\boldsymbol{x})^{\top} \boldsymbol{f}(\boldsymbol{x}). \\
 \end{aligned}
 \]
 
