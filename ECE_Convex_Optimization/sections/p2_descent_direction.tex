@@ -1,0 +1,35 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Ascent and Descent Direction}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+Given a function \(f\), the direction of ascent of \(f\) at the point \(\boldsymbol{x}^{*}\) satisfies \(\boldsymbol{d}^{\top} \nabla f\left(\boldsymbol{x}^{*}\right)>0\). Similarly, the direction of descent satisfies \(\boldsymbol{d}^{\top} \nabla f\left(\boldsymbol{x}^{*}\right)<0\).
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Find the range of values of the parameter \(\alpha\) for which \(\boldsymbol{d}=\left[\begin{array}{ll}\alpha & 1\end{array}\right]^{\top}\) is a direction of ascent of: \(f=f\left(x_{1}, x_{2}\right)=x_{1}^{3}+x_{1} x_{2}-x_{1}^{3} x_{2}^{2}\), at the point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}1 & 1\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:
+\[\nabla f(\boldsymbol{x})=\left[\begin{array}{c}2 x_{1}^{2}+x_{2}-2 x_{1} x_{2}^{2} \\ x_{1}-2 x_{1}^{2} x_{2}\end{array}\right], \nabla f\left(\boldsymbol{x}^{(0)}\right)=\left[\begin{array}{c}2 \\ -1\end{array}\right]. \]
+
+We need \(\boldsymbol{d}^{\top} \nabla f\left(\boldsymbol{x}^{(0)}\right)>0\), which means
+
+\[
+	\left[\begin{array}{ll}
+		\alpha & 1
+	\end{array}\right]\left[\begin{array}{c}
+		2 \\
+		-1
+	\end{array}\right]=2 \alpha-1>0.
+\]
+
+Therefore, for \(\alpha>\dfrac{1}{2}, \boldsymbol{d}\) is a direction of ascent.
+
+\medskip
+\noindent
+Example 2: Find the range of values of the parameter \(\beta\) for which \(\boldsymbol{d}=\left[\begin{array}{ll}\beta & 1\end{array}\right]^{\top}\) is a direction of descent of: \(f=f\left(x_{1}, x_{2}\right)=x_{1}+\frac{3 x_{2}}{x_{1}}\), at the point \(\boldsymbol{x}^{(0)}=\left[\begin{array}{ll}1 & 2\end{array}\right]^{\top}\).
+
+\textbf{Short answer}:: \(\beta>\dfrac{3}{5}\).
