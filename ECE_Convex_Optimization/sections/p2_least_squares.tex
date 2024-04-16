@@ -1,0 +1,342 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Least Squares}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Concept}
+Consider a system of linear equations
+
+\[
+	\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b},
+\]
+
+where \(\boldsymbol{A} \in \mathbb{R}^{m \times n}, \boldsymbol{b} \in \mathbb{R}^{m}, m \geq n\), and \(\operatorname{rank}(\boldsymbol{A})=n\). If \(b\) does not belong to the range of \(\boldsymbol{A}\), then this system of equations is said to be inconsistent or over-determined. In this case there is no solution to the above set of equations. Our goal then is to find the vector \(\boldsymbol{x}\) minimizing \(\|\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b}\|^{2}\). This problem is a special case of the nonlinear least-squares problem.
+
+Theorem 4 The unique vector \(\boldsymbol{x}^{*}\) that minimizes \(\|\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b}\|^{2}\) is given by the solution to the equation \(\boldsymbol{A}^{\top} \boldsymbol{A} \boldsymbol{x}=\boldsymbol{A}^{\top} \boldsymbol{b}\), that is, \(\boldsymbol{x}^{*}=\left(\boldsymbol{A}^{\top} \boldsymbol{A}\right)^{-1} \boldsymbol{A}^{\top} \boldsymbol{b}\).
+
+Proposition 1 Let \(\boldsymbol{h} \in \mathcal{R}(\boldsymbol{A})\) be such that \(\boldsymbol{h}-\boldsymbol{b}\) is orthogonal to \(\mathcal{R}(\boldsymbol{A})\). Then, \(\boldsymbol{h}=\boldsymbol{A} \boldsymbol{x}^{*}=\boldsymbol{A}\left(\boldsymbol{A}^{\top} \boldsymbol{A}\right)^{-1} \boldsymbol{A}^{\top} \boldsymbol{b}\).
+
+Lemma 1 (Full-Rank Factorization) Let \(\boldsymbol{A} \in \mathbb{R}^{m \times n}, \operatorname{rank}(\boldsymbol{A})=r \leq \min \{m, n\}\). Then, there exist matrices \(\boldsymbol{B} \in \mathbb{R}^{m \times r}\) and \(\boldsymbol{C} \in \mathbb{R}^{r \times n}\) such that
+
+\[
+	\boldsymbol{A}=\boldsymbol{B} \boldsymbol{C},
+\]
+
+where \(\operatorname{rank}(\boldsymbol{A})=\operatorname{rank}(\boldsymbol{B})=\operatorname{rank}(\boldsymbol{C})=r\).
+
+
+%------------------------------------------------------%
+\subsection{Examples}
+Example 1: Find the ellipes
+
+\[
+	\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1,
+\]
+
+that comes as close as possible to the three data points:
+
+\[
+	\left(x_{1}, y_{1}\right)=(\sqrt{3}, \sqrt{6}),\left(x_{2}, y_{2}\right)=(\sqrt{2}, 2),\left(x_{3}, y_{3}\right)=(1, \sqrt{2}) .
+\]
+
+\textbf{Short answer}:
+We use the least squares to solve the problem. We are faced with solving the following set of equations,
+
+\[
+	\left[\begin{array}{ll}
+		x_{1}^{2} & y_{1}^{2} \\
+		x_{2}^{2} & y_{2}^{2} \\
+		x_{3}^{2} & y_{3}^{2}
+	\end{array}\right]\left[\begin{array}{c}
+		1 / a^{2} \\
+		1 / b^{2}
+	\end{array}\right]=\left[\begin{array}{l}
+		1 \\
+		1 \\
+		1
+	\end{array}\right]
+\]
+
+that is,
+
+\[
+	\left[\begin{array}{ll}
+		3 & 6 \\
+		2 & 4 \\
+		1 & 2
+	\end{array}\right]\left[\begin{array}{l}
+		1 / a^{2} \\
+		1 / b^{2}
+	\end{array}\right]=\left[\begin{array}{l}
+		1 \\
+		1 \\
+		1
+	\end{array}\right] .
+\]
+
+Thus we are faced with solving a system of linear equations, \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\), where \(\boldsymbol{b}\) is not in the range of \(\boldsymbol{A}\). The least squares solution to the above system has the form \(\boldsymbol{x}^{*}=\boldsymbol{A}^{\dagger} \boldsymbol{b}\). To compute \(\boldsymbol{A}^{\dagger}\), we first perform a full rank factorization of \(\boldsymbol{A}\), \(\boldsymbol{A}=\boldsymbol{B} \boldsymbol{C}\), we obtain
+
+\[
+	\boldsymbol{A}=\left[\begin{array}{ll}
+		3 & 6 \\
+		2 & 4 \\
+		1 & 2
+	\end{array}\right]=\left[\begin{array}{l}
+		3 \\
+		2 \\
+		1
+	\end{array}\right]\left[\begin{array}{ll}
+		1 & 2
+	\end{array}\right]=\boldsymbol{B} \boldsymbol{C} .
+\]
+
+Then we compute \(\boldsymbol{A}^{\dagger}=\boldsymbol{C}^{\dagger} \boldsymbol{B}^{\dagger}\), where \(\boldsymbol{B}^{\dagger}=\left(\boldsymbol{B}^{\top} \boldsymbol{B}\right)^{-1} \boldsymbol{B}^{\top}=\frac{1}{14}\left[\begin{array}{lll}3 & 2 & 1\end{array}\right]\), and \(\boldsymbol{C}^{\dagger}=\boldsymbol{C}^{\top}\left(\boldsymbol{C} \boldsymbol{C}^{\top}\right)^{-1}=\frac{1}{5}\left[\begin{array}{l}1 \\ 2\end{array}\right]\). Hence
+
+\[
+	\boldsymbol{A}^{\dagger}=\frac{1}{70}\left[\begin{array}{l}
+		1 \\
+		2
+	\end{array}\right]\left[\begin{array}{lll}
+		3 & 2 & 1
+	\end{array}\right]=\frac{1}{70}\left[\begin{array}{lll}
+		3 & 2 & 1 \\
+		6 & 4 & 2
+	\end{array}\right]
+\]
+
+and therefore
+
+\[
+	\left[\begin{array}{l}
+		1 / a^{2} \\
+		1 / b^{2}
+	\end{array}\right]=\boldsymbol{A}^{\dagger}\left[\begin{array}{l}
+		1 \\
+		1 \\
+		1
+	\end{array}\right]=\left[\begin{array}{c}
+		\frac{3}{35} \\
+		\frac{6}{35}
+	\end{array}\right] .
+\]
+
+The ellipse that the best fits the given data points in the sense of the least squares is described by
+
+\[
+	\frac{3}{35} x^{2}+\frac{6}{35} y^{2}=1
+\]
+
+Example 2: Consider a mechanical spring-mass-dashpot system, where the left ends of the linear spring and the linear dashpot are attached to a wall while their right ends are attached to the left side of the mass \(m\). In addition, the force, \(f\), is acting on the right end of the mass. Let \(x\) denote the linear displacement of the mass from its rest position. This mechanical system can then be modeled by the following differential equation,
+
+\[
+	m \frac{d^{2} x(t)}{d t^{2}}+b \frac{d x(t)}{d t}+k x(t)=f(t),
+\]
+
+where \(b\) is the damping coefficient and \(k\) is the spring coefficient. Our objective is to estimate the system parameters \(m, b\), and \(k\), using available measurements of the acceleration, \(a(t)=\frac{d^{2} x(t)}{d t^{2}}\), the velocity, \(v(t)=\frac{d x(t)}{d t}\), the displacement, \(x(t)\), and the force, \(f(t)\) at three different instances of the system operation. The result of measurement experiment are given in the table below. Obtain the
+
+Table 1: Measurement data of the spring-mass-dashpot system.
+
+\begin{center}
+	\begin{tabular}{c|cccc}
+		Experiment & \(a\) & \(v\) & \(x\) & \(f\) \\
+		\hline
+		1 & 1 & 0 & -1 & 0 \\
+		2 & 0 & 1 & 0 & 2 \\
+		3 & 0 & -1 & 0 & 1 \\
+	\end{tabular}
+\end{center}
+
+least squares estimate of the above mechanical system parameters.
+
+\textbf{Short answer}:
+
+We have
+
+\[
+	\left[\begin{array}{lll}
+		a & v & x
+	\end{array}\right]\left[\begin{array}{c}
+		m \\
+		b \\
+		k
+	\end{array}\right]=f .
+\]
+
+Applying the above to the measurement data from the table yields
+
+\[
+	\left[\begin{array}{ccc}
+		1 & 0 & -1 \\
+		0 & 1 & 0 \\
+		0 & -1 & 0
+	\end{array}\right]\left[\begin{array}{c}
+		m \\
+		b \\
+		k
+	\end{array}\right]=\left[\begin{array}{l}
+		0 \\
+		2 \\
+		1
+	\end{array}\right]
+\]
+
+Thus we are faced with solving a system of linear equations, \(\boldsymbol{A} \boldsymbol{x}=\boldsymbol{b}\), where \(\boldsymbol{b}\) is not in the range of \(\boldsymbol{A}\). The least squares solution to the above system has the form
+
+\[
+	\boldsymbol{x}^{*}=\boldsymbol{A}^{\dagger} \boldsymbol{b} .
+\]
+
+To compute \(\boldsymbol{A}^{\dagger}\), we first perform full rank factorization of \(\boldsymbol{A}\),
+
+\[
+	\boldsymbol{A}=\boldsymbol{B} \boldsymbol{C}=\left[\begin{array}{cc}
+		1 & 0 \\
+		0 & 1 \\
+		0 & -1
+	\end{array}\right]\left[\begin{array}{ccc}
+		1 & 0 & -1 \\
+		0 & 1 & 0
+	\end{array}\right]
+\]
+
+Then we compute
+
+\[
+	\boldsymbol{A}^{\dagger}=\boldsymbol{C}^{\dagger} \boldsymbol{B}^{\dagger}
+\]
+where
+
+\[
+	\boldsymbol{B}^{\dagger}=\left(\boldsymbol{B}^{\top} \boldsymbol{B}\right)^{-1} \boldsymbol{B}^{\top}=\left[\begin{array}{ccc}
+		1 & 0 & 0 \\
+		0 & 1 / 2 & -1 / 2
+	\end{array}\right]
+\]
+
+and
+
+\[
+	\boldsymbol{C}^{\dagger}=\boldsymbol{C}^{\top}\left(\boldsymbol{C} \boldsymbol{C}^{\top}\right)^{-1}=\left[\begin{array}{cc}
+		1 / 2 & 0 \\
+		0 & 1 \\
+		-1 / 2 & 0
+	\end{array}\right] .
+\]
+
+Hence,
+
+\[
+	\boldsymbol{A}^{\dagger}=\left[\begin{array}{ccc}
+		1 / 2 & 0 & 0 \\
+		0 & 1 / 2 & -1 / 2 \\
+		-1 / 2 & 0 & 0
+	\end{array}\right]
+\]
+
+and therefore, the least squares estimates of the system parameters are
+
+\[
+	\boldsymbol{x}^{*}=\left[\begin{array}{c}
+		m^{*} \\
+		b^{*} \\
+		k^{*}
+	\end{array}\right]=\boldsymbol{A}^{\dagger} \boldsymbol{b}=\left[\begin{array}{c}
+		0 \\
+		1 / 2 \\
+		0
+	\end{array}\right] .
+\]
+
+Example 3: Consider a series \(R L\) circuit, where \(I(s)\) is the Laplace transform of the circuit current and \(V_{s}(s)\) is the Laplace transform of the source voltage. The transfer function, \(I(s) / V_{s}(s)\), is
+
+\[
+	\frac{I(s)}{V_{s}(s)}=\frac{1}{s L+R} .
+\]
+
+The corresponding differential equation is
+
+\[
+	L \frac{d i(t)}{d t}+\operatorname{Ri}(t)=v_{s}(t) .
+\]
+
+Our objective is to estimate the circuit parameter \(L\) and \(R\), using avaliable measurements of \(\frac{d i(t)}{d t}, i(t)\), and \(v_{s}(t)\) at three different instances of the circuit operation. The results of measurement experiments are shown below. Employ the least squares method to estimate \(L\) and \(R\).
+
+\textbf{Short answer}:
+
+We have
+
+\[
+	\left[\begin{array}{cc}
+		\frac{d i}{d t} & i
+	\end{array}\right]\left[\begin{array}{l}
+		L \\
+		R
+	\end{array}\right]=v_{s}
+\]
+
+Table 2: Measurement data of a series \(R L\) circuit.
+
+\begin{center}
+	\begin{tabular}{c|ccc}
+		Experiment & \(d i / d t\) & \(i\) & \(v_{s}\) \\
+		\hline
+		1 & 0 & 1 & 1 \\
+		2 & -1 & 0 & -2 \\
+		3 & 0 & -1 & -4 \\
+	\end{tabular}
+\end{center}
+
+Applying to the above to the measurement data from the table above yields
+
+\[
+	\left[\begin{array}{cc}
+		0 & 1 \\
+		-1 & 0 \\
+		0 & -1
+	\end{array}\right]\left[\begin{array}{l}
+		L \\
+		R
+	\end{array}\right]=\left[\begin{array}{c}
+		1 \\
+		-2 \\
+		-4
+	\end{array}\right]
+\]
+
+The least squares solution to the above system is
+
+\[
+	\begin{aligned}
+		{\left[\begin{array}{l}
+				L \\
+				R
+			\end{array}\right] } & =\left(\left[\begin{array}{ccc}
+			0 & -1 & 0 \\
+			1 & 0 & -1
+		\end{array}\right]\left[\begin{array}{cc}
+			0 & 1 \\
+			-1 & 0 \\
+			0 & -1
+		\end{array}\right]\right)^{-1}\left[\begin{array}{ccc}
+			0 & -1 & 0 \\
+			1 & 0 & -1
+		\end{array}\right]\left[\begin{array}{c}
+			1 \\
+			-2 \\
+			-4
+		\end{array}\right] \\
+		& =\left[\begin{array}{cc}
+			1 & 0 \\
+			0 & 0.5
+		\end{array}\right]\left[\begin{array}{l}
+			2 \\
+			5
+		\end{array}\right] \\
+		& =\left[\begin{array}{c}
+			2 \\
+			2.5
+		\end{array}\right] .
+	\end{aligned}
+\]
