@@ -1,0 +1,138 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{PSO Algorithm}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+The PSO algorithm is shown in Algorithm \ref{alg:PSO}.
+
+\begin{algorithm}
+\caption{PSO algorithm}  \label{alg:PSO}
+\begin{spacing}{1.5}
+	\begin{algorithmic}[1]
+		\State Set \( k := 0 \). 
+		\For {\( i = 1, \ldots, d \)}
+			\State Generate initial random positions \( x_i^{(0)} \) and velocities \( v_i^{(0)} \), and set \( p_i^{(0)} = x_i^{(0)} \), \( \boldsymbol{g}^{(0)} = \arg \min_{\boldsymbol{x} \in \{x_1^{(0)}, \ldots, x_d^{(0)}\} } f(\boldsymbol{x}) \).
+		\EndFor
+		\For{ \(i = 1, \ldots, d \) }
+			\State Generate random \( n \)-vectors \( r_i^{(k)} \) and \( s_i^{(k)} \) with components uniformly in the interval \((0, 1)\), and set
+			\(\begin{aligned}
+				v_i^{(k+1)} &= \omega v_i^{(k)} + c_1 r_i^{(k)} \odot (p_i^{(k)} - x_i^{(k)}) + c_2 s_i^{(k)} \odot (\boldsymbol{g}^{(k)} - x_i^{(k)}), \\
+				x_i^{(k+1)} &= x_i^{(k)} + v_i^{(k+1)}.
+			\end{aligned}
+			\)
+		\EndFor
+		\For { \( i = 2, \ldots, d \)}
+			\If {\( f(x_i^{(k+1)}) < f(p_i^{(k)}) \)}
+				\State Set \( p_i^{(k+1)} = x_i^{(k+1)} \).
+			\Else 
+				\State Set \( p_i^{(k+1)} = p_i^{(k)} \).
+			\EndIf
+		\EndFor
+		\If {there exists \( i \in \{1, \ldots, d\} \) such that \( f(x_i^{(k+1)}) < \boldsymbol{g}^{(k)} \),}
+			\State set \( \boldsymbol{g}^{(k+1)} = x_i^{(k+1)} \),
+		\Else
+			\State set \( \boldsymbol{g}^{(k+1)} = \boldsymbol{g}^{(k)} \).
+		\EndIf
+		\State If stopping criterion satisfied, then stop.
+		\State Set \( k := k + 1 \), go to step 2.
+	\end{algorithmic}
+\end{spacing}
+\end{algorithm}
+
+The PSO techniques have evolved since 1995. For example, recently Clerc proposed a constriction-factor version of the algorithm, where the velocity is updated as
+
+\[
+	v_{i}^{(k+1)}=\kappa\left(v_{i}^{(k)}+c_{1} r_{i}^{(k)} \circ\left(p_{i}^{(k)}-x_{i}^{(k)}\right)+c_{2} s_{i}^{(k)} \circ\left(\boldsymbol{g}^{(k)}-x_{i}^{(k)}\right)\right),
+\]
+
+where the constriction coefficient \(\kappa\) is computed as
+
+\[
+	\kappa=\frac{2}{\left|2-\phi-\sqrt{\phi^{2}-4 \phi}\right|}.
+\]
+
+%------------------------------------------------------%
+\subsection{Example}
+Example 1: Consider a particle whose current position and velocity vectors are:
+
+\[
+	\boldsymbol{x}_{\text {current }}=\left[\begin{array}{l}
+		1 \\
+		2
+	\end{array}\right] \text { and } \boldsymbol{v}_{\text {current }}=\left[\begin{array}{l}
+		4 \\
+		8
+	\end{array}\right] .
+\]
+
+Find the particle's next position, \(\boldsymbol{x}_{n e x t}\), using the constriction-factor version of the particle swarm optimization algorithm, where the cognitive coefficient \(c_{1}=2\) and the social coefficient \(c_{2}=2\). The pbest is
+
+\[
+	\boldsymbol{p}=\left[\begin{array}{l}
+		0.5 \\
+		1.5
+	\end{array}\right]
+\]
+
+and the gbest is
+
+\[
+	\boldsymbol{g}=\left[\begin{array}{l}
+		5 \\
+		6
+	\end{array}\right]
+\]
+
+Assume that the random vectors \(\boldsymbol{r}\) and \(\boldsymbol{s}\) have the form,
+
+\[
+	\boldsymbol{r}=\frac{1}{2}\left[\begin{array}{l}
+		1 \\
+		1
+	\end{array}\right]
+\]
+
+and
+
+\[
+	\boldsymbol{s}=\frac{1}{4}\left[\begin{array}{l}
+		1 \\
+		1
+	\end{array}\right]
+\]
+
+\textbf{Short answer}:
+
+We have \(\phi=c_{1}+c_{2}=4\), and
+
+\[
+	\kappa=\frac{2}{\left|2-\phi-\sqrt{\phi^{2}-4 \phi}\right|}=1
+\]
+
+Then
+
+\[
+	\begin{aligned}
+		v_{i}^{(k+1)} & =\kappa\left(v_{i}^{(k)}+c_{1} r_{i}^{(k)} \circ\left(p_{i}^{(k)}-x_{i}^{(k)}\right)+c_{2} s_{i}^{(k)} \circ\left(\boldsymbol{g}^{(k)}-x_{i}^{(k)}\right)\right) \\
+		& =\left[\begin{array}{l}
+			5.5 \\
+			9.5
+		\end{array}\right] .
+	\end{aligned}
+\]
+
+Therefore,
+
+\[
+	\boldsymbol{x}_{n e x t}=\boldsymbol{x}_{\text {current }}+\boldsymbol{v}_{\text {next }}=\left[\begin{array}{l}
+		1 \\
+		2
+	\end{array}\right]+\left[\begin{array}{l}
+		5.5 \\
+		9.5
+	\end{array}\right]=\left[\begin{array}{c}
+		6.5 \\
+		11.5
+	\end{array}\right] \text {. }
+\]
