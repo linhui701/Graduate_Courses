@@ -1,0 +1,69 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Convex and concave}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Practice problems}
+\begin{enumerate}
+	\item Find the range of values of the parameter \(\alpha\) for which the function,
+\end{enumerate}
+
+\[
+	f\left(x_{1}, x_{2}, x_{3}\right)=2 x_{1} x_{3}-x_{1}^{2}-x_{2}^{2}-5 x_{3}^{2}-2 \alpha x_{1} x_{2}-4 x_{2} x_{3},
+\]
+
+is concave.
+
+\textbf{Short answer}: A quadratic form is concave if and only if it is negative semi-definite. Equivalently, if and only if its negative is positive semi-definite. Therefore, we have
+
+\[
+	\alpha \in[-4 / 5,0] .
+\]
+
+(For more details please check Section 3 Problem 1 in this review material.)
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Is the set
+\end{enumerate}
+
+\[
+	S=\left\{\boldsymbol{x} \in \mathbb{R}^{2}:\left[\begin{array}{ll}
+		1 & 2
+	\end{array}\right] \boldsymbol{x} \leq 2\right\}
+\]
+
+convex or not?
+
+\textbf{Short answer}: To show that the set \(S\) is convex, we need to demonstrate that if \(\boldsymbol{x}, \boldsymbol{y} \in S\), then so is the line segment
+
+\[
+	\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y}, \alpha \in[0,1] .
+\]
+
+We have
+
+\[
+	\begin{aligned}
+		{\left[\begin{array}{ll}
+				1 & 2
+			\end{array}\right](\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y}) } & =\alpha\left[\begin{array}{ll}
+			1 & 2
+		\end{array}\right] \boldsymbol{x}+(1-\alpha)\left[\begin{array}{ll}
+			1 & 2
+		\end{array}\right] \boldsymbol{y} \\
+		& \leq 2 \alpha+2(1-\alpha) \\
+		& =2
+	\end{aligned}
+\]
+
+that is, if \(\boldsymbol{x}, \boldsymbol{y} \in S\), then \(\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y} \in S\) for \(\alpha \in[0,1]\). Therefore, the set \(S\) is convex.
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	\item Given a monotone non-decreasing function \(g\) of single variable, that is, \(g\left(r_{1}\right) \leq g\left(r_{2}\right)\) for \(r_{1}<r_{2}\). The function \(g\) is also convex. Let \(f\) be a convex function on a convex set \(\Omega \subseteq \mathbb{R}^{n}\). Show that the composite function \(g(f(\boldsymbol{x}))\) is convex on \(\Omega\).
+\end{enumerate}
+
+\textbf{Short answer}: Let \(\boldsymbol{x}, \boldsymbol{y} \in \Omega\). Since \(\Omega\) is convex, we have \(\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y} \in \Omega\), for \(\alpha \in[0,1]\). Since \(f\) is convex, we have \(f(\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y}) \leq \alpha f(\boldsymbol{x})+(1-\alpha) f(\boldsymbol{y})\). Now let \(r_{1}=f(\alpha \boldsymbol{x}+(1-\alpha) \boldsymbol{y})\) and \(r_{2}=\alpha f(\boldsymbol{x})+(1-\alpha) f(\boldsymbol{y})\). Then \(r_{1} \leq r_{2}\) implies \(g\left(r_{1}\right) \leq g\left(r_{2}\right)\). Since \(r\) is a function of \(f, g(r)\) is convex, and \(\boldsymbol{x} \in \Omega\), we have \(g(f(\boldsymbol{x}))\) to be convex on \(\Omega\).
