@@ -1,0 +1,326 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Lagrange's condition and its application}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Practice problems}
+\begin{enumerate}
+	\item Find all maximizers of the function
+	\[
+	f\left(x_{1}, x_{2}\right)=\frac{18 x_{1}^{2}-8 x_{1} x_{2}+12 x_{2}^{2}}{2 x_{1}^{2}+2 x_{2}^{2}} .
+	\]
+\end{enumerate}
+
+
+\textbf{Short answer}:
+
+We observe that \(f\left(x_{1}, x_{2}\right)\) is a ratio of two quadratic functions, that is, we can represent \(f\left(x_{1}, x_{2}\right)\) as
+
+\[
+	f\left(x_{1}, x_{2}\right)=\frac{\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}}{\boldsymbol{x}^{\top} \boldsymbol{P} \boldsymbol{x}} .
+\]
+
+Therefore, if a point \(\boldsymbol{x}\) is a maximizer of \(f\left(x_{1}, x_{2}\right)\) then so is any nonzero multiple of this point because
+
+\begin{equation*}
+	\frac{(t \boldsymbol{x})^{\top} \boldsymbol{Q}(t \boldsymbol{x})}{(t \boldsymbol{x})^{\top} \boldsymbol{P}(t \boldsymbol{x})}=\frac{t^{2} \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}}{t^{2} \boldsymbol{x}^{\top} \boldsymbol{P} \boldsymbol{x}}=\frac{\boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}}{\boldsymbol{x}^{\top} \boldsymbol{P} \boldsymbol{x}} .
+\end{equation*}
+
+Thus any nonzero multiple of a solution is also a solution. To proceed, represent the original problem in an equivalent form,
+
+\[
+	\begin{array}{rl}
+		\operatorname{maximize} & \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x}=18 x_{1}^{2}-8 x_{1} x_{2}+12 x_{2}^{2} \vspace{2mm}\\
+		\text { subject to} & \boldsymbol{x}^{\top} \boldsymbol{P} \boldsymbol{x}=2 x_{1}^{2}+2 x_{2}^{2}=1 .
+	\end{array}
+\]
+
+We apply the Lagrange's method to solve the problem. We form the Lagrangian function,
+
+\[
+	l(\boldsymbol{x}, \boldsymbol{\lambda})=f(\boldsymbol{x})+ \lambda h(\boldsymbol{x}),
+\]
+
+compute its gradient and find critical points. We have,
+
+\[
+	\begin{aligned}
+		\nabla_{\boldsymbol{x}} l (\boldsymbol{x}, \boldsymbol{\lambda}) & =\nabla_{\boldsymbol{x}}\left(\boldsymbol{x}^{\top}\left[\begin{array}{cc}
+			18 & -4 \\
+			-4 & 12
+		\end{array}\right] \boldsymbol{x}+\lambda\left(1-\boldsymbol{x}^{\top}\left[\begin{array}{ll}
+			2 & 0 \\
+			0 & 2
+		\end{array}\right] \boldsymbol{x}\right)\right) \\
+		& =2\left[\begin{array}{cc}
+			18 & -4 \\
+			-4 & 12
+		\end{array}\right] \boldsymbol{x}-2 \lambda \left[\begin{array}{cc}
+			2 & 0 \\
+			0 & 2
+		\end{array}\right] \boldsymbol{x} \\
+		& =\boldsymbol{0} .
+	\end{aligned}
+\]
+
+We represent the above in an equivalent form,
+
+\[
+	\left(\lambda \boldsymbol{I}_{2}-\left[\begin{array}{ll}
+		2 & 0 \\
+		0 & 2
+	\end{array}\right]^{-1}\left[\begin{array}{cc}
+		18 & -4 \\
+		-4 & 12
+	\end{array}\right]\right) \boldsymbol{x}= \boldsymbol{0}.
+\]
+
+That is, solving the problem is being reduced to solving an eigenvalue-eigenvector problem,
+
+\[
+	\left(\lambda \boldsymbol{I}_{2}-\left[\begin{array}{cc}
+		9 & -2 \\
+		-2 & 6
+	\end{array}\right]\right) \boldsymbol{x}=\left[\begin{array}{cc}
+		\lambda-9 & 2 \\
+		2 & \lambda-6
+	\end{array}\right] \boldsymbol{x}=\boldsymbol{0} .
+\]
+
+The characteristic polynomial is
+
+\[
+	\lambda^{2}-15 \lambda+50=(\lambda-5)(\lambda-10) .
+\]
+
+The eigenvalues are 5 and 10 . Because we are interested in finding a maximizer, we conclude that the value of the maximized function is 10 , while the corresponding maximizer corresponds to an appropriate scaled, to satisfy the constraint, eigenvector of this eigenvalue. An eigenvector can easily be found by taking any nonzero column of the adjoint matrix of
+
+\[
+	10 \boldsymbol{I}_{2}-\left[\begin{array}{cc}
+		9 & -2 \\
+		-2 & 6
+	\end{array}\right] = \left[\begin{array}{cc}
+	1  & 2 \\
+	2 & 4
+	\end{array}\right].
+\]
+
+Thus
+
+\[
+	\sqrt{0.1}\left[\begin{array}{c}
+		-2 \\
+		1
+	\end{array}\right]
+\]
+
+is a maximizer for the equivalent problem. Any multiple of the above vector is a solution of the original maximization problem.
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Consider the following model of a discrete-time system,
+	\[
+		x(k+1)=x(k)+2 u(k),
+	\]
+\end{enumerate}
+
+where \(x(0)=3\), and \(0 \leq k \leq 2\). Use the Lagrange multiplier approach to calculate the optimal control sequence
+
+\[
+	\{u(0), u(1), u(2)\}
+\]
+
+that transfers the initial state \(x(0)\) to \(x(3)=9\) while minimizing the performance index
+
+\[
+	J=\frac{1}{2} \sum_{k=0}^{2} u(k)^{2}=\frac{1}{2} \boldsymbol{u}^{\top} \boldsymbol{u} .
+\]
+
+\textbf{Short answer}: 
+
+The composite input vector,
+
+\[
+	\boldsymbol{u}=\left[\begin{array}{lll}
+		u(0) & u(1) & u(2)
+	\end{array}\right]^{\top} .
+\]
+
+The performance index \(J\) is \(J=\dfrac{1}{2} \boldsymbol{u}^{\top} \boldsymbol{u}\). To obtain the constraint \(\boldsymbol{A} \boldsymbol{u}=\boldsymbol{b}\), where \(\boldsymbol{A} \in \mathbb{R}^{1 \times 3}\), we proceed as follows. First, we write
+
+\[
+	\begin{aligned}
+		x(2) & =x(1)+2 u(1) \\
+		& =x(0)+2 u(0)+2 u(1) .
+	\end{aligned}
+\]
+
+Using the above, we obtain
+
+\[
+	\begin{aligned}
+		x(3) & =x(2)+2 u(2) \\
+		& =x(0)+2 u(0)+2 u(1)+2 u(2) \\
+		& =9 .
+	\end{aligned}
+\]
+
+We represent the above in the format \(\boldsymbol{A} \boldsymbol{u}=\boldsymbol{b}\) as follows
+
+\[
+	\left[\begin{array}{lll}
+		2 & 2 & 2
+	\end{array}\right]\left[\begin{array}{l}
+		u(0) \\
+		u(1) \\
+		u(2)
+	\end{array}\right]=6 .
+\]
+
+Thus we formulate the problem of finding the optimal control sequence as a constrained optimization problem
+
+\[
+	\begin{array}{rl}
+		\operatorname{minimize} & \dfrac{1}{2} \boldsymbol{u}^{\top} \boldsymbol{u} \vspace{2mm}\\
+		\text { subject to} & \boldsymbol{A} \boldsymbol{u}=\boldsymbol{b} .
+	\end{array}
+\]
+
+To solve the above problem, we form the Lagrangian
+
+\[
+	l(\boldsymbol{u}, \boldsymbol{\lambda} )=\frac{1}{2} \boldsymbol{u}^{\top} \boldsymbol{u}+ \boldsymbol{\lambda}^{\top} (\boldsymbol{A} \boldsymbol{u}-\boldsymbol{b}),
+\]
+
+where \(\lambda\) is the Lagrange multiplier. Applying the Lagrange's first-order condition yields
+
+\[
+	\boldsymbol{u}+\boldsymbol{A}^{\top} \boldsymbol{\lambda}=\boldsymbol{0} \text { and } \boldsymbol{A} \boldsymbol{u}=\boldsymbol{b} .
+\]
+
+From the first of the above conditions, we calculate, \(\boldsymbol{u}=-\boldsymbol{A}^{\top} \boldsymbol{\lambda} \). Substituting the above into the second of the Lagrange conditions gives
+
+\[
+	\boldsymbol{\lambda}=-\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)^{-1} \boldsymbol{b} .
+\]
+
+Combining the last two equations, we obtain a closed-form formula for the optimal input sequence
+
+\[
+	\boldsymbol{u}=\boldsymbol{A}^{\top}\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)^{-1} \boldsymbol{b} .
+\]
+
+In this problem,
+
+\[
+	u=\left[\begin{array}{l}
+		u(0) \\
+		u(1) \\
+		u(2)
+	\end{array}\right]=\frac{\boldsymbol{b}}{\left(\boldsymbol{A} \boldsymbol{A}^{\top}\right)} \boldsymbol{A}^{\top}=\left[\begin{array}{l}
+		1 \\
+		1 \\
+		1
+	\end{array}\right] .
+\]
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	\item Find minimizers and maximizers of the function,
+	\[
+		f(\boldsymbol{x})=\left(\boldsymbol{a}^{\top} \boldsymbol{x}\right)\left(\boldsymbol{b}^{\top} \boldsymbol{x}\right), \boldsymbol{x} \in \mathbb{R}^{3},
+	\]
+
+	subject to
+	\[
+		\begin{aligned}
+			& x_{1}+x_{2}=0 \\
+			& x_{2}+x_{3}=0
+		\end{aligned}
+	\]
+
+	where
+	
+	\[
+		\boldsymbol{a}=\left[\begin{array}{l}
+			0 \\
+			1 \\
+			0
+		\end{array}\right] \text { and } \boldsymbol{b}=\left[\begin{array}{l}
+			1 \\
+			0 \\
+			1
+		\end{array}\right] .
+	\]
+\end{enumerate}
+
+\textbf{Short answer}: 
+
+We form the Lagrangian
+
+\[
+	l(\boldsymbol{x}, \boldsymbol{\lambda} )=\frac{1}{2} \boldsymbol{x}^{\top}\left(\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}\right) \boldsymbol{x}+\lambda_{1}\left(x_{1}+x_{2}\right)+\lambda_{2}\left(x_{2}+x_{3}\right) .
+\]
+
+The Lagrange conditions take the form,
+
+\[
+	\begin{aligned}
+		\nabla_{\boldsymbol{x}} l (\boldsymbol{x}, \boldsymbol{\lambda})
+		& =\left(\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}\right) \boldsymbol{x}+\left[\begin{array}{ll}
+			\nabla_{\boldsymbol{x}} h_{1}(\boldsymbol{x}) & \nabla_{\boldsymbol{x}} h_{2}(\boldsymbol{x})
+		\end{array}\right] \boldsymbol{\lambda} \\
+		& =\left[\begin{array}{lll}
+			0 & 1 & 0 \\
+			1 & 0 & 1 \\
+			0 & 1 & 0
+		\end{array}\right] \boldsymbol{x}+\left[\begin{array}{ll}
+			1 & 0 \\
+			1 & 1 \\
+			0 & 1
+		\end{array}\right] \boldsymbol{\lambda} \\
+		& =\left[\begin{array}{l}
+			0 \\
+			0 \\
+			0
+		\end{array}\right], \\
+		h(\boldsymbol{x})
+		& =\left[\begin{array}{l}
+			x_{1}+x_{2} \\
+			x_{2}+x_{3}
+		\end{array}\right]=\left[\begin{array}{l}
+			0 \\
+			0
+		\end{array}\right] .
+	\end{aligned}
+\]
+
+It is easy to see that \(\boldsymbol{x}^{*}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\) and \(\boldsymbol{\lambda}^{*}=\left[\begin{array}{ll}0 & 0\end{array}\right]^{\top}\) satisfy the Lagrange, FONC conditions. The Hessian of the lagrangian is
+
+\[
+	\boldsymbol{L}\left(\boldsymbol{x}^{*}, \boldsymbol{\lambda}^{*}\right)=\boldsymbol{a} \boldsymbol{b}^{\top}+\boldsymbol{b} \boldsymbol{a}^{\top}=\left[\begin{array}{ccc}
+		0 & 1 & 0 \\
+		1 & 0 & 1 \\
+		0 & 1 & 0
+	\end{array}\right]
+\]
+
+and the tangent space
+
+\[
+	T\left(\boldsymbol{x}^{*}\right)=\left\{\boldsymbol{y}: \boldsymbol{y} = c \left[\begin{array}{c}
+		1 \\
+		-1 \\
+		1
+	\end{array}\right], c \in \mathbb{R}\right\} .
+\]
+
+To verify if the critical point satisfies the SOSC, we evaluate
+
+\[
+	\boldsymbol{y}^{\top} \boldsymbol{L} \left(\boldsymbol{x}^{*}, \boldsymbol{\lambda}^{*}\right) \boldsymbol{y}=-4 c^{2}<0 .
+\]
+
+Thus the critical point is a strict local maximizer.
