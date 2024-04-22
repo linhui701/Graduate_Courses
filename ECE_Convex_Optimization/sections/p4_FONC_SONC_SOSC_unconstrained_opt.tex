@@ -1,0 +1,108 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{FONC, SONC, SOSC for unconstrained optimization problem}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Practice problems}
+\begin{enumerate}
+	\item Find minimizers and maximizers of the function,	
+	\[
+		f\left(x_{1}, x_{2}\right)=\frac{1}{3} x_{1}^{3}-4 x_{1}+\frac{1}{3} x_{2}^{3}-9 x_{2} .
+	\]
+
+\end{enumerate}
+
+
+\textbf{Short answer}:
+
+Because there are no constraints on \(x_{1}\) or \(x_{2}\), we can utilize conditions for unconstrained optimization. To proceed, we first compute the function gradient and find the critical points, that is, the points that satisfy the FONC,
+
+\[
+	\nabla f\left(x_{1}, x_{2}\right)=0 .
+\]
+
+The components of the gradient \(\nabla f\left(x_{1}, x_{2}\right)\) are
+
+\[
+	\frac{\partial f}{\partial x_{1}}=x_{1}^{2}-4 \text { and } \frac{\partial f}{\partial x_{2}}=x_{2}^{2}-9 .
+\]
+
+Thus there are four critical points,
+
+\[
+	\boldsymbol{x}^{(1)}=\left[\begin{array}{l}
+		2 \\
+		3
+	\end{array}\right], \boldsymbol{x}^{(2)}=\left[\begin{array}{c}
+		2 \\
+		-3
+	\end{array}\right], \boldsymbol{x}^{(3)}=\left[\begin{array}{c}
+		-2 \\
+		3
+	\end{array}\right], \text { and } \boldsymbol{x}^{(4)}=\left[\begin{array}{c}
+		-2 \\
+		-3
+	\end{array}\right] .
+\]
+
+We next compute the Hessian matrix of the function \(f\),
+
+\[
+	\boldsymbol{F}(\boldsymbol{x})=\left[\begin{array}{cc}
+		2 x_{1} & 0 \\
+		0 & 2 x_{2}
+	\end{array}\right]
+\]
+
+Note that \(\boldsymbol{F}\left(\boldsymbol{x}^{(1)}\right) \succ 0\) and therefore, \(\boldsymbol{x}^{(1)}\) is a strict local minimizer. Next, \(\boldsymbol{F}\left(\boldsymbol{x}^{(4)}\right) \prec 0\) and therefore, \(\boldsymbol{x}^{(4)}\) is a strict local maximizer. The Hessian is indefinite at \(\boldsymbol{x}^{(2)}\) and \(\boldsymbol{x}^{(3)}\) and so these points are neither maximizers nor minimizers.
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item In some of the optimization methods, when minimizing a given function \(f(\boldsymbol{x})\), we select an initial guess \(\boldsymbol{x}^{(0)}\) and a real symmetric positive definite matrix \(\boldsymbol{H}_{0}\). Then we compute \(\boldsymbol{d}^{(k)}=-\boldsymbol{H}_{k} g^{(k)}\), where \(\boldsymbol{g}^{(k)}=\nabla f\left(\boldsymbol{x}^{(k)}\right)\), and \(\boldsymbol{x}^{(k+1)}=\boldsymbol{x}^{(k)}+\alpha_{k} \boldsymbol{d}^{(k)}\), where
+	\[
+		\alpha_{k}=\arg \min _{\alpha \geq 0} f\left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right) .
+	\]
+
+	Suppose that the function we wish to minimize is a standard quadratic of the form,
+	
+	\[
+		f(\boldsymbol{x})=\frac{1}{2} \boldsymbol{x}^{\top} \boldsymbol{Q} \boldsymbol{x} - \boldsymbol{x}^{\top} \boldsymbol{b}+c, \quad \boldsymbol{Q}=\boldsymbol{Q}^{\top} \succ 0 .
+	\]
+	
+	(1) Find a closed form expression for \(\alpha_{k}\) in terms of \(\boldsymbol{Q}, \boldsymbol{H}_{k}, \boldsymbol{g}^{(k)}\), and \(\boldsymbol{d}^{(k)}\).
+	
+	(2) Give a sufficient condition on \(\boldsymbol{H}_{k}\) for \(\alpha_{k}\) to be positive.
+
+\end{enumerate}
+
+
+\textbf{Short answer}:
+
+(1) We have
+
+\[
+	f\left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right) = 
+	\frac{1}{2}\left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right)^{\top} \boldsymbol{Q} \left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right)-\left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right)^{\top} \boldsymbol{b}+c .
+\]
+
+Using the chain rule, we obtain
+
+\[
+	\frac{d}{d \alpha} f\left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right) = \left(\boldsymbol{x}^{(k)}+\alpha \boldsymbol{d}^{(k)}\right)^{\top} \boldsymbol{Q} \boldsymbol{d}^{(k)}-\boldsymbol{d}^{(k)^{\top}} \boldsymbol{b} .
+\]
+
+Equating the above to zero and solving for \(\alpha\) gives
+
+\[
+	\left(\boldsymbol{x}^{(k)^{\top}} \boldsymbol{Q}-\boldsymbol{b}^{\top}\right) \boldsymbol{d}^{(k)}=-\alpha \boldsymbol{d}^{(k)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(k)} .
+\]
+
+Taking into account that \(\boldsymbol{g}^{(k)^{\top}} = \boldsymbol{x}^{(k)^{\top}} \boldsymbol{Q}-\boldsymbol{b}^{\top}\) and that \(\boldsymbol{d}^{(k)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(k)}>0\) for \(\boldsymbol{g}^{(k)} \neq 0\), we obtain
+
+\[
+	\alpha_{k} = -\frac{\boldsymbol{g}^{(k)^{\top}} \boldsymbol{d}^{(k)}}{\boldsymbol{d}^{(k)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(k)}} = \frac{\boldsymbol{g}^{(k)^{\top}} \boldsymbol{H}_{k} \boldsymbol{g}^{(k)}}{\boldsymbol{d}^{(k)^{\top}} \boldsymbol{Q} \boldsymbol{d}^{(k)}} .
+\]
+
+(2) The matrix \(\boldsymbol{Q}\) is symmetric and positive definite; hence \(\alpha_{k}>0\) if \(\boldsymbol{H}_{k}=\) \(\boldsymbol{H}_{k}^{\top} \succ 0\).
