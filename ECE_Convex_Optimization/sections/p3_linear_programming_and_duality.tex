@@ -1,0 +1,240 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{Linear Programming and its Duality}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Practice problems}
+
+Example 1
+\[
+	\begin{array}{rl}
+		\operatorname{maximize} & 5 x_{1}+2 x_{2} \vspace{2mm}\\
+		\text { subject to} & x_{1}+x_{2}+x_{3}=5 \vspace{2mm}\\
+		& -3 x_{1}+2 x_{2}-x_{4}=-5 \vspace{2mm}\\
+		& x_{i} \geq 0, \quad i=1,2,3,4 .
+	\end{array}
+\]
+
+\textbf{Short answer}:
+We transform the problem into the following equivalent problem,
+
+\[
+	\begin{array}{rl}
+		\operatorname{minimize} & -5 x_{1}-2 x_{2} \vspace{2mm}\\
+		\text { subject to} & x_{1}+x_{2}+x_{3}=5 \vspace{2mm}\\
+		& 3 x_{1}-2 x_{2}+x_{4}=5 \vspace{2mm}\\
+		& x_{i} \geq 0, i=1,2,3,4 .
+	\end{array}
+\]
+
+We form the tableau for the problem and process with simplex procedure.
+
+\begin{equation*}
+	\begin{array}{cccc|c}
+		1 & 1 & 1 & 0 & 5 \\
+		3 & -2 & 0 & 1 & 5 \\
+		\hline-5 & -2 & 0 & 0 & 0
+	\end{array}
+\end{equation*}
+
+We first pivot about \((2,1)\) th element, to get
+
+\begin{equation*}
+	\begin{array}{cccc|c}
+		0 & 5 / 3 & 1 & -1 / 3 & 10 / 3 \\
+		1 & -2 / 3 & 0 & 1 / 3 & 5 / 3 \\
+		\hline 0 & -16 / 3 & 0 & 5 / 3 & 25 / 3
+	\end{array}
+\end{equation*}
+
+\begin{center}
+	\begin{tabular}{cccc|c}
+		0 & 1 & \(3 / 5\) & \(-1 / 5\) & 2 \\
+		1 & 0 & \(2 / 5\) & \(1 / 5\) & 3 \\
+		\hline
+		0 & 0 & \(16 / 5\) & \(3 / 5\) & 19 \\
+		\hline
+	\end{tabular}
+\end{center}
+
+We then pivot about \((1,2)\) th element, to get the tableau above.
+
+We have the optimized basic feasible solution as \(\boldsymbol{x}=\left[\begin{array}{llll}3 & 2 & 0 & 0\end{array}\right]^{\top}\). The optimal value of \(5 x_{1}+2 x_{2}\) is 19 .
+
+
+\medskip
+\noindent
+Example 2. Find the dual problem corresponding to the following primal problem:
+
+\[
+	\begin{array}{rl}
+		\operatorname{minimize} & c^{\top} x \vspace{2mm}\\
+		\text { subject to} & A_{1} x \geq b_{1} \vspace{2mm}\\
+		& A_{2} x \leq b_{2} \vspace{2mm}\\
+		& A_{3} x=b_{3} \vspace{2mm}\\
+		& \boldsymbol{x} \geq 0 .
+	\end{array}
+\]
+
+\textbf{Short answer}:
+
+We transform the given problem into its standard form:
+
+\[
+	\begin{array}{rl}
+		\operatorname{ minimize} & c^{\top} x \vspace{2mm} \\
+		\text { subject to} & A_{1} x \geq b_{1} \vspace{2mm} \\
+		& -A_{2} x \geq-b_{2} \vspace{2mm} \\
+		& A_{3} x \geq b_{3} \vspace{2mm} \\
+		& -A_{3} x \geq-b_{3} \vspace{2mm} \\
+		& \boldsymbol{x} \geq 0 .
+	\end{array}
+\]
+
+The dual problem is then:
+
+\begin{equation*}
+	\begin{aligned}
+		& \text { maximize }\left[\begin{array}{llll}
+			u^{\top} & v^{\top} & w^{\top} & \lambda^{\top}
+		\end{array}\right]\left[\begin{array}{c}
+			b_{1} \\
+			-b_{2} \\
+			b_{3} \\
+			-b_{3}
+		\end{array}\right] \\
+		& \text { subject to }\left[\begin{array}{llll}
+			u^{\top} & v^{\top} & w^{\top} & \lambda^{\top}
+		\end{array}\right]\left[\begin{array}{c}
+			A_{1} \\
+			-A_{2} \\
+			A_{3} \\
+			-A_{3}
+		\end{array}\right] \leq c^{\top}
+	\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+	u, v, w, \lambda \geq 0 .
+\end{equation*}
+
+
+\medskip
+\noindent
+Example 3. Convert the following optimization problem into a linear programming problem and solve it;
+
+\[
+	\begin{array}{rl}
+		\text { maximize} & -\left|x_{1}\right|-\left|x_{2}\right|-\left|x_{3}\right| \vspace{2mm}\\
+		\text { subject to } & {\left[\begin{array}{ccc}
+				1 & 1 & -1 \\
+				0 & -1 & 0
+			\end{array}\right]\left[\begin{array}{l}
+				x_{1} \\
+				x_{2} \\
+				x_{3}
+			\end{array}\right]=\left[\begin{array}{l}
+				2 \\
+				1
+			\end{array}\right] .}
+	\end{array}
+\]
+
+Construct its dual program and solve it.
+
+\textbf{Short answer}:
+
+We introduce two sets of non-negative variables: \(x_{i}^{+} \geq 0, x_{i}^{-} \geq 0\), \(i=1,2,3\). We can then represent the optimization problem in the form
+
+\[
+	\begin{array}{cl}
+		\text { minimize} &
+		\left(x_{1}^{+}+x_{1}^{-}\right)+\left(x_{2}^{+}+x_{2}^{-}\right)+\left(x_{3}^{+}+x_{3}^{-}\right) \vspace{2mm} \\
+		\text {subject to} & {\left[\begin{array}{cccccc}
+				1 & 1 & -1 & -1 & -1 & 1 \\
+				0 & -1 & 0 & 0 & 1 & 0
+			\end{array}\right]\left[\begin{array}{l}
+				x_{1}^{+} \\
+				x_{2}^{+} \\
+				x_{3}^{+} \\
+				x_{1}^{-} \\
+				x_{2}^{-} \\
+				x_{3}^{-}
+			\end{array}\right]=\left[\begin{array}{l}
+				2 \\
+				1
+			\end{array}\right]} \\
+		& x_{i}^{+}, x_{i}^{-} \geq 0 .
+	\end{array}
+\]
+
+We form the initial tableau,
+
+\[
+	\begin{array}{cccccc|c}
+		1 & 1 & -1 & -1 & -1 & 1 & 2 \\
+		0 & -1 & 0 & 0 & 1 & 0 & 1 \\
+		\hline 1 & 1 & 1 & 1 & 1 & 1 & 0
+	\end{array}
+\]
+
+There is no apparent basic feasible solution. We add the second row to the first one to obtain,
+
+\[
+	\begin{array}{cccccc|c}
+		1 & 0 & -1 & -1 & 0 & 1 & 3 \\
+		0 & -1 & 0 & 0 & 1 & 0 & 1 \\
+		\hline 1 & 1 & 1 & 1 & 1 & 1 & 0
+	\end{array}
+\]
+
+We next calculate the reduced cost coefficients,
+
+\[
+	\begin{array}{cccccc|c}
+		1 & 0 & -1 & -1 & 0 & 1 & 3 \\
+		0 & -1 & 0 & 0 & 1 & 0 & 1 \\
+		\hline 0 & 2 & 2 & 2 & 0 & 0 & -4
+	\end{array}
+\]
+
+We have zeros under the basic columns. The reduced cost coefficients are all non-negative. The optimal solution is,
+
+\[
+	\boldsymbol{x}^{*}=\left[\begin{array}{llllll}
+		3 & 0 & 0 & 0 & 1 & 0
+	\end{array}\right]^{\top} .
+\]
+
+The optimal solution to the original problem is \(\boldsymbol{x}^{*}=\left[\begin{array}{lll}3 & -1 & 0\end{array}\right]^{\top}\).
+
+The dual of the above linear program is
+
+\[
+	\begin{array}{cl}
+	\operatorname{maximize} &  2 \lambda_{1}+\lambda_{2} \\
+	\text{ subject to} &  
+		\left[\begin{array}{ll}\lambda_{1} & \lambda_{2}\end{array}\right]
+		\left[\begin{array}{cccccc}1 & 1 & -1 & -1 & -1 & 1 \\ 0 & -1 & 0 & 0 & 1 & 0\end{array}\right] \leq
+		\left[\begin{array}{llllll}1 & 1 & 1 & 1 & 1 & 1\end{array}\right].
+	\end{array}
+\]
+
+The optimal solution to the dual is,
+
+\[
+	\begin{aligned}
+		\boldsymbol{\lambda}^{* \top} & =\boldsymbol{c}_{\boldsymbol{B}}^{\top} \boldsymbol{B}^{-1} \\
+		& =\left[\begin{array}{ll}
+			1 & 1
+		\end{array}\right]\left[\begin{array}{cc}
+			1 & -1 \\
+			0 & 1
+		\end{array}\right]^{-1} \\
+		& =\left[\begin{array}{ll}
+			1 & 2
+		\end{array}\right] .
+	\end{aligned}
+\]
