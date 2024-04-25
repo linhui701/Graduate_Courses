@@ -1,29 +1,62 @@
 \documentclass[12pt,thmsa]{article}
 
-\usepackage{amsmath}
+
+%maths
+\usepackage{amsmath}   % \sideset
 \usepackage{amsthm}    % for proof
 \usepackage{amsfonts}  % for \mathbb
 \usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
-\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script 
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+\usepackage{optidef}   % for optimization definition
+
+%algorithms
 \usepackage{algorithm} % http://ctan.org/pkg/algorithms
 \usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
-\usepackage{graphicx}  % Allows including images
+
+%tables
 \usepackage{booktabs}  % Allows the use of \toprule, \midrule and \bottomrule in tables
-\usepackage{cancel}
-\usepackage{color}     % color
-\usepackage{geometry}
-\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
-\usepackage{textcase}  % \MakeTextUppercase
-\usepackage{float}     % Force figure placement in text with [H]
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage[table]{xcolor} % For \cellcolor
 \usepackage[export]{adjustbox}
-\usepackage{enumitem}
-\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
-\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
-\usepackage{hyperref}
+
+%figures
+\usepackage{graphicx}  % Allows including images
+\usepackage{float}     % Force figure placement in text with [H]
+
+%tikzpicture
 \usepackage{tikz}
-\usetikzlibrary{shapes, arrows.meta, positioning}
+\usepackage{scalerel}
+\usepackage{pict2e}
+\usepackage{tkz-euclide}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes, positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns, arrows.meta}
+\usetikzlibrary{shadows}
+\usetikzlibrary{external}
+
+%pgfplots
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+
+%colors
+\usepackage{color}     % color
+
+%other
+\usepackage{cancel}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\usepackage{textcase}  % \MakeTextUppercase
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
+
+%layout
+\usepackage{geometry}
 
 \geometry{
 	a4paper,
@@ -762,9 +795,7 @@
 \medskip
 
 \noindent
-[Ref]: 
-
-Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``An introduction to optimization", 4th Edition, John Wiley and Sons, Inc. 2013.
+[Ref]: Edwin K.P. Chong, Stanislaw H. Żak, ``PART I MATHEMATICAL REVIEW" in ``\href{https://www.amazon.com/Introduction-Optimization-Edwin-K-Chong/dp/1118279018}{An introduction to optimization}", 4th Edition, John Wiley and Sons, Inc. 2013.
 
 
 \end{document}
