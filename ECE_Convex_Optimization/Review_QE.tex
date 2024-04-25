@@ -7,6 +7,7 @@
 \usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
 \usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
 \usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+\usepackage{optidef}   % for optimization definition
 
 %algorithms
 \usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
@@ -136,26 +137,26 @@
 
 % Part 2: Unconstrained Optimization
 \include{./sections/p2_FONC_SONC_SOSC}
-%\include{./sections/p2_descent_direction}
-%\include{./sections/p2_1d_search}
-%\include{./sections/p2_steepest_descent}
-%\include{./sections/p2_Newton's_method}
-%\include{./sections/p2_conjugate_direction_method}
-%\include{./sections/p2_quasi-Newton_methods}
-%\include{./sections/p2_pseudoinverse}
-%\include{./sections/p2_least_squares}
-%\include{./sections/p2_recursive_least_squares}
-%\include{./sections/p2_standard_minimization}
-%\include{./sections/p2_particle_swarm_optimization}
+\include{./sections/p2_descent_direction}
+\include{./sections/p2_1d_search}
+\include{./sections/p2_steepest_descent}
+\include{./sections/p2_Newton's_method}
+\include{./sections/p2_conjugate_direction_method}
+\include{./sections/p2_quasi-Newton_methods}
+\include{./sections/p2_pseudoinverse}
+\include{./sections/p2_least_squares}
+\include{./sections/p2_recursive_least_squares}
+\include{./sections/p2_standard_minimization}
+\include{./sections/p2_particle_swarm_optimization}
 
-%% Part 3: Linear Programming
-%\include{./sections/p3_linear_programming}
-%\include{./sections/p3_linear_programming_and_duality}
+% Part 3: Linear Programming
+\include{./sections/p3_linear_programming}
+\include{./sections/p3_linear_programming_and_duality}
 
-%% Part 4: Nonlinear Constrained Optimization
-%\include{./sections/p4_FONC_SONC_SOSC_unconstrained_opt}
-%\include{./sections/p4_Lagrange's_condition}
-%\include{./sections/p4_KKT_condition}
-%\include{./sections/p4_convex_and_concave}
+% Part 4: Nonlinear Constrained Optimization
+\include{./sections/p4_FONC_SONC_SOSC_unconstrained_opt}
+\include{./sections/p4_Lagrange's_condition}
+\include{./sections/p4_KKT_condition}
+\include{./sections/p4_convex_and_concave}
 
 \end{document}
