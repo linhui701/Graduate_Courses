@@ -1,0 +1,247 @@
+%------------------------------------------------------%
+%------------------------------------------------------%
+\section{KKT condition and its application}
+%------------------------------------------------------%
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{Practice problems}
+\begin{enumerate}
+	\item Consider the optimization problem
+	\[
+		\begin{array}{rl}
+			\operatorname{minimize} & x_{1}^{2}+4 x_{2}^{2} \vspace{2mm} \\
+			\text { subject to} & x_{1}^{2}+2 x_{2}^{2} \geq 4 .
+		\end{array}
+	\]
+	
+	(1) Find all points that satisfy the KKT conditions.
+	
+	(2) Apply the SOSC to determine the nature of the critical points from the previous part.
+
+\end{enumerate}
+
+\textbf{Short answer}:
+
+We form the Lagrangian function,
+
+\[
+	l(\boldsymbol{x}, \mu)=x_{1}^{2}+4 x_{2}^{2}+\mu\left(4-x_{1}^{2}-2 x_{2}^{2}\right) .
+\]
+
+The KKT conditions take the form,
+
+\[
+	\begin{aligned}
+		& D_{\boldsymbol{x}} l(\boldsymbol{x}, \mu)=\left[\begin{array}{ll}
+			2 x_{1}-2 \mu x_{1} & 8 x_{2}-4 \mu x_{2}
+		\end{array}\right]=\boldsymbol{0}^{\top} \\
+		& \mu\left(4-x_{1}^{2}-2 x_{2}^{2}\right)=0 \\
+		& \mu>0 \\
+		& 4-x_{1}^{2}-2 x_{2}^{2} \leq 0 .
+	\end{aligned}
+\]
+
+From the first of the above equality, we obtain \((1-\mu) x_{1}=0\) and \((2-\mu) x_{2}=0\). We first consider the case when \(\mu=0\). Then, we obtain the point \(\boldsymbol{x}^{(1)}=0\), which does not satisfy the constraints.
+
+The next case is when \(\mu=1\). Then we have \(x_{2}=0\) and using \(\mu\left(4-x_{1}^{2}-\right.\) \(\left.2 x_{2}^{2}\right)=0\) gives
+
+\[
+	\boldsymbol{x}^{(2)}=\left[\begin{array}{l}
+		2 \\
+		0
+	\end{array}\right] \text { and } \boldsymbol{x}^{(3)}=\left[\begin{array}{c}
+		-2 \\
+		0
+	\end{array}\right] .
+\]
+
+For the case when \(\mu=2\), we have to have \(x_{1}=0\) and we get
+
+\[
+	\boldsymbol{x}^{(4)}=\left[\begin{array}{c}
+		0 \\
+		\sqrt{2}
+	\end{array}\right] \text { and } \boldsymbol{x}^{(5)}=\left[\begin{array}{c}
+		0 \\
+		-\sqrt{2}
+	\end{array}\right] .
+\]
+
+The Hessian of \(l\) is
+
+\[
+	\boldsymbol{L}=\left[\begin{array}{ll}
+		2 & 0 \\
+		0 & 8
+	\end{array}\right]+\mu\left[\begin{array}{cc}
+		-2 & 0 \\
+		0 & -4
+	\end{array}\right]
+\]
+
+When \(\mu=1\),
+
+\[
+	\boldsymbol{L}=\left[\begin{array}{ll}
+		0 & 0 \\
+		0 & 4
+	\end{array}\right]
+\]
+
+We next find the subspace
+
+\[
+	\begin{aligned}
+		\tilde{T} & =T=\left\{\boldsymbol{y}: \left[\begin{array}{ll} 
+			\pm 4 & 0
+		\end{array}\right] \boldsymbol{y}=0\right\} \\
+		& =\left\{\boldsymbol{y}=a\left[\begin{array}{ll}
+			0 & 1
+		\end{array}\right]^{\top}: a \in \mathbb{R}\right\} .
+	\end{aligned}
+\]
+
+We then check for positive definiteness of \(\boldsymbol{L}\) on \(\tilde{T}\),
+
+\[
+	\boldsymbol{y}^{\top} \boldsymbol{L} \boldsymbol{y}=a^{2}\left[\begin{array}{ll}
+		0 & 1
+	\end{array}\right]\left[\begin{array}{ll}
+		0 & 0 \\
+		0 & 4
+	\end{array}\right]\left[\begin{array}{l}
+		0 \\
+		1
+	\end{array}\right]=4 a^{2}>0 .
+\]
+
+Hence, \(\boldsymbol{x}^{(2)}\) and \(\boldsymbol{x}^{(3)}\) satisfy the SOSC to be strict local minimizers. When \(\mu=2\),
+
+\[
+	\boldsymbol{L}=\left[\begin{array}{cc}
+		-2 & 0 \\
+		0 & 0
+	\end{array}\right]
+\]
+and
+
+\[
+	T=\left\{\boldsymbol{y}=a\left[\begin{array}{ll}
+		1 & 0
+	\end{array}\right]^{\top}: a \in \mathbb{R}\right\}
+\]
+
+We have
+
+\[
+	\boldsymbol{y}^{\top} \boldsymbol{L} \boldsymbol{y}=-2 a^{2}<0 .
+\]
+
+Thus, \(\boldsymbol{x}^{(4)}\) and \(\boldsymbol{x}^{(5)}\) do not satisfy the SONC to be minimizers. In summary, only \(\boldsymbol{x}^{(2)}\) and \(\boldsymbol{x}^{(3)}\) are strict local minimizers.
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Consider the following constraints on \(\mathbb{R}^{2}\) :
+
+	\[
+		\begin{aligned}
+			& h\left(x_{1}, x_{2}\right)=\left(x_{1}-2\right)^{2}=0 \\
+			& g\left(x_{1}, x_{2}\right)=\left(x_{2}+1\right)^{3} \leq 0 .
+		\end{aligned}
+	\]
+	
+	(1) Find the set of feasible points.
+	
+	(2) Are the feasible points regular or not. Justify your answer.
+
+\end{enumerate}
+
+\textbf{Short answer}:
+
+The feasible set consists of the points
+
+\[
+	\boldsymbol{x}=\left[\begin{array}{l}
+		2 \\
+		a
+	\end{array}\right], a \leq-1 .
+\]
+
+We next find the gradients,
+
+\[
+	\nabla h(\boldsymbol{x})=\left[\begin{array}{c}
+		2\left(x_{1}-2\right) \\
+		0
+	\end{array}\right] \text { and } \nabla g(\boldsymbol{x})=\left[\begin{array}{c}
+		0 \\
+		3\left(x_{2}+1\right)^{2}
+	\end{array}\right]
+\]
+
+All feasible points are not regular because at the above points the gradient of \(h\) and \(g\) are not linearly independent. There are no regular points of the constraints.
+
+\begin{enumerate}
+	\setcounter{enumi}{2}
+	\item Show that the two problems below are dual by showing the equivalence of the KKT conditions:
+	\begin{mini*}|l|
+		{\boldsymbol{x}}{\boldsymbol{c}^{\top} \boldsymbol{x}}
+		{}{}
+		\addConstraint{\boldsymbol{A} \boldsymbol{x} \geq \boldsymbol{b}}
+		\addConstraint{\boldsymbol{x} \geq 0.}{}
+	\end{mini*}
+
+	and
+	\begin{maxi*}|l|
+		{\boldsymbol{\lambda}}{\boldsymbol{b}^{\top} \boldsymbol{\lambda}}
+		{}{}
+		\addConstraint{\boldsymbol{A}^{\top} \boldsymbol{\lambda} \geq \boldsymbol{c}}
+		\addConstraint{\boldsymbol{\lambda} \geq 0.}{}
+	\end{maxi*}
+
+\end{enumerate}
+
+\textbf{Short answer}:
+
+It is sufficient to show that the two linear programs have identical KKT conditions. For the first linear program, let \(\boldsymbol{\mu}\) be the vector of Lagrangian multipliers associated with \(\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b} \geq \boldsymbol{0}\), and \(\boldsymbol{s}\) be the vector of multipliers associated with \(\boldsymbol{x} \geq 0\). The Lagrangian function is then
+
+\begin{equation*}
+	L_{1}(\boldsymbol{x}, \boldsymbol{\mu}, \boldsymbol{s})=\boldsymbol{c}^{\top} \boldsymbol{x}-\boldsymbol{\mu}^{\top}(\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b})-\boldsymbol{s}^{\top} \boldsymbol{x} .
+\end{equation*}
+
+The KKT conditions are
+
+\[
+	\begin{aligned}
+		\boldsymbol{A}^{\top} \boldsymbol{\mu}+\boldsymbol{s} & = \boldsymbol{c} \\
+		\boldsymbol{A} \boldsymbol{x} & \geq \boldsymbol{b} \\
+		\boldsymbol{x} & \geq \boldsymbol{0} \\
+		\boldsymbol{\mu} & \geq \boldsymbol{0} \\
+		\boldsymbol{s} & \geq \boldsymbol{0} \\
+		\boldsymbol{\mu}^{\top}(\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b}) & =\boldsymbol{0} \\
+		\boldsymbol{s}^{\top} \boldsymbol{x} & =0 .
+	\end{aligned}
+\]
+
+For the second linear program, we know that \(\max \quad \boldsymbol{b}^{\top} \boldsymbol{\lambda}\) is equivalent to \(\min \quad -\boldsymbol{b}^{\top} \boldsymbol{\lambda}\). Similarly, let \(\boldsymbol{x}\) be the vector of Lagrangian multipliers associated with \(\boldsymbol{A}^{\top} \boldsymbol{\lambda} \leq \boldsymbol{c}\) and \(\boldsymbol{y}\) be the vector of multipliers associated with \(\boldsymbol{\lambda} \geq \boldsymbol{0}\). The Lagrangian function is then
+
+\[
+	L_{2}(\boldsymbol{\lambda}, \boldsymbol{x}, \boldsymbol{y})=-\boldsymbol{b}^{\top} \boldsymbol{\lambda}-\boldsymbol{x}^{\top}\left(\boldsymbol{c}-\boldsymbol{A}^{\top} \boldsymbol{\lambda} \right)-\boldsymbol{y}^{\top} \boldsymbol{\lambda} .
+\]
+
+We then have the KKT conditions as
+
+\[
+	\begin{aligned}
+		\boldsymbol{A} \boldsymbol{x} - \boldsymbol{b} & = \boldsymbol{y} \\
+		\boldsymbol{A}^{\top} \boldsymbol{\lambda} & \leq \boldsymbol{c} \\
+		\boldsymbol{\lambda} & \geq \boldsymbol{0} \\
+		\boldsymbol{x} & \geq \boldsymbol{0} \\
+		\boldsymbol{y} & \geq \boldsymbol{0} \\
+		\boldsymbol{x}^{\top}\left(\boldsymbol{c}-\boldsymbol{A}^{\top} \boldsymbol{\lambda} \right) & = \boldsymbol{0} \\
+		\boldsymbol{y}^{\top} \boldsymbol{\lambda} & = \boldsymbol{0} .
+	\end{aligned}
+\]
+
+Defining \(\boldsymbol{s}=\boldsymbol{c}-\boldsymbol{A}^{\top} \boldsymbol{\lambda}\) and noting that \(\boldsymbol{y}=\boldsymbol{A} \boldsymbol{x}-\boldsymbol{b}\), we can easily verify that the two KKT conditions are identical, which is desired argument.
