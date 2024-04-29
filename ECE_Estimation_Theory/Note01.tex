@@ -1,0 +1,477 @@
+\documentclass[12pt,thmsa]{article}
+
+%maths
+\usepackage{amsmath}   % \sideset
+\usepackage{amsthm}    % for proof
+\usepackage{amsfonts}  % for \mathbb
+\usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+\usepackage{optidef}   % for optimization definition
+
+%algorithms
+\usepackage{algorithm} % http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+
+%tables
+\usepackage{booktabs}  % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage[table]{xcolor} % For \cellcolor
+\usepackage[export]{adjustbox}
+
+%figures
+\usepackage{graphicx}  % Allows including images
+\usepackage{float}     % Force figure placement in text with [H]
+
+%tikzpicture
+\usepackage{tikz}
+\usepackage{scalerel}
+\usepackage{pict2e}
+\usepackage{tkz-euclide}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes, positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns, arrows.meta}
+\usetikzlibrary{shadows}
+\usetikzlibrary{external}
+
+%pgfplots
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+
+%colors
+\usepackage{color}     % color
+
+%other
+\usepackage{cancel}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\usepackage{textcase}  % \MakeTextUppercase
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
+
+%layout
+\usepackage{geometry}
+
+\graphicspath{ {./Figure/} }
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+
+% Linhui added for newly defined color
+\definecolor{forestgreen}{RGB}{34,139,34}
+
+% Linhui added for Expectation and Variance
+\newcommand{\Exp}{{\mathbb E}\! }
+\newcommand{\Var}{\mbox{Var}\! }
+
+% Linhui added for rename the command for empty set.
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+%------------------------------------------------------%
+\makeatletter
+\def\maketitle{%
+	\par
+	\hrule height 1.5pt\vspace{1ex}
+	\par\noindent
+	
+	\begin{minipage}{0.5\textwidth}
+		\scshape
+		Purdue University $\cdot$ ece 64500 \\[1ex]
+		Estimation Theory \\
+		Prof. Chan, Prof. Krogmeier
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\MakeTextUppercase{{\@title}}\\[0.3ex] % 0.2ex height space between two line
+		\textit{\@author}\\[0.2ex]
+		\textit{February 1, 2023}
+	\end{minipage}
+	\par\vspace{1ex}
+	\hrule height 1.5pt\vspace{1ex}
+	\par
+}
+\makeatother
+
+\author{Linhui Xie}
+\title{Lecture Note 01}
+%------------------------------------------------------%
+
+\begin{document}
+\maketitle
+
+\setcounter{section}{0}
+%------------------------------------------------------%
+\section{Review and Intro}
+%------------------------------------------------------%
+\setcounter{section}{1}
+%------------------------------------------------------%
+
+%------------------------------------------------------%
+\subsection{ Estimation vs. Detection}
+%------------------------------------------------------%
+In a nutshell the subject is concerned with the extraction of information from noise corrupted signals. Synonym is theory of statistical inference.
+
+Some Common Applications
+
+\begin{itemize}
+	\item Detection of target returns in radar or sonar. (D)
+	\item Position location in GPS. (E)
+	\item Speech and pattern recognition. (D \& E)
+	\item Seismic exploration for detection of oil and gas. (D \& E)
+	\item Tracking and trajectory estimation of aircraft, missiles, etc. (E)
+	\item Demodulation and decoding in communication systems. (D)
+	\item Feature classification in image processing. (D)
+	\item System identification / model fitting. (D \& E)
+	\item Range estimation in radar and sonar. (E)
+	\item Bearing or direction estimation in antenna array processing. (E)
+\end{itemize}
+
+Distinction between the two is, in general:
+
+\begin{itemize}
+	\item Detection theory ${ }^{1}$ used to select the physical or mathmatical model from a finite set of models that best represents the data.
+	\item Estimation theory ${ }^{2}$ is used to identify the unknown information bearing parameters in a model
+\end{itemize}
+
+Most applications incorporate elements of both detection and estimation. For example, in direction finding most methods first estimate the number of sources (a detection problem) and then estimate the directions of these sources (an estimation problem).
+\footnotetext{ 
+	${ }^{1}$ AKA hypothesis testing
+	${ }^{2} \mathrm{AKA}$ parameter or point estimation.
+}
+
+
+%------------------------------------------------------%
+\subsection{Probability Space}
+%------------------------------------------------------%
+
+A \underline{probability space} is a triple $(\Omega, \mathcal{F}, \mathcal{P})$ where:
+
+\begin{enumerate}
+	\item $\Omega$ is a non-empty set of points.
+	\item $\mathcal{F}$ is a class of subsets of $\Omega$ called events which satisfies
+
+
+	\begin{itemize}
+		\item $\Omega \in \mathcal{F}$
+		\item $A \in \mathcal{F} \Rightarrow A^{c} \in \mathcal{F}$
+		\item $A_{n} \in \mathcal{F}, n=1,2, \ldots \Rightarrow \cup_{n=1}^{\infty} A_{n} \in \mathcal{F}$
+	\end{itemize}
+	
+	Such a class of sets or events is called a $\sigma$-field or $\sigma$-algebra. Note also that the above axioms imply that $\mathcal{F}$ is closed with respect to countable intersections.\\
+	
+	\item $\mathcal{P}$ is a function defined on $\mathcal{F}$ and taking real values satisfying
+
+	\begin{itemize}
+		\item $0 \leq \mathcal{P}(A) \leq 1$ for all $A \in \mathcal{F}$
+		\item $\mathcal{P}(\emptyset)=0, \mathcal{P}(\Omega)=1$
+		\item If $A_{n}, n=1,2, \ldots$ is a disjoint sequence of events then
+	\end{itemize}
+	
+	\[
+	\mathcal{P}\left(\bigcup_{n=1}^{\infty} A_{n}\right)=\sum_{n=1}^{\infty} \mathcal{P}\left(A_{n}\right)
+	\]
+	
+\end{enumerate}
+
+
+%------------------------------------------------------%
+\subsection{Random Variables}
+%------------------------------------------------------%
+\begin{itemize}
+	\item A real-valued random variable $X$ is a function $X: \Omega \rightarrow \mathcal{R}$ such that
+
+	$$
+	\{\omega \in \Omega: X(\omega) \leq x\} \in \mathcal{F}
+	$$
+	
+	for all $x \in \mathcal{R}$. The essential point is that sets of the form above have probabilities assigned to them. For simpler notation the above set is more often denoted $\{X \leq x\}$ dropping the reference to points $\omega$.
+
+	\item A complex-valued random variable $Z$ is a function $Z: \Omega \rightarrow \mathcal{C}$ where the real and imaginary parts are real-valued random variables.
+	
+	\item Similarly can form vector valued random variables taking values in $\mathcal{R}^{n}$ or $\mathcal{C}^{n}$.
+	
+	\item The above definitions for rvs can be considerably extended. One particularly useful notion is that of discrete random variables
+
+	$$
+	X: \Omega \rightarrow\{\text { a countable or finite set }\}
+	$$
+	
+	such that $\{X=x\} \in \mathcal{F}$ for all values $x$.
+
+\end{itemize}
+%------------------------------------------------------%
+\subsection{Distribution and Density Functions}
+%------------------------------------------------------%
+\begin{itemize}
+	\item $X$ a real-valued rv. Since the events
+
+
+	$$
+	\{X \leq x\} \in \mathcal{F}
+	$$
+	
+	they have assigned to them probabilities and we may define the so-called distribution function
+	
+	$$
+	F_{X}(x)=\mathcal{P}(\{X \leq x\})
+	$$
+	
+	This function satisfies
+	
+	\begin{enumerate}
+		\item right continuous: $\lim _{y \rightarrow x^{+}} F_{X}(y)=F_{X}(x)$
+		
+		\item non-decreasing: $x \leq y \Longrightarrow F_{X}(x) \leq F_{X}(y)$
+		
+		\item left hand limits exist: $\lim _{y \rightarrow x^{-}} F_{X}(y)$ exists
+		
+		\item $\lim _{x \rightarrow-\infty} F_{X}(x)=0, \lim _{x \rightarrow+\infty} F_{X}(x)=1$
+		
+	\end{enumerate}
+
+
+	\item Under certain circumstances (absolute continuity) there exists a function $f_{X}: \mathcal{R} \rightarrow \mathcal{R}$ such that
+
+
+	$$
+	F_{X}(x)=\int_{-\infty}^{x} f_{X}(\alpha) \mathrm{d} \alpha, \quad f_{X}(\alpha)=\frac{\mathrm{d}}{\mathrm{d} x} F_{X}(x)
+	$$
+	
+	called the (probability) density of $X$.
+	
+	It turns out for all questions of statistics that one dispenses with the underlying probability space $(\Omega, \mathcal{F}, \mathcal{P})$ and deals directly with the observations and the distributions and densities which characterize them.
+	
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Probability Space of Observations}
+%------------------------------------------------------%
+\begin{itemize}
+	\item $X: \Omega \rightarrow \mathcal{R}$ a real-valued rv. The Borel sets in $\mathcal{R}$ are the "smallest" $\sigma$-field containing intervals of the form
+
+	$$
+	(-\infty, x] \quad x \in \mathcal{R}
+	$$
+
+	Denote this class of sets by $\mathcal{B}$. Then:
+
+	\begin{itemize}
+		\item all intervals $\in \mathcal{B}$
+		\item all open sets $\in \mathcal{B}$
+		\item all closed sets $\in \mathcal{B}$
+		\item Then fact that a rv $X$ with distribution $F_{X}$ induces a probability space (unique) $\left(\mathcal{R}, \mathcal{B}, P_{X}\right)$ st
+	\end{itemize}
+
+	$$
+	\begin{aligned}
+		P_{X}((-\infty, x]) & =F_{X}(x)=\mathcal{P}(\{\omega \in \Omega: X(\omega) \leq x\}) \\
+		P_{X}((y, x]) & =F_{X}(x)-F_{X}(y)=\mathcal{P}(\{\omega \in \Omega: y<X(\omega) \leq x\})
+	\end{aligned}
+	$$
+
+	Furthermore, if $F_{X}(x)$ has a density $f_{X}(x)$ then
+	
+	$$
+	P_{X}(B)=\int_{B} f_{X}(x) \mathrm{d} x
+	$$
+	
+	for all $B \in \mathcal{B}$.
+
+	\item Can be generalized to other types of random variables as well:
+	
+	\begin{itemize}
+		\item vector $\left(\mathcal{R}^{n}, \mathcal{B}^{n}\right)$
+		
+		\item discrete $\left(\Gamma, 2^{\Gamma}\right)$
+	
+	\end{itemize}
+	
+	Use following single notation to handle general case: $(\Gamma, \mathcal{G})$.
+\end{itemize}
+
+%------------------------------------------------------%
+\subsection{Statistical Inference}
+%------------------------------------------------------%
+\begin{itemize}
+	\item Space of observations $(\Gamma, \mathcal{G})=($ Euclidean or discrete set, Borel sets or power set $)$.
+	\item Observed random variable (or vector) $X$ taking values $x \in \Gamma$.
+	\item Parameter space $\Lambda$ (usually Euclidean or discrete) with the interpretation that each $\theta \in \Lambda$ indexes a particular "state of nature".
+	\item Family of probability distributions ${ }^{3}$
+
+	$$
+	\left\{P_{\theta}: \theta \in \Lambda\right\}
+	$$
+	
+	defined upon the observation space $(\Gamma, \mathcal{G})$.
+
+\end{itemize}
+
+\noindent
+\underline{Goal of Statistical Theory}: To infer information from observation $X=x$. Recall that statistics breaks into two disciplines
+
+\begin{enumerate}
+	\item \underline{Statistical Detection}
+	
+	\item \underline{Statistical Estimation}
+	
+\end{enumerate}
+
+%------------------------------------------------------%
+\subsubsection{Statistical Detection}
+End result is that one of a finite number of choices about the state of nature is made. This could mean either that $\Lambda$ is finite or that there is a finite partition \footnotetext{
+${ }^{3}$ There are many analogous notations to indicate the family of distributions:
+$$
+F_{\theta}(\cdot), f_{\theta}(\cdot), p_{\theta}(\cdot), \text { or } F(\cdot \mid \theta), f(\cdot \mid \theta), p(\cdot \mid \theta)
+$$
+}
+and the goal of the statistical procedure is to decide from which set $\Lambda_{i}$ the true parameter $\theta$ comes.
+
+\begin{itemize}
+	\item Example: Based on the observed behavior $\{X=x\}$ of the DJIA over the past week choose to either buy or sell FORD stock.
+	\item Example: Target present or not in a radar return.
+\end{itemize}
+
+%------------------------------------------------------%
+\subsubsection{Statistical Estimation}
+The object is to infer information about the value of an unknown quantity based upon our observation. Here it is typical that $\Lambda$ is uncountable.
+
+\begin{itemize}
+	\item Example: Based on the observed behavior $\{X=x\}$ of the DJIA over the past week predict the value of FORD stock at the end of trading tomorrow.
+	\item Example: Determination of target range based upon radar return signal.
+\end{itemize}
+
+Note that the distinction between these problems is sometimes blurred and that many problems contain elements of both.
+
+%------------------------------------------------------%
+\subsubsection{Modeling of the Family of Probability Distributions}
+\begin{itemize}
+	\item The model for the statistical problem is embodied in the family of probability distributions
+\end{itemize}
+
+$$
+\left\{P_{\theta}: \theta \in \Lambda\right\}
+$$
+
+defined upon the observation space $(\Gamma, \mathcal{G})$.
+
+\begin{itemize}
+	\item Can think of the overall experiment as a system
+\end{itemize}
+
+
+
+which maps parameters to observations. The parameter $\theta$ may be a vector in a Euclidean space or it may be discrete. It can be modeled as deterministic (so-called classical theory) or random (so-called Bayesian theory).
+
+\begin{itemize}
+	\item Some common forms for the random mapping $W(\cdot)$ :
+	\item Linear Additive Noise Model:
+
+
+
+	\begin{itemize}
+		\item $H$ in an $m \times n$ deterministic matrix. $N$ is a random noise vector.
+
+
+		\item $ Y=H \theta+N$
+
+
+		\item Model is important in communications and control, signal processing, and system identification.
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Non-linear Additive Noise Model:
+
+
+	\begin{itemize}
+		\item $g: \mathcal{R}^{n} \rightarrow \mathcal{R}^{m}$ in a non-linear mapping. $N$ is a random noise vector.
+	
+		\item $Y=g(\theta)+N$
+	
+		\item Model is important in communications and control, signal processing, and system identification.
+	\end{itemize}
+
+\end{itemize}
+
+\begin{itemize}
+	\item Multiplicative Noise Model:
+
+	\begin{itemize}
+		\item $N, V$ are random noise vectors.
+
+		\item $Y=N \theta+V$
+
+		\item Model is important for radar target scattering functions, Rayleigh fading in communications systems, speckle noise in coherent optics.
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item The Unknown Parameter $\theta$ The state of nature, which we hope to estimate, is typically modeled in one of two ways - which lead to distinct approaches in detection and estimation problems.
+\end{itemize}
+
+\begin{enumerate}
+	\item Classical Model. $\theta$ is a fixed and non-random parameter from the set of possible parameter values $\Lambda$. Each distinct $\theta \in \Lambda$ produces a distinct probability distribution for the observation $Y$, i.e., we have a family of distributions
+\end{enumerate}
+
+$$
+\left\{f_{\theta}(y): \theta \in \Lambda\right\}
+$$
+
+indexed by a non-random but unknown parameter.
+
+\begin{enumerate}
+	\setcounter{enumi}{1}
+	\item Bayesian Model. Here $\theta$ is considered to be the value taken by a random variable $\Theta$.
+	
+	\begin{itemize}
+		\item In the Bayesian framework, there is a joint pdf $f_{\Theta, Y}(\theta, y)$ defined upon the probability space $\Lambda \times \Gamma$ of the complete experiment.
+		\item There is a family of conditional densities
+		
+		$$
+		\left\{f_{Y \mid \Theta}(y \mid \theta): \theta \in \Lambda\right\}
+		$$
+		
+		which specify the behavior of $Y$ for a particular realization $\Theta=\theta \in \Lambda$.
+		
+		\item There is also a marginal pdf $f_{\Theta}(\theta)$ on the random parameter $\Theta$.
+		
+	\end{itemize}
+
+\end{enumerate}
+
+
+%------------------------------------------------------%
+\subsubsection{Definition of an Estimator}
+\begin{itemize}
+	\item An \textit{estimator} is a mapping of values of $Y$ into parameters $\theta$, i.e.,
+
+	$$
+	\hat{\theta}: \Gamma \rightarrow \Lambda
+	$$
+	
+	such that $\hat{\theta}(y)$ is an estimate of the true parameter $\theta$ and $\hat{\theta}(Y)$ is a random variable.
+
+	\item Study ``best" estimators and "good" properties: measures of badness - MSE, probability of error.
+	
+	\item In this fashion estimation will become an optimization problem.
+\end{itemize}
+
+
+\bigskip
+
+\noindent
+[Ref]: 
+
+
+\end{document}
