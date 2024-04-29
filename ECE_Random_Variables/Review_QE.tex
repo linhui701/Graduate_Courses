@@ -1,0 +1,185 @@
+\documentclass[12pt,thmsa]{article}
+
+%maths
+\usepackage{amsmath}   % \sideset
+\usepackage{amsthm}    % for proof
+\usepackage{amsfonts}  % for \mathbb
+\usepackage{mathrsfs}  % for Ralph Smith's Formal Script Font
+\usepackage[mathscr]{euscript} %redefine the \mathcal command to use Euler script
+\usepackage{amssymb}   % \varnothing, \bigstar, \blacksquare, \clubsuit, \blacktriangleright, \diamondsuit, \spadesuit, \dagger, \checkmark
+
+%algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+%\usepackage[ruled,vlined,linesnumbered]{algorithm2e} % For algorithm
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms % conflict with algorithm2e
+
+%tables
+\usepackage{booktabs}  % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage[table]{xcolor} % For \cellcolor
+\usepackage[export]{adjustbox}
+
+%figures
+\usepackage{graphicx}  % Allows including images
+\usepackage{float}     % Force figure placement in text with [H]
+
+%tikzpicture
+\usepackage{tikz}
+\usepackage{scalerel}
+\usepackage{pict2e}
+\usepackage{tkz-euclide}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes, positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns, arrows.meta}
+\usetikzlibrary{shadows}
+\usetikzlibrary{external}
+\usetikzlibrary{3d}
+
+%pgfplots
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+\usepgfplotslibrary{fillbetween}
+
+%colors
+\usepackage{color}     % color
+\usepackage[colorinlistoftodos]{todonotes}
+
+%other
+\usepackage{cancel}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*} % global option, remove the indentation for a specific list
+\usepackage{textcase}  % \MakeTextUppercase
+\renewcommand{\qedsymbol}{$\blacksquare$} % change the QED symbol to a filled square
+\usepackage{hyperref}
+\usepackage{tocloft}
+
+%layout
+\usepackage{geometry}
+\usepackage{fancyhdr}   % Fancy Headers
+\usepackage{setspace}   % Include the setspace package
+
+%------------------------------------------------------%
+%              Create Center Title Page                              %
+%------------------------------------------------------%
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\graphicspath{ {./Figure/} }
+
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+	top=20mm,
+}
+
+% Linhui added for newly defined color
+\definecolor{forestgreen}{RGB}{34,139,34}
+
+
+% Linhui added for Expectation and Variance
+\newcommand{\Exp}{{\mathbb E}\! }
+\newcommand{\Var}{\mbox{Var}\! }
+
+% Linhui added for rename the command for empty set.
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+%------------------------------------------------------%
+\makeatletter
+\def\maketitle{%
+	\par
+	\hrule height 1.5pt\vspace{1ex}
+	\par\noindent
+	
+	\begin{minipage}{0.5\textwidth}
+		\scshape
+		Purdue University $\cdot$ ece 60000 \\[1ex]
+		Random Variables \\
+		Prof. Bell
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\raggedleft
+		\MakeTextUppercase{{\@title}}\\[0.3ex] % 0.2ex height space between two line
+		\textit{\@author}\\[0.2ex]
+		\textit{August 1, 2022}
+	\end{minipage}
+	\par\vspace{1ex}
+	\hrule height 1.5pt\vspace{1ex}
+	\par
+}
+\makeatother
+
+\author{Linhui Xie}
+\title{Review of Qualify Exam}
+%------------------------------------------------------%
+
+\begin{document}
+	\tableofcontents
+	\newpage
+	
+%% Part 1
+%\include{./sections/p1_set_theory_and_random_experiments}
+%\include{./sections/p1_probability_spaces}
+%\include{./sections/p1_conditional_probability}
+%\include{./sections/p1_statistical_independence}
+%\include{./sections/p1_compound_random_experiments}
+%\include{./sections/p1_random_variables_definition}
+
+
+%% Part 2
+%\include{./sections/p2_conditional_distributions}
+%\include{./sections/p2_probability_distribution_and_density_function}
+%\include{./sections/p2_expectation}
+%\include{./sections/p2_characteristic_and_moment_generating_functions}
+
+%% Part 3
+%\include{./sections/p3_joint_distributions}
+%\include{./sections/p3_independent_random_variables}
+%\include{./sections/p3_functions_of_one_random_variables}
+%\include{./sections/p3_correlation}
+%\include{./sections/p3_joint_expectation}
+%\include{./sections/p3_conditional_distributions}
+%\include{./sections/p3_conditional_expectations}
+
+%% Part 4
+%\include{./sections/p4_stochastic_convergence}
+%\include{./sections/p4_weak_law_of_large_numbers}
+%\include{./sections/p4_central_limit_theorem}
+%\include{./sections/p4_stochastic_processes}
+%\include{./sections/p4_stationarity}
+%\include{./sections/p4_correlation_and_covariance_function}
+%\include{./sections/p4_power_spectral_density}
+%\include{./sections/p4_Gaussian_random_process_through_linear_system}
+%\include{./sections/p4_point_and_renewal_process}
+%\include{./sections/p4_Poisson_process}
+
+%% Part 5
+%\include{./sections/qe_00}
+%\include{./sections/qe_01}
+%\include{./sections/qe_02}
+%\include{./sections/qe_03}
+%\include{./sections/qe_04}
+%\include{./sections/qe_05}
+%\include{./sections/qe_06}
+%\include{./sections/qe_07}
+%\include{./sections/qe_08}
+%\include{./sections/qe_09}
+%\include{./sections/qe_10}
+%\include{./sections/qe_11}
+%\include{./sections/qe_12}
+%\include{./sections/qe_13}
+%\include{./sections/qe_14}
+%\include{./sections/qe_15}
+%\include{./sections/qe_16}
+%\include{./sections/qe_17}
+%\include{./sections/qe_18}
+
+\end{document}
